@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+/*
+CS 3312, spring 2017
+Final Project
+YOUR NAME: Anna Porter
+*/
+
+/* Fixing the box-sizing attribute will make things easier later. */
+html {
+   box-sizing: border-box;
+}
+
+/* Normally the * selector is smart to avoid, but for this purpose it's fine. */
+*, *:before, *:after {
+   box-sizing: inherit;
+}
+h1 {
+   text-align: center;
+}
+/*table {
+   margin: 1em auto;
+}*/
+td {
+   height: 50px;
+   width: 50px;
+   /*border: 1px solid;*/
+   text-align: center;
+}
+td:first-child {
+   border-left: solid;
+}
+td:nth-child(3n) {
+   border-right: solid;
+}
+tr:first-child {
+   border-top: solid;
+}
+tr:nth-child(3n) {
+   border-bottom:solid;
+}
+#pencil-markings {
+   border: none;
+}
