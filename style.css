@@ -3,14 +3,16 @@
 /*
 CS 3312, spring 2017
 Final Project
-YOUR NAME: Anna Porter
+YOUR NAME: Anna Porter and Michael McCarver
 */
 
 /* Fixing the box-sizing attribute will make things easier later. */
 html {
    box-sizing: border-box;
 }
-
+body {
+   background-image: url(wood.jpg);
+}
 /* Normally the * selector is smart to avoid, but for this purpose it's fine. */
 *, *:before, *:after {
    box-sizing: inherit;
@@ -39,6 +41,29 @@ tr:first-child {
 tr:nth-child(3n) {
    border-bottom:solid;
 }
-#pencil-markings {
+.dropbtn {
+   cursor: pointer;
+   background-color: #3CAF50;
+   color: white;
+   padding: 16px;
+   font-size: 16px;
    border: none;
+}
+.dropbtn:hover, .dropbtn:focus {
+   background-color: #3e8e41
+}
+.dropdown {
+   position: relative;
+   display: inline-block;
+}
+.dropdown-content {
+   display: none;
+   position: absolute;
+   background-color: #f9f9f9;
+   min-width: 160px;
+   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+   z-index: 1;
+}
+.show {
+   display: block;
 }
