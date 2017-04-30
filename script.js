@@ -158,17 +158,25 @@ document.addEventListener('DOMContentLoaded', function () {
                  [0, 6, 0, 0, 8, 0, 0, 0, 3]];
                  //https://www.sudoku.ws/extreme-3.html
    puzzles = [easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3];
-   document.querySelector('#my-dropdown').classList.toggle('show');
+
+   document.getElementById('easy').addEventListener('click', function () {
+      document.getElementById('my-dropdown').classList.toggle('show');
+
+   }, false);
+
    window.onclick = function (event) {
       if (!event.target.matches('.dropbtn')) {
-         var dropdowns;
-         dropdowns = document.getElementsByClassName('dropdown-content');
-         dropdowns.forEach(function (item) {
-            if (item.classList.contains('show')) {
-               item.classList.remove('show');
+
+         var i, openDropdown, dropdowns = document.getElementsByClassName("dropdown-content");
+
+         for (i = 0; i < dropdowns.length; i += 1) {
+            openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+               openDropdown.classList.remove('show');
             }
-         });
+
+         }
       }
    };
-}, false);
 
+}, false);
