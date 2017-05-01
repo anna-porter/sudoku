@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
                  [0, 0, 0, 2, 6, 0, 5, 0, 7],
                  [0, 6, 0, 0, 8, 0, 0, 0, 3]];
                  //https://www.sudoku.ws/extreme-3.html
-   puzzles = {easy0:easy1, easy1: easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3};
+   puzzles = {easy0: easy1, easy1: easy2, easy2: easy3, medium0: medium1, medium1: medium2, medium2: medium3, hard0: hard1, hard1: hard2, hard2: hard3, fiendish0: fiendish1, fiendish1: fiendish2, fiendish2: fiendish3, nightmare0: nightmare1, nightmare1: nightmare2, nightmare2: nightmare3};
 
    // Add an event listener to every difficulty button
    Array.prototype.forEach.call(document.getElementsByClassName('dropdown'), function (buttonElement) {
@@ -170,12 +170,9 @@ document.addEventListener('DOMContentLoaded', function () {
             // Add event listener to the drop-down buttons
             Array.prototype.forEach.call(buttonElement.getElementsByClassName('puzzle-select'), function (puzzleElement, whichPuzzle) {
                puzzleElement.onclick = function (event) {
-//                window.alert(puzzleElement.parentNode.parentNode); // For testing
-//                  window.alert(puzzleElement.parentNode.parentNode.id + whichPuzzle);
 
                   // Try to make a puzzle appear
                   var name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
-//                  window.alert(name);
                   var array = puzzles[name];
                   var puzzlePlace = document.getElementById('currentPuzzle'), insidePuzzlePlace;
 
@@ -185,19 +182,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
                   for (var i = 0; i < 9; i += 1)
                   {
-                    puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row"</div>');
+                    puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row">');
                     for (var j = 0; j < 9; j += 1)
                     {
-                      insidePuzzlePlace = puzzlePlace.querySelector('#row')
+                      insidePuzzlePlace = puzzlePlace.querySelector('#row');
                        insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + name + ' ' + i + ',' + j +'</div>');
                     }
+                    puzzlePlace.insertAdjacentHTML('beforeend', '</div>');
                   }
                }
             });
 
            // When the user clicks outside of the buttons, collapse the menu
             window.onclick = function (event) {
-//             window.alert(event.target.nodeName); // For testing
+
                if (!event.target.matches('.dropbtn')) {
                   Array.prototype.forEach.call(document.getElementsByClassName("dropdown-content"), function (dropdownElement) {
                       if (dropdownElement.classList.contains('show')) {
