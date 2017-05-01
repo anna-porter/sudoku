@@ -182,10 +182,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
                   for (var i = 0; i < 9; i += 1)
                   {
-                    puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row">');
+                    puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row' + i + '" class="happy">');
                     for (var j = 0; j < 9; j += 1)
                     {
-                      insidePuzzlePlace = puzzlePlace.querySelector('#row');
+                      insidePuzzlePlace = puzzlePlace.querySelector('#row' + i);
                        insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + name + ' ' + i + ',' + j +'</div>');
                     }
                     puzzlePlace.insertAdjacentHTML('beforeend', '</div>');
