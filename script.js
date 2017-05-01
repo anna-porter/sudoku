@@ -198,19 +198,6 @@ document.addEventListener('DOMContentLoaded', function () {
                   }
                }
             });
-
-           // When the user clicks outside of the buttons, collapse the menu
-//             window.onclick = function (event) {
-// //               window.alert(event.target.parentNode.id);
-// //                window.alert(buttonElement.id);
-//                if (event.target.parentNode !== buttonElement) {
-//                   Array.prototype.forEach.call(buttonElement.getElementsByClassName("dropdown-content"), function (dropdownElement) {
-//                       if (dropdownElement.classList.contains('show')) {
-//                         dropdownElement.classList.remove('show');
-//                       }
-//                   });
-//                }
-//             };
          });
    });
 
