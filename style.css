@@ -78,6 +78,11 @@ tr:nth-child(3n) {
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #f1f1f1}
 
+#row {
+   display: flex;
+   flex-wrap: wrap;
+}
+
 .show {
    display: block;
 }
