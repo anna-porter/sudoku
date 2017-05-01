@@ -185,8 +185,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row' + i + '" class="happy">');
                     for (var j = 0; j < 9; j += 1)
                     {
-                      insidePuzzlePlace = puzzlePlace.querySelector('#row' + i);
-                       insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + name + ' ' + i + ',' + j +'</div>');
+                       insidePuzzlePlace = puzzlePlace.querySelector('#row' + i);
+                       //insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + name + ' ' + i + ',' + j +'</div>');
+                       if (array[i][j] !== 0) {
+                         insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + array[i][j] + '</div>');
+                       }
+                       else {
+                        insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>&nbsp</div>');
+                       }
                     }
                     puzzlePlace.insertAdjacentHTML('beforeend', '</div>');
                   }
@@ -195,8 +201,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
            // When the user clicks outside of the buttons, collapse the menu
             window.onclick = function (event) {
-
-               if (!event.target.matches('.dropbtn')) {
+//               window.alert(event.target.parentNode);
+               if (event.target.parentNode.id !== buttonElement.id) {
                   Array.prototype.forEach.call(document.getElementsByClassName("dropdown-content"), function (dropdownElement) {
                       if (dropdownElement.classList.contains('show')) {
                         dropdownElement.classList.remove('show');
