@@ -52,10 +52,12 @@ tr:nth-child(3n) {
 }
 .dropbtn:hover, .dropbtn:focus {
    background-color: gray;
+   border-radius: 10px 10px 10px 10px;
 }
 .dropdown {
    position: relative;
    display: inline-block;
+   border-radius: 10px 10px 10px 10px;
 }
 .dropdown-content {
    display: none;
