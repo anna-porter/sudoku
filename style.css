@@ -42,15 +42,16 @@ tr:nth-child(3n) {
    border-bottom:solid;
 }
 .dropbtn {
-   background-color: #3CAF50;
+   background-color: black;
    color: white;
    padding: 16px;
    font-size: 16px;
    border: none;
    cursor: pointer;
+   border-radius: 10px 10px 10px 10px;
 }
 .dropbtn:hover, .dropbtn:focus {
-   background-color: #3e8e41
+   background-color: gray;
 }
 .dropdown {
    position: relative;
@@ -74,11 +75,111 @@ tr:nth-child(3n) {
     text-decoration: none;
     display: block;
 }
+#nightmare {
+   background-color: #012345;
+}
 
+#nightmare-1 {
+   background-color: #01305e;
+   color: white;
+}
+#nightmare-2 {
+   background-color: #023d77;
+   color: white;
+}
+#nightmare-3 {
+   background-color: #024990;
+   color: white;
+}
+#fiendish {
+   background-color: #123456;
+   color: white;
+}
+#fiendish-1 {
+   background-color: #16416b;
+   color: white;
+}
+#fiendish-2 {
+   background-color: #1b4e80;
+   color: white;
+}
+
+#fiendish-3 {
+   background-color: #1f5a95;
+   color: white;
+}
+
+#hard {
+   background-color: #233467;
+   color: white;
+}
+#hard-1 {
+   background-color: #293e7a;
+   color: white;
+}
+#hard-2 {
+   background-color: #30478d;
+   color: white;
+}
+#hard-3 {
+   background-color: #2651a0;
+   color: white;
+}
+#medium {
+   background-color: #345678;
+   color: white;
+}
+#medium-1 {
+   background-color: #3c638a;
+   color: white;
+}
+#medium-2 {
+   background-color: #43709c;
+   color: white;
+}
+#medium-3 {
+   background-color: #4b7cad;
+   color: white;
+}
+#easy {
+   background-color: #456789;
+   color: white;
+}
+#easy-1 {
+   background-color: #4e749a;
+   color: white;
+}
+#easy-2 {
+   background-color: #5781aa;
+   color: white;
+}
+#easy-3 {
+   background-color: #688db3;
+   color: white;
+}
+.input {
+   background-color: #5781aa;
+   color: white;
+   font-size: 30px;
+   width: 40px;
+   height: 40px;
+   border-radius: 8px 8px 8px 8px;
+}
+.input:hover {
+   background-color: #688db3;
+}
+#noborder {
+   border: none;
+   /*background-image: url(paper.png);*/
+
+}
+table {
+   /*background-image: url(paper.png)*/
+}
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #f1f1f1}
 
-.happy {
+#row {
    display: flex;
    flex-wrap: wrap;
 }
