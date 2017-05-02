@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url(http://fonts.googleapis.com/css?family=Poiret+One); 
+@import url(http://fonts.googleapis.com/css?family=Poiret+One);
 /*
 CS 3312, spring 2017
 Final Project
@@ -22,10 +22,36 @@ body {
 div {
    margin: 0 auto;
 }
-.happy {
-   width: 40px;
-   height: 40px;
+
+#currentPuzzle {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   max-width: 400px;
+   max-height: 600px;
+
 }
+
+.happy {
+/*   width: 40px;
+   height: 40px;*/
+   /*width: 400px;*/
+   /*width: 40%;*/
+   width: 50%;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   border: 1px solid;
+   font-size: 250%;
+}
+
+.happy div {
+/*   width: 43px;
+   height: 43px;*/
+   width: 10%;
+   height: 10%;
+}
+
 /* Normally the * selector is smart to avoid, but for this purpose it's fine. */
 *, *:before, *:after {
    box-sizing: inherit;
@@ -191,18 +217,14 @@ tr:nth-child(3n) {
    /*background-image: url(paper.png);*/
 
 }
-#puzzle {
+
+/*#row1 {
    width: 40px;
    height: 40px;
    display: block;
-}
-#row1 {
-   width: 40px;
-   height: 40px;
-   display: block;
-}
+}*/
 .input {
-   
+
 }
 /* https://codepen.io/keithwyland/pen/xuJpG?editors=1010 *//*
 ol {
@@ -227,7 +249,7 @@ li {
   margin: 0 0.5em;
   font-family: Poiret One, monospace;
   color: #ddd;
-  /* UNCOMMENT THIS WHEN WE FIGURE IT OUT 
+  /* UNCOMMENT THIS WHEN WE FIGURE IT OUT
   display: none;
 }
 
@@ -279,7 +301,7 @@ span {
     top: 0;
   }
   to {
-    top: -60em; 
+    top: -60em;
   }
 }
 
