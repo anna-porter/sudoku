@@ -10,24 +10,22 @@ Final Project
 YOUR NAME(s): Anna Porter and Michael McCarver
 -->
 <!--
-
 GOALS:
 Create basic sudoku layout without pencil marks
 Save previous input
 Clear previous input for all and for each puzzle
 Have multiple puzzles of different difficulties
-
 Must have interactive elements
 Must be organized using model view controller (studio 8)
 model seperate from view seperate from controller
 Written proposal due next week
-
 -->
 <!-- Import a CSS stylesheet to style the page. -->
 <link href="style.css" rel="stylesheet" />
 
 </head><body>
 <h1> Sudoku Puzzles </h1>
+<h2><time>00:00:00</time></h2>
 
    <!-- Puzzle Selectors -->
    <div class = "dropdown" id="easy">
@@ -39,163 +37,6 @@ Written proposal due next week
 
       </div>
    </div>
-   <!--https://codepen.io/keithwyland/pen/xuJpG?editors=1010-->
-   <!--
-<ol class="clock">
-  <li class="hour">
-    <div class="ten">
-      <span>0</span>
-      <span>1</span>
-      <span>2</span>
-      <span>3</span>
-      <span>4</span>
-      <span>5</span>
-      <span>6</span>
-      <span>7</span>
-      <span>8</span>
-      <span>9</span>
-      <span>0</span>
-    </div>
-    <div class="one">
-      <span>0</span>
-      <span>1</span>
-      <span>2</span>
-      <span>3</span>
-      <span>4</span>
-      <span>5</span>
-      <span>6</span>
-      <span>7</span>
-      <span>8</span>
-      <span>9</span>
-      <span>0</span>
-    </div>
-  </li>
-  <li class="min">
-    <div class="ten">
-      <span>0</span>
-      <span>1</span>
-      <span>2</span>
-      <span>3</span>
-      <span>4</span>
-      <span>5</span>
-      <span>0</span>
-    </div>
-    <div class="one">
-      <span>0</span>
-      <span>1</span>
-      <span>2</span>
-      <span>3</span>
-      <span>4</span>
-      <span>5</span>
-      <span>6</span>
-      <span>7</span>
-      <span>8</span>
-      <span>9</span>
-      <span>0</span>
-    </div>
-  </li>
-  <li class="sec">
-    <div class="ten">
-      <span>0</span>
-      <span>1</span>
-      <span>2</span>
-      <span>3</span>
-      <span>4</span>
-      <span>5</span>
-      <span>0</span>
-    </div>
-    <div class="one">
-      <span>0</span>
-      <span>1</span>
-      <span>2</span>
-      <span>3</span>
-      <span>4</span>
-      <span>5</span>
-      <span>6</span>
-      <span>7</span>
-      <span>8</span>
-      <span>9</span>
-      <span>0</span>
-    </div>
-  </li>
-</ol>
-      <li class="hour">
-         <div class = "ten">
-            <span>0</span>
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-            <span>6</span>
-            <span>7</span>
-            <span>8</span>
-            <span>9</span>
-            <span>0</span>
-         </div>
-         <div class ="one">
-            <span>0</span>
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-            <span>6</span>
-            <span>7</span>
-            <span>8</span>
-            <span>9</span>
-            <span>0</span>
-         </div>
-      </li>
-      <li class="min">
-         <div class="ten">
-            <span>0</span>
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-            <span>0</span>
-         </div>
-         <div class ="one">
-            <span>0</span>
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-            <span>6</span>
-            <span>7</span>
-            <span>8</span>
-            <span>9</span>
-            <span>0</span>
-         </div>
-      <li class="sec">
-         <div class="ten">
-            <span>0</span>
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-            <span>0</span>
-         </div>
-         <div class ="one">
-            <span>0</span>
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-            <span>6</span>
-            <span>7</span>
-            <span>8</span>
-            <span>9</span>
-            <span>0</span>
-         </div>
-      </li>
--->
-
    <div class = "dropdown" id="medium">
       <button class = "dropbtn">Medium</button>
       <div id="my-dropdown" class = "dropdown-content">
@@ -228,34 +69,34 @@ Written proposal due next week
          <button class="puzzle-select" id="nightmare-3">Nightmare 3</button>
       </div>
    </div>
-   <button id="clear">Clear Puzzle</button>
-   <button id="save"> Save Puzzle</button>
-   <button id="validate-always">Validate as You Go</button>
-   <button id="validate-once">Validate</button>
-   <button id="user-input">Input Your Own!</button>
+   
+   <div class = "puzzleHere" id="currentPuzzle"> </div>
+   <div class = "sidebar">
+      <button class = "utility" id="clear">Clear Puzzle</button>
+      <button class = "utility" id="save"> Save Puzzle</button>
+      <button class = "utility" id="validate-always">Validate as You Go</button>
+      <button class = "utility" id="validate-once">Validate</button>
+      <button class = "utility" id="user-input">Input Your Own!</button>
 
-   <table>
-      <div class = "puzzleHere" id="currentPuzzle"> </div>
-   </table>
-
-   <!-- Manual Entry Buttons -->
-   <table id="input-buttons">
-      <tr id="noborder">
-         <td id="noborder"><button class="input" id="1">1</button></td>
-         <td id="noborder"><button class="input" id="2">2</button></td>
-         <td id="noborder"><button class="input" id="3">3</button></td>
-      </tr id="noborder">
-      <tr id="noborder">
-         <td id="noborder"><button class="input" id="4">4</button></td>
-         <td id="noborder"><button class="input" id="5">5</button></td>
-         <td id="noborder"><button class="input" id="6">6</button></td>
-      </tr>
-      <tr id="noborder">
-         <td id="noborder"><button class="input" id="7">7</button></td>
-         <td id="noborder"><button class="input" id="8">8</button></td>
-         <td id="noborder"><button class="input" id="9">9</button></td>
-      </tr>
-   </table>
+      <!-- Manual Entry Buttons -->
+      <table id="input-buttons">
+         <tr id="noborder">
+            <td id="noborder"><button class="input" id="1">1</button></td>
+            <td id="noborder"><button class="input" id="2">2</button></td>
+            <td id="noborder"><button class="input" id="3">3</button></td>
+         </tr id="noborder">
+         <tr id="noborder">
+            <td id="noborder"><button class="input" id="4">4</button></td>
+            <td id="noborder"><button class="input" id="5">5</button></td>
+            <td id="noborder"><button class="input" id="6">6</button></td>
+         </tr>
+         <tr id="noborder">
+            <td id="noborder"><button class="input" id="7">7</button></td>
+            <td id="noborder"><button class="input" id="8">8</button></td>
+            <td id="noborder"><button class="input" id="9">9</button></td>
+         </tr>
+      </table>
+   </div>
 </body></html>
 
 <!-- Import a JavaScript script to add interactivity to the page. -->
