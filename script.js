@@ -161,54 +161,51 @@ document.addEventListener('DOMContentLoaded', function () {
 
    // Add an event listener to every difficulty button
    Array.prototype.forEach.call(document.getElementsByClassName('dropdown'), function (buttonElement) {
-         // When the button is clicked, show the buttons underneath it
-         buttonElement.addEventListener('click', function () {
-            //document.getElementById('my-dropdown').classList.toggle('show');
-            //buttonElement.querySelector('#my-dropdown').classList.toggle('show');
-            buttonElement.querySelector('#my-dropdown').classList.toggle('show');
+      // When the button is clicked, show the buttons underneath it
+      buttonElement.addEventListener('click', function () {
+         //document.getElementById('my-dropdown').classList.toggle('show');
+         //buttonElement.querySelector('#my-dropdown').classList.toggle('show');
+         buttonElement.querySelector('#my-dropdown').classList.toggle('show');
+         // Add event listener to the drop-down buttons
+         Array.prototype.forEach.call(buttonElement.getElementsByClassName('puzzle-select'), function (puzzleElement, whichPuzzle) {
+            // TOOK EVENT OUT OF THE PARENTHESIS TO APPEASE JSLINT
+            puzzleElement.onclick = function () {
+               // Try to make a puzzle appear
+               var name, array, puzzlePlace, insidePuzzlePlace, i, j;
+               name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
+               array = puzzles[name];
+               puzzlePlace = document.getElementById('currentPuzzle');
 
-            // Add event listener to the drop-down buttons
-            Array.prototype.forEach.call(buttonElement.getElementsByClassName('puzzle-select'), function (puzzleElement, whichPuzzle) {
-               puzzleElement.onclick = function (event) {
-
-                  // Try to make a puzzle appear
-                  var name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
-                  var array = puzzles[name];
-                  var puzzlePlace = document.getElementById('currentPuzzle'), insidePuzzlePlace;
-
-                  while (puzzlePlace.hasChildNodes()) {
-                    puzzlePlace.removeChild(puzzlePlace.firstChild);
-                  }
-
-                  for (var i = 0; i < 9; i += 1)
-                  {
-                    puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row' + i + '" class="happy">');
-                    for (var j = 0; j < 9; j += 1)
-                    {
-                       insidePuzzlePlace = puzzlePlace.querySelector('#row' + i);
-                       //insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + name + ' ' + i + ',' + j +'</div>');
-                       if (array[i][j] !== 0) {
-                         insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + array[i][j] + '</div>');
-                       }
-                       else {
-                        insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>&nbsp</div>');
-                       }
-                    }
-                    puzzlePlace.insertAdjacentHTML('beforeend', '</div>');
-                  }
+               while (puzzlePlace.hasChildNodes()) {
+                  puzzlePlace.removeChild(puzzlePlace.firstChild);
                }
-            });
+
+               for (i = 0; i < 9; i += 1) {
+                  puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row' + i + '" class="happy">');
+                  for (j = 0; j < 9; j += 1) {
+                     insidePuzzlePlace = puzzlePlace.querySelector('#row' + i);
+                     //insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + name + ' ' + i + ',' + j +'</div>');
+                     if (array[i][j] !== 0) {
+                        insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + array[i][j] + '</div>');
+                     } else {
+                        insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>&nbsp</div>');
+                     }
+                  }
+                  puzzlePlace.insertAdjacentHTML('beforeend', '</div>');
+               }
+            };
          });
+      });
    });
 
    window.onclick = function (event) {
-     Array.prototype.forEach.call(document.getElementsByClassName("dropdown-content"), function (dropdownElement) {
-          if (dropdownElement.parentNode.id !== event.target.parentNode.id) {
+      Array.prototype.forEach.call(document.getElementsByClassName("dropdown-content"), function (dropdownElement) {
+         if (dropdownElement.parentNode.id !== event.target.parentNode.id) {
             if (dropdownElement.classList.contains('show')) {
-              dropdownElement.classList.remove('show');
+               dropdownElement.classList.remove('show');
             }
-          }
-     });
+         }
+      });
    };
 
 }, false);
