@@ -29,7 +29,7 @@ div {
    justify-content: center;
    max-width: 400px;
    max-height: 600px;
-
+   flex-direction: column;
 }
 
 .happy {
@@ -37,9 +37,10 @@ div {
    height: 40px;*/
    /*width: 400px;*/
    /*width: 40%;*/
-   width: 50%;
+   width: 100%;
    display: flex;
    flex-wrap: wrap;
+   flex-direction: row;
    justify-content: center;
    border: 1px solid;
    font-size: 250%;
@@ -50,6 +51,14 @@ div {
    height: 43px;*/
    width: 10%;
    height: 10%;
+}
+
+.happy div > {
+   border-right: 1px solid;
+}
+
+.happy div:nth-child(3n + 3) {
+   border-right: 3px solid;
 }
 
 /* Normally the * selector is smart to avoid, but for this purpose it's fine. */
