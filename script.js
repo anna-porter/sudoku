@@ -5,15 +5,13 @@
 // YOUR NAME(S): Anna Porter and Michael McCarver
 
 /* 
-   Validate as you go
    Validate once
    Solver
    gray out buttons once nine of that number are on the page.
-
  */
 document.addEventListener('DOMContentLoaded', function () {
    'use strict';
-   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, puzzles, h2, seconds, minutes, hours, timer, add, t, selectedNum, validateAsYouGo, numCount;
+   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, puzzles, h2, seconds, minutes, hours, timer, add, t;;
    // Hard code 15 default puzzles
    easy1 = [[7, 9, 0, 0, 0, 0, 3, 0, 0],
             [0, 0, 0, 0, 0, 6, 9, 0, 0],
@@ -166,9 +164,8 @@ document.addEventListener('DOMContentLoaded', function () {
                  [0, 6, 0, 0, 8, 0, 0, 0, 3]];
                  //https://www.sudoku.ws/extreme-3.html
    // Timer function.
-   numCount = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-   validateAsYouGo = false;
    (function () {
+      // The timer won't run when I put its variables in here
    // For the entire timer, Anna used https://jsfiddle.net/Daniel_Hug/pvk6p/
       h2 = document.getElementsByTagName('h2')[0];
       seconds = 0;
@@ -217,9 +214,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
    // Displaying the puzzle, adding event listeners to empty spaces.
    (function () {
-      var sudokuValues, addEventListeners, updateValues;
+      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, selectedNum, checkForGrayButtons;
       selectedNum = 1;
       sudokuValues = [];
+      userInput = [];
+      validateAsYouGo = false;
       // Add an event listener to every difficulty button
       Array.prototype.forEach.call(document.getElementsByClassName('dropdown'), function (buttonElement) {
          // When the button is clicked, show the buttons underneath it
@@ -239,6 +238,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      puzzlePlace.removeChild(puzzlePlace.firstChild);
                   }
 
+                  sudokuValues = []; // reset the values
                   for (i = 0; i < 9; i += 1) {
                      puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row' + i + '" class="happy">');
                      for (j = 0; j < 9; j += 1) {
@@ -247,9 +247,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (array[i][j] !== 0) {
                            insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + array[i][j] + '</div>');
                            sudokuValues.push(array[i][j]);
+                           userInput.push(false);
                         } else {
                            insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div class="empty-space">&nbsp</div>');
                            sudokuValues.push(0);
+                           userInput.push(true);
                            /*insidePuzzlePlace.lastElementChild.addEventListener('click', function (emptySpace) {
                               emptySpace.textContent = selectedNum;
                               if (emptySpace.classList.contains('empty-space')) {
@@ -262,6 +264,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      }
                      puzzlePlace.insertAdjacentHTML('beforeend', '</div>');
                   }
+                  addEventListeners();
                   clearTimeout(t);
                   h2.textContent = '00:00:00';
                   seconds = 0;
@@ -269,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   hours = 0;
                   t = timer();
                };
-               addEventListeners();
+
             });
          }, false);
       });
@@ -278,194 +281,145 @@ document.addEventListener('DOMContentLoaded', function () {
          var emptyCells = document.querySelectorAll('div.empty-space');
          emptyCells.forEach(function (emptyCellElement, whichBlank) {
             emptyCellElement.addEventListener('click', function () {
+               //var i;
                emptyCellElement.textContent = selectedNum;
                if (emptyCellElement.classList.contains('empty-space')) {
-                  //alert('its true');
                   emptyCellElement.classList.remove('empty-space');
                   emptyCellElement.classList.add('user-input');
                }
-               if (validateAsYouGo) {
-                  updateValues(whichBlank, emptyCellElement);
-               }
+               updateValues(whichBlank, emptyCellElement);
+               checkForGrayButtons();
             }, false);
          });
       };
 
       updateValues = function (whichBlank, emptyCellElement) {
-         var row, column, i, j, index, whichBlankCopy;
-         index = 0;
-         numCount = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+         var index, whichBlankCopy;
+         //numCount = [0, 0, 0, 0, 0, 0, 0, 0, 0];
          whichBlankCopy = whichBlank;
-         //firstRun = true;
+         index = 0;
          sudokuValues.forEach(function () {
-            if (whichBlankCopy > 0) {
-               if (sudokuValues[index] !== 0) {
-                  index +=1;
+            if (whichBlankCopy >= 0) {
+               if (sudokuValues[index] > 0 && !userInput[index]) {
+                  //alert(sudokuValues[index] + ' at ' + index);
+                  //alert('numCount of ' + sudokuValues[index] + '+= 1');
+                  //numCount[sudokuValues[index] - 1] += 1;
+                  index += 1;
                } else {
+                  //alert(sudokuValues[index] + ' at ' + index);
+                  //alert(whichBlankCopy + ' = whichBlank');
                   index += 1;
                   whichBlankCopy -= 1;
-               } 
+               }
             }
-            numCount[sudokuValues[index]] += 1;
          });
+         index -= 1;
          sudokuValues[index] = selectedNum;
-         row = index / 9;
+         //numCount[sudokuValues[index] - 1] += 1;
+         if (validateAsYouGo) {
+            validateAlways(index, emptyCellElement);
+         }
+         //checkForGrayButtons();
+      };
+      validateAlways = function (index, emptyCellElement) {
+         var row, column, i, j, k, lowerI, upperI, lowerJ, upperJ, errorFound;
+         errorFound = false;
+         row = Math.floor(index / 9);
          column = index % 9;
          // checking the rest of the row
          for (i = 9 * row; i < 9 * row + 9; i += 1) {
-            if (selectedNum === sudokuValues[i]) {
-               if(emptyCellElement.classList.contains('user-input')) {
-                  emptyCellElement.classList.remove('user-input');
-                  emptyCellElement.classList.add('user-error');
+            if (index !== i) {
+               if (selectedNum === sudokuValues[i]) {
+                  errorFound = true;
+                  //alert ('error in ' + i + ' when checking row');
+                  if (emptyCellElement.classList.contains('user-input')) {
+                     emptyCellElement.classList.remove('user-input');
+                     emptyCellElement.classList.add('user-error');
+                     //alert(errorFound);
+                  }
                }
             }
          }
          // Checking the rest of the column
          for (i = column; i < 81; i += 9) {
-            if (selectedNum === sudokuValues[i]) {
-               if(emptyCellElement.classList.contains('user-input')) {
-                  emptyCellElement.classList.remove('user-input');
-                  emptyCellElement.classList.add('user-error');
+            if (index !== i) {
+               if (selectedNum === sudokuValues[i]) {
+                  //alert ('error in ' + i + ' when checking column');
+                  errorFound = true;
+                  if (emptyCellElement.classList.contains('user-input')) {
+                     emptyCellElement.classList.remove('user-input');
+                     emptyCellElement.classList.add('user-error');
+                  }
                }
             }
          }
-         /*
-         // Checking the top left 3x3
-         if (column < 3 && row < 3) {
-            for (i = 0; i < 3; i +=1) {
-               for (j = 0; j < 3; j += 1) {
-                  if (index !== j * 9 + i) {
-                     if (selectedNum === sudokuValues[j * 9 + i]) {
-                        if(emptyCellElement.classList.contains('user-input')) {
-                           emptyCellElement.classList.remove('user-input');
-                           emptyCellElement.classList.add('user-error');
-                        }
+         if (column < 3) {
+            lowerI = 0;
+            upperI = 3;
+         } else if (column >= 3 && column < 6) {
+            lowerI = 3;
+            upperI = 6;
+         } else {
+            lowerI = 6;
+            upperI = 9;
+         }
+         if (row < 3) {
+            lowerJ = 0;
+            upperJ = 3;
+         } else if (row >= 3 && row < 6) {
+            lowerJ = 3;
+            upperJ = 6;
+         } else {
+            lowerJ = 6;
+            upperJ = 9;
+         }
+         // Checking the 3x3
+
+         for (i = lowerI; i < upperI; i += 1) {
+            for (j = lowerJ; j < upperJ; j += 1) {
+               k = j * 9 + i;
+               //alert('checking ' + k + ' in 3x3');
+               if (index !== k) {
+                  if (selectedNum === sudokuValues[k]) {
+                     errorFound = true;
+                     //alert ('error for ' + index + ' at ' + k + ' when checking 3x3');
+                     //alert ('lowerI = ' + lowerI + ' upperI = ' + upperI);
+                     //alert ('lowerJ = ' + lowerJ + ' upperJ = ' + upperJ);
+                     if (emptyCellElement.classList.contains('user-input')) {
+                        emptyCellElement.classList.remove('user-input');
+                        emptyCellElement.classList.add('user-error');
                      }
                   }
                }
             }
          }
-         // checking the top middle 3x3
-         if (column >= 3 && column < 6 && row < 3) {
-            for (i = 3; i < 6; i +=1) {
-               for (j = 0; j < 3; j += 1) {
-                  if (index !== j * 9 + i) {
-                     if (selectedNum === sudokuValues[j * 9 + i]) {
-                        if(emptyCellElement.classList.contains('user-input')) {
-                           emptyCellElement.classList.remove('user-input');
-                           emptyCellElement.classList.add('user-error');
-                        }
-                     }
-                  }
-               }
-            }
+         //alert(errorFound);
+         if (!errorFound && emptyCellElement.classList.contains('user-error')) {
+
+            //alert ('no errors found');
+            emptyCellElement.classList.remove('user-error');
+            emptyCellElement.classList.add('user-input');
+
          }
-         // checking the top right 3x3
-         if (column >= 6 && column < 9 && row < 3) {
-            for (i = 6; i < 9; i +=1) {
-               for (j = 0; j < 3; j += 1) {
-                  if (index !== j * 9 + i) {
-                     if (selectedNum === sudokuValues[j * 9 + i]) {
-                        if(emptyCellElement.classList.contains('user-input')) {
-                           emptyCellElement.classList.remove('user-input');
-                           emptyCellElement.classList.add('user-error');
-                        }
-                     }
-                  }
-               }
+      };
+
+      checkForGrayButtons = function () {
+         var numCount;
+         alert(sudokuValues);
+         numCount = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+         sudokuValues.forEach(function (sudokuElement) {
+            if (sudokuElement > 0) {
+               numCount[sudokuElement - 1] += 1;
             }
-         }
-         // Checking the middle left 3x3
-         if (column < 3 && row >= 3 && row < 6) {
-            for (i = 0; i < 3; i +=1) {
-               for (j = 3; j < 6; j += 1) {
-                  if (index !== j * 9 + i) {
-                     if (selectedNum === sudokuValues[j * 9 + i]) {
-                        if(emptyCellElement.classList.contains('user-input')) {
-                           emptyCellElement.classList.remove('user-input');
-                           emptyCellElement.classList.add('user-error');
-                        }
-                     }
-                  }
-               }
+         });
+         numCount[selectedNum - 1] += 1;
+         alert(numCount);
+         Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement, whichButton) {
+            if (numCount[whichButton] >= 9 && selectorElement.classList.contains('input')) {
+               selectorElement.classList.remove('input');
+               selectorElement.classList.add('finished-input');
             }
-         }
-         // checking the center 3x3
-         if (column >= 3 && column < 6 && row >= 3 && row < 6) {
-            for (i = 3; i < 6; i +=1) {
-               for (j = 3; j < 6; j += 1) {
-                  if (index !== j * 9 + i) {
-                     if (selectedNum === sudokuValues[j * 9 + i]) {
-                        if(emptyCellElement.classList.contains('user-input')) {
-                           emptyCellElement.classList.remove('user-input');
-                           emptyCellElement.classList.add('user-error');
-                        }
-                     }
-                  }
-               }
-            }
-         }
-         // Checking the right middle 3x3
-         if (column >= 6 && column < 9 && row >= 3 && row < 6) {
-            for (i = 6; i < 9; i +=1) {
-               for (j = 3; j < 6; j += 1) {
-                  if (index !== j * 9 + i) {
-                     if (selectedNum === sudokuValues[j * 9 + i]) {
-                        if(emptyCellElement.classList.contains('user-input')) {
-                           emptyCellElement.classList.remove('user-input');
-                           emptyCellElement.classList.add('user-error');
-                        }
-                     }
-                  }
-               }
-            }
-         }
-         // Checking the middle left 3x3
-         if (column < 3 && row >= 6 && row < 9) {
-            for (i = 0; i < 3; i +=1) {
-               for (j = 3; j < 6; j += 1) {
-                  if (index !== j * 9 + i) {
-                     if (selectedNum === sudokuValues[j * 9 + i]) {
-                        if(emptyCellElement.classList.contains('user-input')) {
-                           emptyCellElement.classList.remove('user-input');
-                           emptyCellElement.classList.add('user-error');
-                        }
-                     }
-                  }
-               }
-            }
-         }
-         // checking the center 3x3
-         if (column >= 3 && column < 6 && row >= 6 && row < 9) {
-            for (i = 3; i < 6; i +=1) {
-               for (j = 3; j < 6; j += 1) {
-                  if (index !== j * 9 + i) {
-                     if (selectedNum === sudokuValues[j * 9 + i]) {
-                        if(emptyCellElement.classList.contains('user-input')) {
-                           emptyCellElement.classList.remove('user-input');
-                           emptyCellElement.classList.add('user-error');
-                        }
-                     }
-                  }
-               }
-            }
-         }
-         // Checking the right middle 3x3
-         if (column >= 6 && column < 9 && row >= 6 && row < 9) {
-            for (i = 6; i < 9; i +=1) {
-               for (j = 0; j < 3; j += 1) {
-                  if (index !== j * 9 + i) {
-                     if (selectedNum === sudokuValues[j * 9 + i]) {
-                        if(emptyCellElement.classList.contains('user-input')) {
-                           emptyCellElement.classList.remove('user-input');
-                           emptyCellElement.classList.add('user-error');
-                        }
-                     }
-                  }
-               }
-            }
-         }
-*/
+         }, false);            
       };
       document.querySelector('#validate-always').addEventListener('click', function () {
          if (validateAsYouGo === false) {
@@ -475,10 +429,6 @@ document.addEventListener('DOMContentLoaded', function () {
          }
       });
       Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement, whichButton) {
-         if (numCount[whichButton] === 9 && selectorElement.classList.contains('input')) {
-            selectorElement.classList.remove('input');
-            selectorElement.classList.add('finished-input');
-         }
          selectorElement.addEventListener('click', function () {
             selectedNum = whichButton + 1;
          }, false);
