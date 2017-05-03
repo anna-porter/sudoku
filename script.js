@@ -1,4 +1,4 @@
-/*jslint browser: true, indent: 3 */
+//*jslint browser: true, indent: 3 */
 
 // CS 3312, spring 2017
 // Final Project: Sudoku Puzzles
@@ -203,32 +203,6 @@ document.addEventListener('DOMContentLoaded', function () {
       timer();
    };
 
-   //t = timer();
-
-
-   /* Start button */
-   /*if (!timerOn) {
-      start.onclick = timer;
-      timerOn = true;
-   }*/
-
-   /* Stop button */
-   /*stop.addEventListener('click', function () {
-      alert('a');
-      //if (timerOn) {
-      timerOn = false;
-      clearTimeout(t);
-      //}
-   }, false);*/
-
-   /* Clear button */
-   /*clear.onclick = function () {
-      h2.textContent = '00:00:00';
-      timerOn = false;
-      seconds = 0;
-      minutes = 0;
-      hours = 0;
-   };*/
    puzzles = {easy0: easy1, easy1: easy2, easy2: easy3, medium0: medium1, medium1: medium2, medium2: medium3, hard0: hard1, hard1: hard2, hard2: hard3, fiendish0: fiendish1, fiendish1: fiendish2, fiendish2: fiendish3, nightmare0: nightmare1, nightmare1: nightmare2, nightmare2: nightmare3};
 
    // Add an event listener to every difficulty button
@@ -260,14 +234,14 @@ document.addEventListener('DOMContentLoaded', function () {
                      if (array[i][j] !== 0) {
                         insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + array[i][j] + '</div>');
                      } else {
-                        insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div id="empty-space">&nbsp</div>');
-                        insidePuzzlePlace.lastElementChild.addEventListener('click', function () {
+                        insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div class="empty-space">&nbsp</div>');
+                        /*insidePuzzlePlace.lastElementChild.addEventListener('click', function (emptySpace) {
                            emptySpace.textContent = selectedNum;
                            if (emptySpace.classList.contains('empty-space')) {
                               emptySpace.classList.remove('empty-space');
                               emptySpace.classList.add('user-input');
                            }
-                        });
+                        }, false);*/
                         //insidePuzzlePlace.getElementByID('empty-space').innerHTML = i;
                      }
                   }
@@ -275,27 +249,54 @@ document.addEventListener('DOMContentLoaded', function () {
                }
                clearTimeout(t);
                h2.textContent = '00:00:00';
-               //timerOn = true;
                seconds = 0;
                minutes = 0;
                hours = 0;
                t = timer();
             };
          });
-      });
+      }, false);
    });
 
-   Array.prototype.forEach.call(document.getElementsByClassName('empty-space'), function (emptySpace) {
-      emptySpace.addEventListener('click', function () {
+   //alert('c');
+   var emptyCells = document.querySelectorAll('#empty-space');
+   alert(emptyCells);
+   emptyCells.forEach(function (emptyCellElement) {
+      alert('insideForEach');
+      emptyCellElement.addEventListener('click', function () {
+         emptyCellElement.textContent = selectedNum;
+         alert(selectedNum);
+      }, false);
+      /*alert(element);
+      element.addEventListener('click', function () {
+         
+         element.textContent = selectedNum;
+         alert(selectedNum);
+      }, false);*/
+   });
+   /*(function () {
+      Array.prototype.slice.call(document.querySelectorAll('#empty-space div')).forEach(function (element) {
+         element.addEventListener('click', function () {
+            element.textContent = selectedNum;
+            alert(selectedNum);
+         }, false);
+      });
+   }());*/
+   
+   
+   
+   /*Array.prototype.forEach.call(document.getElementsById('empty-space'), function (emptySpace) {
+      emptySpace.onclick = function () {
          alert('a');
          
-      }, false);
-   });
-   Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement, whichButton) {
+      };
+   });*/
+   /*Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement, whichButton) {
       selectorElement.addEventListener('click', function () {
          selectedNum = whichButton + 1;
+         alert(selectedNum);
       }, false);
-   });
+   });*/
    window.onclick = function (event) {
       Array.prototype.forEach.call(document.getElementsByClassName("dropdown-content"), function (dropdownElement) {
          if (dropdownElement.parentNode.id !== event.target.parentNode.id) {
