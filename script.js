@@ -1,4 +1,4 @@
-/*jslint browser: true, indent: 3 */
+//*jslint browser: true, indent: 3 */
 
 // CS 3312, spring 2017
 // Final Project: Sudoku Puzzles
@@ -6,7 +6,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
    'use strict';
-   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, puzzles, h2, seconds, minutes, hours, timer, add, t, selectedNum, addEventListeners;
+   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, puzzles, h2, seconds, minutes, hours, timer, add, t, selectedNum;
    // Hard code 15 default puzzles
    easy1 = [[7, 9, 0, 0, 0, 0, 3, 0, 0],
             [0, 0, 0, 0, 0, 6, 9, 0, 0],
@@ -208,7 +208,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
    // Displaying the puzzle, adding event listeners to empty spaces.
    (function () {
+      var sudokuValues, addEventListeners;
       selectedNum = 1;
+      sudokuValues = [];
       // Add an event listener to every difficulty button
       Array.prototype.forEach.call(document.getElementsByClassName('dropdown'), function (buttonElement) {
          // When the button is clicked, show the buttons underneath it
@@ -256,9 +258,6 @@ document.addEventListener('DOMContentLoaded', function () {
                   hours = 0;
                   t = timer();
                };
-               //var emptyCells = document.querySelectorAll('div.empty-space');
-               //alert(emptyCells);
-               //alert(emptyCells.length);
                addEventListeners();
             });
          }, false);
@@ -269,6 +268,11 @@ document.addEventListener('DOMContentLoaded', function () {
          emptyCells.forEach(function (emptyCellElement) {
             emptyCellElement.addEventListener('click', function () {
                emptyCellElement.textContent = selectedNum;
+               if (emptyCellElement.classList.contains('empty-space')) {
+                  //alert('its true');
+                  emptyCellElement.classList.remove('empty-space');
+                  emptyCellElement.classList.add('user-input');
+               }
             }, false);
          });
       };
@@ -276,7 +280,6 @@ document.addEventListener('DOMContentLoaded', function () {
       Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement, whichButton) {
          selectorElement.addEventListener('click', function () {
             selectedNum = whichButton + 1;
-            //alert(selectedNum);
          }, false);
       });
       window.onclick = function (event) {
