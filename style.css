@@ -20,7 +20,13 @@ body {
 div {
    margin: 0 auto;
 }
-
+.ghetto-padding {
+   height: 20px;   
+}
+.sidebar {
+   float: right;
+   margin-right: 19%;
+}
 #currentPuzzle {
    /*position: relative;*/
    display: flex;
@@ -28,17 +34,21 @@ div {
    justify-content: center;
    width: 30%;
    /*height: 600px;*/
+   float: left;
+   margin-left: 25%;
    min-width: 350px;
-   /*padding-bottom: 30%;*/
+   /*padding-bottom: 5%;*/
    flex-direction: column;
    /*flex: 1 1 auto;*/
+   /*padding-top: 5%;*/
+   background-image: url(paper.png);
 }
 
 .happy {
    padding: 0px;
    margin: 0px;
    display: flex;
-   flex-wrap: wrap;
+   flex-wrap: wrap; 
    flex-direction: row;
    justify-content: center;
    font-size: 250%;
@@ -59,12 +69,18 @@ div {
    border: 1px solid;
 }
 
-.happy:nth-child(3), .happy:nth-child(6) {
-   border-bottom: 5px solid;
+.happy:nth-child(9), .happy:nth-child(3), .happy:nth-child(6) {
+   border-bottom: 3px solid;
 }
 
-.happy div:nth-child(3), .happy div:nth-child(6) {
-   border-right: 5px solid;
+.happy div:nth-child(9), .happy div:nth-child(3), .happy div:nth-child(6) {
+   border-right: 3px solid;
+}
+.happy div:first-child {
+   border-left: 3px solid;
+}
+.happy:first-child {
+   border-top: 3px solid;
 }
 
 /* Normally the * selector is smart to avoid, but for this purpose it's fine. */
@@ -223,6 +239,23 @@ tr:nth-child(3n) {
    width: 60px;
    height: 60px;
    border-radius: 8px 8px 8px 8px;
+   /*justify-content: center;*/
+}
+#input-buttons {
+   /*float: center;*/
+   /*justify-content: center;*/
+   /*position: relative;*/
+   margin: 0 auto;
+}
+.utility {
+   white-space: normal;
+   width: 15%;
+   height: 40px;
+   margin: 0.5%;
+   color: white;
+   background-color: #293e7a;
+   text-decoration: none;
+   width: 125px;
 }
 .input:hover {
    background-color: #688db3;
@@ -233,164 +266,9 @@ tr:nth-child(3n) {
 
 }
 
-/*#row1 {
-   width: 40px;
-   height: 40px;
-   display: block;
-}*/
-.input {
 
-}
-/* https://codepen.io/keithwyland/pen/xuJpG?editors=1010 *//*
-ol {
-  background-color: black;
-  display: inline-block;
-  list-style: none;
-  text-align: center;
-  margin: 0 auto;
-  padding: 0 0.5em;
-  height: 6em;
-  overflow: hidden;
-  min-width: 590px;
-  border-style: solid;
-  border-color: black;
-  border-width: 20px 10px;
-}
-
-li {
-  float: left;
-  padding: 0 0.5em;
-  background-color: #333;
-  margin: 0 0.5em;
-  font-family: Poiret One, monospace;
-  color: #ddd;
-  /* UNCOMMENT THIS WHEN WE FIGURE IT OUT
-  display: none;
-}
-
-div {
-  float: left;
-  position: relative;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-span {
-  display: block;
-  font-size: 6em;
-  line-height: 1em;
-}
-
-.sec .one {
-  animation-name: one-step-sec;
-  animation-duration: 10s;
-}
-
-.sec .ten {
-  animation-name: ten-step-sec;
-  animation-duration: 60s;
-}
-
-.min .one {
-  animation-name: one-step-min;
-  animation-duration: 600s;
-}
-
-.min .ten {
-  animation-name: ten-step-min;
-  animation-duration: 3600s;
-}
-
-.hour .one {
-  animation-name: one-step-hour;
-  animation-duration: 36000s;
-}
-
-.hour .ten {
-  animation-name: ten-step-hour;
-  animation-duration: 360000s;
-}
-
-@keyframes one-step-sec {
-  from {
-    top: 0;
-  }
-  to {
-    top: -60em;
-  }
-}
-
-@keyframes ten-step-sec {
-  15% { top: 0; }
-  16.66666666666667%, 31.66666666666667% { top: -6em;}
-  33.33333333333334%, 48.33333333333333% { top: -12em;}
-  50%, 65% { top: -18em;}
-  66.66666666666668%, 81.66666666666667% { top: -24em;}
-  83.33333333333335%, 98.33333333333333% { top: -30em;}
-  100% { top: -36em;}
-}
-
-@keyframes one-step-min {
-  9.83% { top: 0; }
-  10%, 19.83% { top: -6em;}
-  20%, 29.83% { top: -12em;}
-  30%, 39.83% { top: -18em;}
-  40%, 49.83% { top: -24em;}
-  50%, 59.83% { top: -30em;}
-  60%, 69.83% { top: -36em;}
-  70%, 79.83% { top: -42em;}
-  80%, 89.83% { top: -48em;}
-  90%, 99.83% { top: -54em;}
-  100% { top: -60em;}
-}
-
-@keyframes ten-step-min {
-  16.6383% { top: 0; }
-  16.66666666666667%, 33.30496% { top: -6em;}
-  33.33333333333334%, 49.97163% { top: -12em;}
-  50%, 66.638296% { top: -18em;}
-  66.66666666666668%, 83.30496% { top: -24em;}
-  83.33333333333335%, 99.97163% { top: -30em;}
-  100% { top: -36em;}
-}
-
-@keyframes one-step-hour {
-  9.83% { top: 0; }
-  10%, 19.83% { top: -6em;}
-  20%, 29.83% { top: -12em;}
-  30%, 39.83% { top: -18em;}
-  40%, 49.83% { top: -24em;}
-  50%, 59.83% { top: -30em;}
-  60%, 69.83% { top: -36em;}
-  70%, 79.83% { top: -42em;}
-  80%, 89.83% { top: -48em;}
-  90%, 99.83% { top: -54em;}
-  100% { top: -60em;}
-}
-
-@keyframes ten-step-hour {
-  9.83% { top: 0; }
-  10%, 19.83% { top: -6em;}
-  20%, 29.83% { top: -12em;}
-  30%, 39.83% { top: -18em;}
-  40%, 49.83% { top: -24em;}
-  50%, 59.83% { top: -30em;}
-  60%, 69.83% { top: -36em;}
-  70%, 79.83% { top: -42em;}
-  80%, 89.83% { top: -48em;}
-  90%, 99.83% { top: -54em;}
-  100% { top: -60em;}
-}*/
-table {
-   /*background-image: url(paper.png)*/
-}
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #f1f1f1}
-
-/*#row {
-   display: flex;
-   flex-wrap: wrap;
-}*/
 
 .show {
    display: block;
