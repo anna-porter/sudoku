@@ -1,4 +1,4 @@
-//*jslint browser: true, indent: 3 */
+/*jslint browser: true, indent: 3 */
 
 // CS 3312, spring 2017
 // Final Project: Sudoku Puzzles
@@ -6,7 +6,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
    'use strict';
-   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, puzzles, h2, seconds, minutes, hours, timer, add, t, selectedNum;
+   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, puzzles, h2, seconds, minutes, hours, timer, add, t, selectedNum, addEventListeners;
    // Hard code 15 default puzzles
    easy1 = [[7, 9, 0, 0, 0, 0, 3, 0, 0],
             [0, 0, 0, 0, 0, 6, 9, 0, 0],
@@ -158,153 +158,135 @@ document.addEventListener('DOMContentLoaded', function () {
                  [0, 0, 0, 2, 6, 0, 5, 0, 7],
                  [0, 6, 0, 0, 8, 0, 0, 0, 3]];
                  //https://www.sudoku.ws/extreme-3.html
-   selectedNum = 1;
+   // Timer function.
+   (function () {
    // For the entire timer, Anna used https://jsfiddle.net/Daniel_Hug/pvk6p/
-   h2 = document.getElementsByTagName('h2')[0];
-   seconds = 0;
-   minutes = 0;
-   hours = 0;
-   //timerOn = false;
+      h2 = document.getElementsByTagName('h2')[0];
+      seconds = 0;
+      minutes = 0;
+      hours = 0;
+      //timerOn = false;
 
-   timer = function () {
-      //var t;
-      t = setTimeout(add, 1000);
-      return t;
-   };
-   add = function () {
-      var timeString;
-      seconds += 1;
-      if (seconds >= 60) {
-         seconds = 0;
-         minutes += 1;
-         if (minutes >= 60) {
-            minutes = 0;
-            hours += 1;
-         }
-      }
-
-      timeString = "";
-      if (hours > 9) {
-         timeString += hours + ':';
-      } else {
-         timeString += '0' + hours + ':';
-      }
-      if (minutes > 9) {
-         timeString += minutes + ':';
-      } else {
-         timeString += '0' + minutes + ':';
-      }
-      if (seconds > 9) {
-         timeString += seconds;
-      } else {
-         timeString += '0' + seconds;
-      }
-      h2.textContent = timeString;
-      timer();
-   };
-
-   puzzles = {easy0: easy1, easy1: easy2, easy2: easy3, medium0: medium1, medium1: medium2, medium2: medium3, hard0: hard1, hard1: hard2, hard2: hard3, fiendish0: fiendish1, fiendish1: fiendish2, fiendish2: fiendish3, nightmare0: nightmare1, nightmare1: nightmare2, nightmare2: nightmare3};
-
-   // Add an event listener to every difficulty button
-   Array.prototype.forEach.call(document.getElementsByClassName('dropdown'), function (buttonElement) {
-      // When the button is clicked, show the buttons underneath it
-      buttonElement.addEventListener('click', function () {
-         //document.getElementById('my-dropdown').classList.toggle('show');
-         //buttonElement.querySelector('#my-dropdown').classList.toggle('show');
-         buttonElement.querySelector('#my-dropdown').classList.toggle('show');
-         // Add event listener to the drop-down buttons
-         Array.prototype.forEach.call(buttonElement.getElementsByClassName('puzzle-select'), function (puzzleElement, whichPuzzle) {
-            // TOOK EVENT OUT OF THE PARENTHESIS TO APPEASE JSLINT
-            puzzleElement.onclick = function () {
-               // Try to make a puzzle appear
-               var name, array, puzzlePlace, insidePuzzlePlace, i, j;
-               name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
-               array = puzzles[name];
-               puzzlePlace = document.getElementById('currentPuzzle');
-
-               while (puzzlePlace.hasChildNodes()) {
-                  puzzlePlace.removeChild(puzzlePlace.firstChild);
-               }
-
-               for (i = 0; i < 9; i += 1) {
-                  puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row' + i + '" class="happy">');
-                  for (j = 0; j < 9; j += 1) {
-                     insidePuzzlePlace = puzzlePlace.querySelector('#row' + i);
-                     //insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + name + ' ' + i + ',' + j +'</div>');
-                     if (array[i][j] !== 0) {
-                        insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + array[i][j] + '</div>');
-                     } else {
-                        insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div class="empty-space">&nbsp</div>');
-                        /*insidePuzzlePlace.lastElementChild.addEventListener('click', function (emptySpace) {
-                           emptySpace.textContent = selectedNum;
-                           if (emptySpace.classList.contains('empty-space')) {
-                              emptySpace.classList.remove('empty-space');
-                              emptySpace.classList.add('user-input');
-                           }
-                        }, false);*/
-                        //insidePuzzlePlace.getElementByID('empty-space').innerHTML = i;
-                     }
-                  }
-                  puzzlePlace.insertAdjacentHTML('beforeend', '</div>');
-               }
-               clearTimeout(t);
-               h2.textContent = '00:00:00';
-               seconds = 0;
-               minutes = 0;
-               hours = 0;
-               t = timer();
-            };
-         });
-      }, false);
-   });
-
-   //alert('c');
-   var emptyCells = document.querySelectorAll('#empty-space');
-   alert(emptyCells);
-   emptyCells.forEach(function (emptyCellElement) {
-      alert('insideForEach');
-      emptyCellElement.addEventListener('click', function () {
-         emptyCellElement.textContent = selectedNum;
-         alert(selectedNum);
-      }, false);
-      /*alert(element);
-      element.addEventListener('click', function () {
-         
-         element.textContent = selectedNum;
-         alert(selectedNum);
-      }, false);*/
-   });
-   /*(function () {
-      Array.prototype.slice.call(document.querySelectorAll('#empty-space div')).forEach(function (element) {
-         element.addEventListener('click', function () {
-            element.textContent = selectedNum;
-            alert(selectedNum);
-         }, false);
-      });
-   }());*/
-   
-   
-   
-   /*Array.prototype.forEach.call(document.getElementsById('empty-space'), function (emptySpace) {
-      emptySpace.onclick = function () {
-         alert('a');
-         
+      timer = function () {
+         //var t;
+         t = setTimeout(add, 1000);
+         return t;
       };
-   });*/
-   /*Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement, whichButton) {
-      selectorElement.addEventListener('click', function () {
-         selectedNum = whichButton + 1;
-         alert(selectedNum);
-      }, false);
-   });*/
-   window.onclick = function (event) {
-      Array.prototype.forEach.call(document.getElementsByClassName("dropdown-content"), function (dropdownElement) {
-         if (dropdownElement.parentNode.id !== event.target.parentNode.id) {
-            if (dropdownElement.classList.contains('show')) {
-               dropdownElement.classList.remove('show');
+      add = function () {
+         var timeString;
+         seconds += 1;
+         if (seconds >= 60) {
+            seconds = 0;
+            minutes += 1;
+            if (minutes >= 60) {
+               minutes = 0;
+               hours += 1;
             }
          }
-      });
-   };
 
+         timeString = "";
+         if (hours > 9) {
+            timeString += hours + ':';
+         } else {
+            timeString += '0' + hours + ':';
+         }
+         if (minutes > 9) {
+            timeString += minutes + ':';
+         } else {
+            timeString += '0' + minutes + ':';
+         }
+         if (seconds > 9) {
+            timeString += seconds;
+         } else {
+            timeString += '0' + seconds;
+         }
+         h2.textContent = timeString;
+         timer();
+      };
+   }());
+   puzzles = {easy0: easy1, easy1: easy2, easy2: easy3, medium0: medium1, medium1: medium2, medium2: medium3, hard0: hard1, hard1: hard2, hard2: hard3, fiendish0: fiendish1, fiendish1: fiendish2, fiendish2: fiendish3, nightmare0: nightmare1, nightmare1: nightmare2, nightmare2: nightmare3};
+
+   // Displaying the puzzle, adding event listeners to empty spaces.
+   (function () {
+      selectedNum = 1;
+      // Add an event listener to every difficulty button
+      Array.prototype.forEach.call(document.getElementsByClassName('dropdown'), function (buttonElement) {
+         // When the button is clicked, show the buttons underneath it
+         buttonElement.addEventListener('click', function () {
+            buttonElement.querySelector('#my-dropdown').classList.toggle('show');
+            // Add event listener to the drop-down buttons
+            Array.prototype.forEach.call(buttonElement.getElementsByClassName('puzzle-select'), function (puzzleElement, whichPuzzle) {
+               // TOOK EVENT OUT OF THE PARENTHESIS TO APPEASE JSLINT
+               puzzleElement.onclick = function () {
+                  // Try to make a puzzle appear
+                  var name, array, puzzlePlace, insidePuzzlePlace, i, j;
+                  name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
+                  array = puzzles[name];
+                  puzzlePlace = document.getElementById('currentPuzzle');
+
+                  while (puzzlePlace.hasChildNodes()) {
+                     puzzlePlace.removeChild(puzzlePlace.firstChild);
+                  }
+
+                  for (i = 0; i < 9; i += 1) {
+                     puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row' + i + '" class="happy">');
+                     for (j = 0; j < 9; j += 1) {
+                        insidePuzzlePlace = puzzlePlace.querySelector('#row' + i);
+                        //insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + name + ' ' + i + ',' + j +'</div>');
+                        if (array[i][j] !== 0) {
+                           insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + array[i][j] + '</div>');
+                        } else {
+                           insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div class="empty-space">&nbsp</div>');
+                           /*insidePuzzlePlace.lastElementChild.addEventListener('click', function (emptySpace) {
+                              emptySpace.textContent = selectedNum;
+                              if (emptySpace.classList.contains('empty-space')) {
+                                 emptySpace.classList.remove('empty-space');
+                                 emptySpace.classList.add('user-input');
+                              }
+                           }, false);*/
+                           //insidePuzzlePlace.getElementByID('empty-space').innerHTML = i;
+                        }
+                     }
+                     puzzlePlace.insertAdjacentHTML('beforeend', '</div>');
+                  }
+                  clearTimeout(t);
+                  h2.textContent = '00:00:00';
+                  seconds = 0;
+                  minutes = 0;
+                  hours = 0;
+                  t = timer();
+               };
+               //var emptyCells = document.querySelectorAll('div.empty-space');
+               //alert(emptyCells);
+               //alert(emptyCells.length);
+               addEventListeners();
+            });
+         }, false);
+      });
+
+      addEventListeners = function () {
+         var emptyCells = document.querySelectorAll('div.empty-space');
+         emptyCells.forEach(function (emptyCellElement) {
+            emptyCellElement.addEventListener('click', function () {
+               emptyCellElement.textContent = selectedNum;
+            }, false);
+         });
+      };
+
+      Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement, whichButton) {
+         selectorElement.addEventListener('click', function () {
+            selectedNum = whichButton + 1;
+            //alert(selectedNum);
+         }, false);
+      });
+      window.onclick = function (event) {
+         Array.prototype.forEach.call(document.getElementsByClassName("dropdown-content"), function (dropdownElement) {
+            if (dropdownElement.parentNode.id !== event.target.parentNode.id) {
+               if (dropdownElement.classList.contains('show')) {
+                  dropdownElement.classList.remove('show');
+               }
+            }
+         });
+      };
+   }());
 }, false);
