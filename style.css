@@ -25,8 +25,12 @@ div {
 }
 
 .sidebar {
-   float: right;
-   margin-right: 19%;
+/*   display: flex;
+   flex-wrap: nowrap;
+   flex-direction: column;
+   position: relative;
+   float: right;*/
+   /*margin-right: 19%;*/
 }
 #currentPuzzle {
    /*position: relative;*/
@@ -41,7 +45,7 @@ div {
    /*padding-bottom: 5%;*/
    flex-direction: column;
    /*flex: 1 1 auto;*/
-   /*padding-top: 5%;*/
+   /*padding-bottom:30%;*/
    background-image: url(paper.png);
 }
 
