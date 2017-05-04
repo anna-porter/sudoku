@@ -537,6 +537,10 @@ document.addEventListener('DOMContentLoaded', function () {
                   }
                }
             }
+            // http://stackoverflow.com/questions/38988311/angular-2-not-updating-until-any-object-is-clicked
+            this.sobotService .getRobots().then(ODataRobots => {
+               this.zone.run(() => this.sobots = ODataRobots.data);          
+            });
          }, false);
       };
 
