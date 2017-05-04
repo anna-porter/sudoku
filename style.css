@@ -24,7 +24,6 @@ div {
    height: 20px;
 }
 
-
 .sidebar {
    float: right;
    margin-right: 19%;
@@ -263,7 +262,7 @@ tr:nth-child(3n) {
    color: white;
    background-color: #293e7a;
    text-decoration: none;
-   width: 125px;
+   width: 150px;
 }
 .user-input {
    color: #4e749a;
