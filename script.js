@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
    // Displaying the puzzle, adding event listeners to empty spaces.
    (function () {
-      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle;
+      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle, deleteUserInputs, deleteUserErrors;
       selectedNum = 1;
       sudokuValues = [];
       userInput = [];
@@ -539,6 +539,51 @@ document.addEventListener('DOMContentLoaded', function () {
             }
          }, false);
       };
+      document.querySelector('#clear').addEventListener('click', function () {
+         var userInputs, userErrors;
+         /*userInputs = document.querySelectorAll('#user-input');
+         userInputs.forEach(function (element) {
+            element.classList.remove('user-input');
+            element.classList.add('empty-space');
+            element.html('&nbsp');
+            //element.textContent = ""
+            //element.innerHTML = '&nbsp';
+         });*/
+         //userInputs = document.getElementsByClassName('user-input');
+         userInputs = Array.from(document.getElementsByClassName('user-input'));
+         //alert(userInputs.length);
+         while (userInputs.length > 0) {
+            //alert('callingDeleteInputs');
+            deleteUserInputs();
+            userInputs = Array.from(document.getElementsByClassName('user-input'));
+         }
+         
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+         }
+         
+      });
+      deleteUserInputs = function () {
+         //alert('deleting');
+         Array.prototype.forEach.call(document.getElementsByClassName('user-input'), function (element) {
+            element.classList.remove('user-input');
+            element.classList.add('empty-space');
+            //element.html('&nbsp');
+            //element.textContent = ""
+            element.innerHTML = '&nbsp';
+         });
+      };
+      deleteUserErrors = function () {
+         Array.prototype.forEach.call(document.getElementsByClassName('user-error'), function (element) {
+            element.classList.remove('user-error');
+            element.classList.add('empty-space');
+            //element.html('&nbsp');
+            //element.textContent = "";
+            element.innerHTML = '&nbsp';
+         });
+      };
       document.querySelector('#validate-always').addEventListener('click', function () {
          if (validateAsYouGo === false) {
             validateAsYouGo = true;
@@ -588,7 +633,7 @@ document.addEventListener('DOMContentLoaded', function () {
          solverValues = [];
          rows = [];
          i = 0;
-         testing = 0
+         testing = 0;
          totalKids = 0;
          parents = document.querySelectorAll('div.happy');
          //alert(parents);
@@ -603,18 +648,18 @@ document.addEventListener('DOMContentLoaded', function () {
                //alert(childNode.textContent);
                //alert(childNode.textContent.length);
                //if (i < 9) {
-                  if (childNode.textContent === '1' || childNode.textContent === '2' || childNode.textContent === '3' || childNode.textContent === '4' || childNode.textContent === '5' || childNode.textContent === '6' || childNode.textContent === '7' || childNode.textContent === '8' || childNode.textContent === '9') { 
-                  //if (typeof parseInt(childNode.textContent) === 'number' ){
-                     rows.push(childNode.textContent);
-                     //alert(rows);
-                     i += 1;
-                     testing += 1;
-                  } else {
-                     //alert('pushing 0');
-                     rows.push('0');
-                     i += 1;
-                     testing += 1;
-                  }
+               if (childNode.textContent === '1' || childNode.textContent === '2' || childNode.textContent === '3' || childNode.textContent === '4' || childNode.textContent === '5' || childNode.textContent === '6' || childNode.textContent === '7' || childNode.textContent === '8' || childNode.textContent === '9') {
+               //if (typeof parseInt(childNode.textContent) === 'number' ){
+                  rows.push(childNode.textContent);
+                  //alert(rows);
+                  i += 1;
+                  testing += 1;
+               } else {
+                  //alert('pushing 0');
+                  rows.push('0');
+                  i += 1;
+                  testing += 1;
+               }
                /*} else {
                   //alert(row);
                   solverValues.push(rows);
@@ -631,8 +676,8 @@ document.addEventListener('DOMContentLoaded', function () {
          //alert(rose);
          //alert(solverValues);
          //alert('calling Solver');
-         alert(solveSudoku(solverValues));
-         alert(solverValues);
+         //alert(solveSudoku(solverValues));
+         //alert(solverValues);
 //         alert(totalKids);
   //       alert(testing);
     //     alert(solverValues);
