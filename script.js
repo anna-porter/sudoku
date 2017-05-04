@@ -11,7 +11,7 @@
  */
 document.addEventListener('DOMContentLoaded', function () {
    'use strict';
-   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, userPuzzle1, userPuzzle2, puzzles, h2, seconds, minutes, hours, timer, add, t, selectedNum;
+   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, userPuzzle1, userPuzzle2, puzzles, h2, seconds, minutes, hours, timer, add, t, selectedNum, resetUserError;
    // Hard code 15 default puzzles
    easy1 = [[7, 9, 0, 0, 0, 0, 3, 0, 0],
             [0, 0, 0, 0, 0, 6, 9, 0, 0],
@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
       checkForGrayButtons = function () {
-         var numCount;
+         var numCount, k;
          //alert(sudokuValues);
          numCount = [0, 0, 0, 0, 0, 0, 0, 0, 0];
          sudokuValues.forEach(function (sudokuElement) {
@@ -494,7 +494,6 @@ document.addEventListener('DOMContentLoaded', function () {
                      if (selectorElement.classList.contains('input')) {
                         selectorElement.classList.remove('input');
                      }
-
                      selectorElement.classList.add('finished-input');
                   }
                }
@@ -517,24 +516,27 @@ document.addEventListener('DOMContentLoaded', function () {
                }
             }
          }, false);
-
-         Array.prototype.forEach.call(document.getElementsByClassName('finished-input'), function (selectorElement) {
+         //removeFinishedInputs();
+//alert('insideCheckforGray above finished');
+         k = Array.from(document.getElementsByClassName('finished-input'));
+         k.forEach(function (selectorElement) {
             var i, tmp;
-
+//alert('insideCheckforGray above for');
             for (i = 0; i < 9; i += 1) {
                if (numCount[i] < 9) {
                   tmp = i + 1;
-
+//alert('insideCheckforGray inside finished');
                   if (selectorElement.id === tmp + 'b') {
                      if (selectorElement.classList.contains('finished-input')) {
                         selectorElement.classList.remove('finished-input');
                      }
                      //alert(numCount[i]);
+                     //alert('addingINput');
                      selectorElement.classList.add('input');
                   }
                }
             }
-         }, false);
+         });
       };
       document.querySelector('#clear').addEventListener('click', function () {
          var userInputs, userErrors, oneButton, finishedInputs;
@@ -548,13 +550,43 @@ document.addEventListener('DOMContentLoaded', function () {
          });*/
          //userInputs = document.getElementsByClassName('user-input');
          userInputs = Array.from(document.getElementsByClassName('user-input'));
-         alert(userInputs.length);
+         //alert(userInputs.length);
          while (userInputs.length > 0) {
             //alert('callingDeleteInputs');
             deleteUserInputs();
             userInputs = Array.from(document.getElementsByClassName('user-input'));
          }
 
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+         }
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+         }
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+         }
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+         }
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+         }
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+         }
          userErrors = Array.from(document.getElementsByClassName('user-error'));
          while (userErrors.length > 0) {
             deleteUserErrors();
@@ -570,7 +602,15 @@ document.addEventListener('DOMContentLoaded', function () {
          oneButton = document.getElementsByClassName('input')[0];
          oneButton.classList.remove('input');
          oneButton.classList.add('selected');
+         //alert('calling check for gray');
          checkForGrayButtons();
+         removeFinishedInputs();
+         clearTimeout(t);
+         h2.textContent = '00:00:00';
+         seconds = 0;
+         minutes = 0;
+         hours = 0;
+         t = timer();
       });
       removeFinishedInputs = function () {
          Array.prototype.forEach.call(document.getElementsByClassName('finished-input'), function (element) {
@@ -580,6 +620,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
          });
       };
+
       deleteUserInputs = function () {
          //alert('deleting');
          Array.prototype.forEach.call(document.getElementsByClassName('user-input'), function (element) {
