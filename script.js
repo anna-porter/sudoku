@@ -4,14 +4,14 @@
 // Final Project: Sudoku Puzzles
 // YOUR NAME(S): Anna Porter and Michael McCarver
 
-/*
+/* 
 
    Solver
    selected button does not switch to gray after 9 spaces are filled
  */
 document.addEventListener('DOMContentLoaded', function () {
    'use strict';
-   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, puzzles, h2, seconds, minutes, hours, timer, add, t;
+   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, userPuzzle1, puzzles, h2, seconds, minutes, hours, timer, add, t;
    // Hard code 15 default puzzles
    easy1 = [[7, 9, 0, 0, 0, 0, 3, 0, 0],
             [0, 0, 0, 0, 0, 6, 9, 0, 0],
@@ -163,6 +163,15 @@ document.addEventListener('DOMContentLoaded', function () {
                  [0, 0, 0, 2, 6, 0, 5, 0, 7],
                  [0, 6, 0, 0, 8, 0, 0, 0, 3]];
                  //https://www.sudoku.ws/extreme-3.html
+   userPuzzle1 = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0]];
    // Timer function.
    (function () {
       // The timer won't run when I put its variables in here
@@ -210,11 +219,11 @@ document.addEventListener('DOMContentLoaded', function () {
          timer();
       };
    }());
-   puzzles = {easy0: easy1, easy1: easy2, easy2: easy3, medium0: medium1, medium1: medium2, medium2: medium3, hard0: hard1, hard1: hard2, hard2: hard3, fiendish0: fiendish1, fiendish1: fiendish2, fiendish2: fiendish3, nightmare0: nightmare1, nightmare1: nightmare2, nightmare2: nightmare3};
+   puzzles = {easy0: easy1, easy1: easy2, easy2: easy3, medium0: medium1, medium1: medium2, medium2: medium3, hard0: hard1, hard1: hard2, hard2: hard3, fiendish0: fiendish1, fiendish1: fiendish2, fiendish2: fiendish3, nightmare0: nightmare1, nightmare1: nightmare2, nightmare2: nightmare3, userPuzzle0: userPuzzle1};
 
    // Displaying the puzzle, adding event listeners to empty spaces.
    (function () {
-      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, selectedNum, checkForGrayButtons, removeSelected, wrongCells;
+      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, selectedNum, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle;
       selectedNum = 1;
       sudokuValues = [];
       userInput = [];
@@ -229,56 +238,59 @@ document.addEventListener('DOMContentLoaded', function () {
             Array.prototype.forEach.call(buttonElement.getElementsByClassName('puzzle-select'), function (puzzleElement, whichPuzzle) {
                // TOOK EVENT OUT OF THE PARENTHESIS TO APPEASE JSLINT
                puzzleElement.onclick = function () {
-                  // Try to make a puzzle appear
-                  var name, array, puzzlePlace, insidePuzzlePlace, i, j, k;
-                  name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
-                  array = puzzles[name];
-                  puzzlePlace = document.getElementById('currentPuzzle');
-
-                  while (puzzlePlace.hasChildNodes()) {
-                     puzzlePlace.removeChild(puzzlePlace.firstChild);
-                  }
-
-                  sudokuValues = []; // reset the values
-                  for (i = 0; i < 9; i += 1) {
-                     puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row' + i + '" class="happy">');
-                     for (j = 0; j < 9; j += 1) {
-                        insidePuzzlePlace = puzzlePlace.querySelector('#row' + i);
-                        //insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + name + ' ' + i + ',' + j +'</div>');
-                        if (array[i][j] !== 0) {
-                           insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + array[i][j] + '</div>');
-                           sudokuValues.push(array[i][j]);
-                           userInput.push(false);
-                        } else {
-                           //alert (j + ' * ' + 9 + ' + ' + i);
-                           k = i * 9 + j;
-                           insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div class="empty-space" id = ' + k + '>&nbsp</div>');
-                           sudokuValues.push(0);
-                           userInput.push(true);
-                           /*insidePuzzlePlace.lastElementChild.addEventListener('click', function (emptySpace) {
-                              emptySpace.textContent = selectedNum;
-                              if (emptySpace.classList.contains('empty-space')) {
-                                 emptySpace.classList.remove('empty-space');
-                                 emptySpace.classList.add('user-input');
-                              }
-                           }, false);*/
-                           //insidePuzzlePlace.getElementByID('empty-space').innerHTML = i;
-                        }
-                     }
-                     puzzlePlace.insertAdjacentHTML('beforeend', '</div>');
-                  }
-                  addEventListeners();
-                  clearTimeout(t);
-                  h2.textContent = '00:00:00';
-                  seconds = 0;
-                  minutes = 0;
-                  hours = 0;
-                  t = timer();
+                  displayPuzzle(puzzleElement, whichPuzzle);
                };
-
             });
          }, false);
       });
+
+      displayPuzzle = function (puzzleElement, whichPuzzle) {
+         // Try to make a puzzle appear
+         var name, array, puzzlePlace, insidePuzzlePlace, i, j, k;
+         name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
+         //alert(name);
+         //alert(whichPuzzle);
+         array = puzzles[name];
+         puzzlePlace = document.getElementById('currentPuzzle');
+         while (puzzlePlace.hasChildNodes()) {
+            puzzlePlace.removeChild(puzzlePlace.firstChild);
+         }
+         sudokuValues = []; // reset the values
+         for (i = 0; i < 9; i += 1) {
+            puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row' + i + '" class="happy">');
+            for (j = 0; j < 9; j += 1) {
+               insidePuzzlePlace = puzzlePlace.querySelector('#row' + i);
+               //insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + name + ' ' + i + ',' + j +'</div>');
+               if (array[i][j] !== 0) {
+                  insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + array[i][j] + '</div>');
+                  sudokuValues.push(array[i][j]);
+                  userInput.push(false);
+               } else {
+                  //alert (j + ' * ' + 9 + ' + ' + i);
+                  k = i * 9 + j;
+                  insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div class="empty-space" id = ' + k + '>&nbsp</div>');
+                  sudokuValues.push(0);
+                  userInput.push(true);
+                  /*insidePuzzlePlace.lastElementChild.addEventListener('click', function (emptySpace) {
+                  emptySpace.textContent = selectedNum;
+                  if (emptySpace.classList.contains('empty-space')) {
+                     emptySpace.classList.remove('empty-space');
+                     emptySpace.classList.add('user-input');
+                  }
+                  }, false);*/
+                  //insidePuzzlePlace.getElementByID('empty-space').innerHTML = i;
+               }
+            }
+            puzzlePlace.insertAdjacentHTML('beforeend', '</div>');
+         }
+         addEventListeners();
+         clearTimeout(t);
+         h2.textContent = '00:00:00';
+         seconds = 0;
+         minutes = 0;
+         hours = 0;
+         t = timer();
+      };
 
       addEventListeners = function () {
          var emptyCells = document.querySelectorAll('div.empty-space');
@@ -509,7 +521,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      if (selectorElement.classList.contains('input')) {
                         selectorElement.classList.remove('input');
                      } else if (selectorElement.classList.contains('selected')) {
-                        alert("removing Selected");
+                        //alert("removing Selected");
                         selectorElement.classList.remove('selected');
                      }
                      selectorElement.classList.add('finished-input');
@@ -533,6 +545,135 @@ document.addEventListener('DOMContentLoaded', function () {
                //alert(errorFound);
             }
          });
+      });
+
+      document.querySelector('#solve').addEventListener('click', function () {
+         //alert('inside solve');
+         var kids, parents, solverValues, rows, i, solveSudoku, checkRow, checkCol, check3x3, findEmptySpace, isCellSafe, displaySolution;
+         /*kids = Array.prototype.slice.call(children);
+         alert(kids[0]);
+         kids.forEach.call(children, function (child) {
+            alert(children);
+            alert(child);
+         });*/
+         solverValues = [];
+         rows = [];
+         i = 0;
+         parents = document.querySelectorAll('div.happy');
+         //alert(parents);
+         parents.forEach(function (parentNode) {
+            kids = parentNode.children;
+            //alert(kids);
+            kids = Array.from(kids);
+            kids.forEach(function (childNode) {
+               //alert(childNode.textContent);
+               //alert(childNode.textContent.length);
+               if (i < 9) {
+                  if (childNode.textContent === '1' || childNode.textContent === '2' || childNode.textContent === '3' || childNode.textContent === '4' || childNode.textContent === '5' || childNode.textContent === '6' || childNode.textContent === '7' || childNode.textContent === '8' || childNode.textContent === '9') {
+                     rows.push(childNode.textContent);
+                     //alert(row);
+                     i += 1;
+                  } else {
+                     //alert('pushing 0');
+                     rows.push(0);
+                     i += 1;
+                  }
+               } else {
+                  //alert(row);
+                  solverValues.push(rows);
+                  rows = [];
+                  i = 0;
+               }
+            });
+            alert('calling Solver');
+            solveSudoku(solverValues);
+            alert(solverValues);
+         });
+         solveSudoku = function (solverValues) {
+            var emptyCell, row, column, numberToTry;
+            emptyCell = findEmptySpace(solverValues, row, column);
+            row = emptyCell[0];
+            column = emptyCell[1];
+            // base case: if no empty cell  
+            if (row === -1) {
+               return true;
+            }
+
+            for (numberToTry = 1; numberToTry <= 9; numberToTry += 1) {
+
+               if (isCellSafe(solverValues, row, column, numberToTry)) {
+                  solverValues[row][column] = numberToTry;
+                  if (solveSudoku(solverValues)) {
+                     return true;
+                  }
+                  // else                    // mark cell as empty (with 0)    
+                  solverValues[row][column] = 0;
+               }
+            }
+             // trigger back tracking
+            return false;
+         };
+
+
+         findEmptySpace = function (solverValues, row, column) {
+            var finished, cellReturn;
+            finished = false;
+            cellReturn = [-10, -10];
+            while (!finished) {
+               if (row === 9) {
+                  return cellReturn;
+               }// else {
+               if (solverValues[row][column] === 0) {
+                  cellReturn[0] = row;
+                  cellReturn[1] = column;
+                  return cellReturn;
+               }// else {
+               if (column < 8) {
+                  column += 1;
+               } else {
+                  row += 1;
+                  column = 0;
+               }
+            }
+            return cellReturn;
+         };
+
+         isCellSafe = function (solverValues, row, column, numberToTry) {
+            return checkRow(solverValues, column, numberToTry) && checkCol(solverValues, column, numberToTry) && check3x3(solverValues, row, column, numberToTry);
+         };
+
+         checkRow = function (solverValues, row, numberToTry) {
+            var j;
+            for (j = 0; j < 9; j += 1) {
+               if (numberToTry === solverValues[row][j]) {
+                  return false;
+               }
+            }
+            return true;
+         };
+         checkCol = function (solverValues, column, numberToTry) {
+            var aye;
+            for (aye = 0; aye < 9; aye += 1) {
+               if (numberToTry === solverValues[aye][column]) {
+                  return false;
+               }
+            }
+            return true;
+         };
+         check3x3 = function (solverValues, row, column, numberToTry) {
+            var eye, j;
+            row = Math.floor(row / 3) * 3;
+            column = Math.floor(column / 3) * 3;
+
+            for (eye = 0; eye < 3; eye += 1) {
+               for (j = 0; j < 3; j += 1) {
+                  if (numberToTry === solverValues[row + eye][column + j]) {
+                     return false;
+                  }
+               }
+            }
+            return true;
+         };
       });
 
       Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement, whichButton) {
