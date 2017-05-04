@@ -456,102 +456,43 @@ document.addEventListener('DOMContentLoaded', function () {
             }
          });
          numCount[selectedNum - 1] += 1;
-         //alert(numCount);
+
          Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement) {
             var i, tmp;
-            //alert(document.getElementsByClassName('input'));
+
             for (i = 0; i < 9; i += 1) {
                if (numCount[i] >= 9) {
                 tmp = i + 1;
+
                 if (selectorElement.id === tmp + 'b')
                 {
                   if (selectorElement.classList.contains('input')) {
                     selectorElement.classList.remove('input');
-                  } else if (selectorElement.classList.contains('selected')) {
-                    selectorElement.classList.remove('selected');
                   }
+
                   selectorElement.classList.add('finished-input');
                 }
-
-                  // if (i === 0 && selectorElement.id === '1b') {
-                  //    if (selectorElement.classList.contains('input')) {
-                  //       selectorElement.classList.remove('input');
-                  //    } else if (selectorElement.classList.contains('selected')) {
-                  //       selectorElement.classList.remove('selected');
-                  //    }
-                  //    selectorElement.classList.add('finished-input');
-                  // }
-                  // if (i === 1 && selectorElement.id === '2b') {
-                  //    if (selectorElement.classList.contains('input')) {
-                  //       selectorElement.classList.remove('input');
-                  //    } else if (selectorElement.classList.contains('selected')) {
-                  //       selectorElement.classList.remove('selected');
-                  //    }
-                  //    selectorElement.classList.add('finished-input');
-                  // }
-                  // if (i === 2 && selectorElement.id === '3b') {
-                  //    if (selectorElement.classList.contains('input')) {
-                  //       selectorElement.classList.remove('input');
-                  //    } else if (selectorElement.classList.contains('selected')) {
-                  //       selectorElement.classList.remove('selected');
-                  //    }
-                  //    selectorElement.classList.add('finished-input');
-                  // }
-                  // if (i === 3 && selectorElement.id === '4b') {
-                  //    if (selectorElement.classList.contains('input')) {
-                  //       selectorElement.classList.remove('input');
-                  //    } else if (selectorElement.classList.contains('selected')) {
-                  //       selectorElement.classList.remove('selected');
-                  //    }
-                  //    selectorElement.classList.add('finished-input');
-                  // }
-                  // if (i === 4 && selectorElement.id === '5b') {
-                  //    if (selectorElement.classList.contains('input')) {
-                  //       selectorElement.classList.remove('input');
-                  //    } else if (selectorElement.classList.contains('selected')) {
-                  //       selectorElement.classList.remove('selected');
-                  //    }
-                  //    selectorElement.classList.add('finished-input');
-                  // }
-                  // if (i === 5 && selectorElement.id === '6b') {
-                  //    if (selectorElement.classList.contains('input')) {
-                  //       selectorElement.classList.remove('input');
-                  //    } else if (selectorElement.classList.contains('selected')) {
-                  //       selectorElement.classList.remove('selected');
-                  //    }
-                  //    selectorElement.classList.add('finished-input');
-                  // }
-                  // if (i === 6 && selectorElement.id === '7b') {
-                  //    if (selectorElement.classList.contains('input')) {
-                  //       selectorElement.classList.remove('input');
-                  //    } else if (selectorElement.classList.contains('selected')) {
-                  //       selectorElement.classList.remove('selected');
-                  //    }
-                  //    selectorElement.classList.add('finished-input');
-                  // }
-                  // if (i === 7 && selectorElement.id === '8b') {
-                  //    if (selectorElement.classList.contains('input')) {
-                  //       selectorElement.classList.remove('input');
-                  //    } else if (selectorElement.classList.contains('selected')) {
-                  //       selectorElement.classList.remove('selected');
-                  //    }
-                  //    selectorElement.classList.add('finished-input');
-                  // }
-                  // if (i === 8 && selectorElement.id === '9b') {
-                  //    if (selectorElement.classList.contains('input')) {
-                  //       selectorElement.classList.remove('input');
-                  //    } else if (selectorElement.classList.contains('selected')) {
-                  //       //alert("removing Selected");
-                  //       selectorElement.classList.remove('selected');
-                  //    }
-                  //    selectorElement.classList.add('finished-input');
-                  // }
                }
             }
-            // http://stackoverflow.com/questions/38988311/angular-2-not-updating-until-any-object-is-clicked
-            this.sobotService.getRobots().then(ODataRobots => {
-               this.zone.run(() => this.sobots = ODataRobots.data);
-            });
+         }, false);
+
+         Array.prototype.forEach.call(document.getElementsByClassName('selected'), function (selectorElement) {
+            var i, tmp;
+
+            for (i = 0; i < 9; i += 1) {
+               if (numCount[i] >= 9) {
+                tmp = i + 1;
+
+                if (selectorElement.id === tmp + 'b')
+                {
+                  if (selectorElement.classList.contains('selected')) {
+                    selectorElement.classList.remove('selected');
+                  }
+
+                  selectorElement.classList.add('finished-input');
+                }
+               }
+            }
          }, false);
       };
 
