@@ -19,30 +19,16 @@ div {
    margin: 0 auto;
 }
 .ghetto-padding {
-   height: 40px;
-}
-
-.neat {
-   width: 100%;
-   /*height: 100%;*/
-   min-height: 450px;
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: center;
+   height: 20px;
 }
 
 .sidebar {
    display: flex;
    flex-wrap: nowrap;
    flex-direction: column;
+   /*position: relative;*/
    float: right;
-   margin-left: 10%;
-   justify-content: space-around;
-   min-height: 450;
-}
-
-.freak {
-   padding-top: 5%;
+   margin-right: 19%;
 }
 
 .top {
@@ -57,17 +43,20 @@ div {
    flex-direction: row;
 }
 
-.maybe {
-   margin-right: 0%;
-}
-
 #currentPuzzle {
+   /*position: relative;*/
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
-   width: 80%;
-   min-width: 450px;
+   width: 30%;
+   /*height: 600px;*/
+   float: left;
+   margin-left: 25%;
+   min-width: 350px;
+   /*padding-bottom: 5%;*/
    flex-direction: column;
+   /*flex: 1 1 auto;*/
+   /*padding-bottom:30%;*/
    background-image: url(paper.png);
 }
 
@@ -75,18 +64,21 @@ div {
    padding: 0px;
    margin: 0px;
    display: flex;
+   flex-wrap: wrap;
    flex-direction: row;
    justify-content: center;
    font-size: 250%;
-   flex: 1;
+   flex: 1 1 auto;
 }
 
 .happy div {
-   /*height: 43px;*/
+/*   width: 43px;
+   height: 43px;*/
    padding: 0px;
    margin: 0px;
    width: 10%;
-   flex: 1;
+   flex: 1 1 auto;
+   height: 100%;
 }
 
 .happy div {
@@ -113,14 +105,10 @@ div {
 }
 h1 {
    text-align: center;
-   font-size: 300%;
 }
-
-h2 {
-   text-align: center;
-   font-size: 200%;
-}
-
+/*table {
+   margin: 1em auto;
+}*/
 td {
    height: 50px;
    width: 50px;
@@ -261,7 +249,7 @@ tr:nth-child(3n) {
    background-color: #688db3;
    color: white;
 }
-#user-input-1 {
+#userinput-1 {
    background-color: #4e749a;
    color: white;
    /*width: 150px;*/
@@ -270,8 +258,8 @@ tr:nth-child(3n) {
    background-color: #5781aa;
    color: white;
    font-size: 30px;
-   width: 70px;
-   height: 70px;
+   width: 60px;
+   height: 60px;
    border-radius: 8px 8px 8px 8px;
    /*justify-content: center;*/
 }
@@ -280,15 +268,23 @@ tr:nth-child(3n) {
    /*justify-content: center;*/
    /*position: relative;*/
    margin: 0 auto;
-   padding-bottom: 10%;
 }
 .utility {
    white-space: normal;
-   /*width: 15%;*/
+   width: 15%;
    height: 40px;
    margin: 0.5%;
    color: white;
    background-color: #293e7a;
+   text-decoration: none;
+   width: 150px;
+}
+.utility-toggle {
+   white-space: normal;
+   height: 39px;
+   margin: 0.5%;
+   color: white;
+   background-color: #00A86B;
    text-decoration: none;
    width: 115px;
 }
@@ -302,16 +298,16 @@ tr:nth-child(3n) {
    background-color: #00A86B;
    color: white;
    font-size: 30px;
-   width: 69px;
-   height: 69px;
+   width: 60px;
+   height: 60px;
    border-radius: 8px 8px 8px 8px;
 }
 .finished-input {
    background-color: #A9A9A9;
    color: white;
    font-size: 30px;
-   width: 68px;
-   height: 68px;
+   width: 60px;
+   height: 60px;
    border-radius: 8px 8px 8px 8px;
 }
 .input:hover {
