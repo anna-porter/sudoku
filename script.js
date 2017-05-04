@@ -518,8 +518,9 @@ document.addEventListener('DOMContentLoaded', function () {
          }, false);
          //removeFinishedInputs();
 //alert('insideCheckforGray above finished');
-         k = Array.from(document.getElementsByClassName('finished-input'));
-         k.forEach(function (selectorElement) {
+         //k = Array.from(document.getElementsByClassName('finished-input'));
+         //k.forEach(function (selectorElement) {
+         Array.prototype.forEach.call(document.getElementsByClassName('selected'), function (selectorElement) {
             var i, tmp;
 //alert('insideCheckforGray above for');
             for (i = 0; i < 9; i += 1) {
