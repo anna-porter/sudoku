@@ -539,6 +539,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
          }, false);
       };
+
       document.querySelector('#clear').addEventListener('click', function () {
          var userInputs, userErrors;
          /*userInputs = document.querySelectorAll('#user-input');
@@ -565,6 +566,7 @@ document.addEventListener('DOMContentLoaded', function () {
          }
          
       });
+
       deleteUserInputs = function () {
          //alert('deleting');
          Array.prototype.forEach.call(document.getElementsByClassName('user-input'), function (element) {
@@ -575,6 +577,7 @@ document.addEventListener('DOMContentLoaded', function () {
             element.innerHTML = '&nbsp';
          });
       };
+
       deleteUserErrors = function () {
          Array.prototype.forEach.call(document.getElementsByClassName('user-error'), function (element) {
             element.classList.remove('user-error');
@@ -584,6 +587,7 @@ document.addEventListener('DOMContentLoaded', function () {
             element.innerHTML = '&nbsp';
          });
       };
+
       document.querySelector('#validate-always').addEventListener('click', function () {
          if (validateAsYouGo === false) {
             validateAsYouGo = true;
