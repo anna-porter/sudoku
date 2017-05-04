@@ -5,13 +5,13 @@
 // YOUR NAME(S): Anna Porter and Michael McCarver
 
 /* 
-   Validate once
+
    Solver
-   gray out buttons once nine of that number are on the page.
+   selected button does not switch to gray after 9 spaces are filled
  */
 document.addEventListener('DOMContentLoaded', function () {
    'use strict';
-   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, puzzles, h2, seconds, minutes, hours, timer, add, t;;
+   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, puzzles, h2, seconds, minutes, hours, timer, add, t;
    // Hard code 15 default puzzles
    easy1 = [[7, 9, 0, 0, 0, 0, 3, 0, 0],
             [0, 0, 0, 0, 0, 6, 9, 0, 0],
@@ -214,10 +214,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
    // Displaying the puzzle, adding event listeners to empty spaces.
    (function () {
-      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, selectedNum, checkForGrayButtons;
+      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, selectedNum, checkForGrayButtons, removeSelected, wrongCells;
       selectedNum = 1;
       sudokuValues = [];
       userInput = [];
+      wrongCells = [];
       validateAsYouGo = false;
       // Add an event listener to every difficulty button
       Array.prototype.forEach.call(document.getElementsByClassName('dropdown'), function (buttonElement) {
@@ -229,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function () {
                // TOOK EVENT OUT OF THE PARENTHESIS TO APPEASE JSLINT
                puzzleElement.onclick = function () {
                   // Try to make a puzzle appear
-                  var name, array, puzzlePlace, insidePuzzlePlace, i, j;
+                  var name, array, puzzlePlace, insidePuzzlePlace, i, j, k;
                   name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
                   array = puzzles[name];
                   puzzlePlace = document.getElementById('currentPuzzle');
@@ -249,7 +250,9 @@ document.addEventListener('DOMContentLoaded', function () {
                            sudokuValues.push(array[i][j]);
                            userInput.push(false);
                         } else {
-                           insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div class="empty-space">&nbsp</div>');
+                           //alert (j + ' * ' + 9 + ' + ' + i);
+                           k = i * 9 + j;
+                           insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div class="empty-space" id = ' + k + '>&nbsp</div>');
                            sudokuValues.push(0);
                            userInput.push(true);
                            /*insidePuzzlePlace.lastElementChild.addEventListener('click', function (emptySpace) {
@@ -316,9 +319,9 @@ document.addEventListener('DOMContentLoaded', function () {
          index -= 1;
          sudokuValues[index] = selectedNum;
          //numCount[sudokuValues[index] - 1] += 1;
-         if (validateAsYouGo) {
-            validateAlways(index, emptyCellElement);
-         }
+         //if (validateAsYouGo) {
+         validateAlways(index, emptyCellElement);
+         //}
          //checkForGrayButtons();
       };
       validateAlways = function (index, emptyCellElement) {
@@ -331,11 +334,16 @@ document.addEventListener('DOMContentLoaded', function () {
             if (index !== i) {
                if (selectedNum === sudokuValues[i]) {
                   errorFound = true;
+                  if (userInput[i]) {
+                     wrongCells.push(document.getElementById(i));
+                  }
+                  if (validateAsYouGo) {
                   //alert ('error in ' + i + ' when checking row');
-                  if (emptyCellElement.classList.contains('user-input')) {
-                     emptyCellElement.classList.remove('user-input');
-                     emptyCellElement.classList.add('user-error');
-                     //alert(errorFound);
+                     if (emptyCellElement.classList.contains('user-input')) {
+                        emptyCellElement.classList.remove('user-input');
+                        emptyCellElement.classList.add('user-error');
+                        //alert(errorFound);
+                     }
                   }
                }
             }
@@ -346,9 +354,13 @@ document.addEventListener('DOMContentLoaded', function () {
                if (selectedNum === sudokuValues[i]) {
                   //alert ('error in ' + i + ' when checking column');
                   errorFound = true;
-                  if (emptyCellElement.classList.contains('user-input')) {
-                     emptyCellElement.classList.remove('user-input');
-                     emptyCellElement.classList.add('user-error');
+                  if (validateAsYouGo) {
+                  //alert ('error in ' + i + ' when checking row');
+                     if (emptyCellElement.classList.contains('user-input')) {
+                        emptyCellElement.classList.remove('user-input');
+                        emptyCellElement.classList.add('user-error');
+                        //alert(errorFound);
+                     }
                   }
                }
             }
@@ -385,27 +397,37 @@ document.addEventListener('DOMContentLoaded', function () {
                      //alert ('error for ' + index + ' at ' + k + ' when checking 3x3');
                      //alert ('lowerI = ' + lowerI + ' upperI = ' + upperI);
                      //alert ('lowerJ = ' + lowerJ + ' upperJ = ' + upperJ);
-                     if (emptyCellElement.classList.contains('user-input')) {
-                        emptyCellElement.classList.remove('user-input');
-                        emptyCellElement.classList.add('user-error');
+                     if (validateAsYouGo) {
+                     //alert ('error in ' + i + ' when checking row');
+                        if (emptyCellElement.classList.contains('user-input')) {
+                           emptyCellElement.classList.remove('user-input');
+                           emptyCellElement.classList.add('user-error');
+                           //alert(errorFound);
+                        }
                      }
                   }
                }
             }
          }
+         if (errorFound && !validateAsYouGo) {
+            wrongCells.push(emptyCellElement);
+         }
          //alert(errorFound);
          if (!errorFound && emptyCellElement.classList.contains('user-error')) {
-
-            //alert ('no errors found');
             emptyCellElement.classList.remove('user-error');
             emptyCellElement.classList.add('user-input');
-
+            for (i = 0; i < wrongCells.length; i += 1) {
+               if (emptyCellElement.isEqualNode(wrongCells[i])) {
+                  wrongCells.splice(i, 1);
+               }
+            }
          }
       };
 
+
       checkForGrayButtons = function () {
          var numCount;
-         alert(sudokuValues);
+         //alert(sudokuValues);
          numCount = [0, 0, 0, 0, 0, 0, 0, 0, 0];
          sudokuValues.forEach(function (sudokuElement) {
             if (sudokuElement > 0) {
@@ -413,13 +435,88 @@ document.addEventListener('DOMContentLoaded', function () {
             }
          });
          numCount[selectedNum - 1] += 1;
-         alert(numCount);
-         Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement, whichButton) {
-            if (numCount[whichButton] >= 9 && selectorElement.classList.contains('input')) {
-               selectorElement.classList.remove('input');
-               selectorElement.classList.add('finished-input');
+         //alert(numCount);
+         Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement) {
+            var i;
+            //alert(document.getElementsByClassName('input'));
+            for (i = 0; i < 9; i += 1) {
+               if (numCount[i] >= 9) {
+                  if (i === 0 && selectorElement.id === '1b') {
+                     if (selectorElement.classList.contains('input')) {
+                        selectorElement.classList.remove('input');
+                     } else if (selectorElement.classList.contains('selected')) {
+                        selectorElement.classList.remove('selected');
+                     }
+                     selectorElement.classList.add('finished-input');
+                  }
+                  if (i === 1 && selectorElement.id === '2b') {
+                     if (selectorElement.classList.contains('input')) {
+                        selectorElement.classList.remove('input');
+                     } else if (selectorElement.classList.contains('selected')) {
+                        selectorElement.classList.remove('selected');
+                     }
+                     selectorElement.classList.add('finished-input');
+                  }
+                  if (i === 2 && selectorElement.id === '3b') {
+                     if (selectorElement.classList.contains('input')) {
+                        selectorElement.classList.remove('input');
+                     } else if (selectorElement.classList.contains('selected')) {
+                        selectorElement.classList.remove('selected');
+                     }
+                     selectorElement.classList.add('finished-input');
+                  }
+                  if (i === 3 && selectorElement.id === '4b') {
+                     if (selectorElement.classList.contains('input')) {
+                        selectorElement.classList.remove('input');
+                     } else if (selectorElement.classList.contains('selected')) {
+                        selectorElement.classList.remove('selected');
+                     }
+                     selectorElement.classList.add('finished-input');
+                  }
+                  if (i === 4 && selectorElement.id === '5b') {
+                     if (selectorElement.classList.contains('input')) {
+                        selectorElement.classList.remove('input');
+                     } else if (selectorElement.classList.contains('selected')) {
+                        selectorElement.classList.remove('selected');
+                     }
+                     selectorElement.classList.add('finished-input');
+                  }
+                  if (i === 5 && selectorElement.id === '6b') {
+                     if (selectorElement.classList.contains('input')) {
+                        selectorElement.classList.remove('input');
+                     } else if (selectorElement.classList.contains('selected')) {
+                        selectorElement.classList.remove('selected');
+                     }
+                     selectorElement.classList.add('finished-input');
+                  }
+                  if (i === 6 && selectorElement.id === '7b') {
+                     if (selectorElement.classList.contains('input')) {
+                        selectorElement.classList.remove('input');
+                     } else if (selectorElement.classList.contains('selected')) {
+                        selectorElement.classList.remove('selected');
+                     }
+                     selectorElement.classList.add('finished-input');
+                  }
+                  if (i === 7 && selectorElement.id === '8b') {
+                     if (selectorElement.classList.contains('input')) {
+                        selectorElement.classList.remove('input');
+                     } else if (selectorElement.classList.contains('selected')) {
+                        selectorElement.classList.remove('selected');
+                     }
+                     selectorElement.classList.add('finished-input');
+                  }
+                  if (i === 8 && selectorElement.id === '9b') {
+                     if (selectorElement.classList.contains('input')) {
+                        selectorElement.classList.remove('input');
+                     } else if (selectorElement.classList.contains('selected')) {
+                        alert("removing Selected");
+                        selectorElement.classList.remove('selected');
+                     }
+                     selectorElement.classList.add('finished-input');
+                  }
+               }
             }
-         }, false);            
+         }, false);
       };
       document.querySelector('#validate-always').addEventListener('click', function () {
          if (validateAsYouGo === false) {
@@ -428,11 +525,35 @@ document.addEventListener('DOMContentLoaded', function () {
             validateAsYouGo = false;
          }
       });
+      document.querySelector('#validate-once').addEventListener('click', function () {
+         wrongCells.forEach(function (element) {
+            if (element.classList.contains('user-input')) {
+               element.classList.remove('user-input');
+               element.classList.add('user-error');
+               //alert(errorFound);
+            }
+         });
+      });
+
       Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement, whichButton) {
          selectorElement.addEventListener('click', function () {
+            //alert('a');
+            removeSelected();
             selectedNum = whichButton + 1;
+            if (selectorElement.classList.contains('input')) {
+               selectorElement.classList.remove('input');
+               selectorElement.classList.add('selected');
+            }
          }, false);
+         
       });
+      removeSelected = function () {
+         //alert('removeSel');
+         Array.prototype.forEach.call(document.getElementsByClassName('selected'), function (selectorElem) {
+            selectorElem.classList.remove('selected');
+            selectorElem.classList.add('input');
+         });
+      };
       window.onclick = function (event) {
          Array.prototype.forEach.call(document.getElementsByClassName("dropdown-content"), function (dropdownElement) {
             if (dropdownElement.parentNode.id !== event.target.parentNode.id) {
