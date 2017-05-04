@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
    // Displaying the puzzle, adding event listeners to empty spaces.
    (function () {
-      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle, deleteUserInputs, deleteUserErrors;
+      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle, deleteUserInputs, deleteUserErrors, removeFinishedInputs;
       // Default the selectedNum to be placed in the cells next to one.
       selectedNum = 1;
       // Initialize some arrays
@@ -461,23 +461,22 @@ document.addEventListener('DOMContentLoaded', function () {
                numCount[sudokuElement - 1] += 1;
             }
          });
-         numCount[selectedNum - 1] += 1;
+         //numCount[selectedNum - 1] += 1;
 
          Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement) {
             var i, tmp;
 
             for (i = 0; i < 9; i += 1) {
                if (numCount[i] >= 9) {
-                tmp = i + 1;
+                  tmp = i + 1;
 
-                if (selectorElement.id === tmp + 'b')
-                {
-                  if (selectorElement.classList.contains('input')) {
-                    selectorElement.classList.remove('input');
+                  if (selectorElement.id === tmp + 'b') {
+                     if (selectorElement.classList.contains('input')) {
+                        selectorElement.classList.remove('input');
+                     }
+
+                     selectorElement.classList.add('finished-input');
                   }
-
-                  selectorElement.classList.add('finished-input');
-                }
                }
             }
          }, false);
@@ -487,41 +486,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
             for (i = 0; i < 9; i += 1) {
                if (numCount[i] >= 9) {
-                tmp = i + 1;
+                  tmp = i + 1;
+                  if (selectorElement.id === tmp + 'b') {
+                     if (selectorElement.classList.contains('selected')) {
+                        selectorElement.classList.remove('selected');
+                     }
 
-                if (selectorElement.id === tmp + 'b')
-                {
-                  if (selectorElement.classList.contains('selected')) {
-                    selectorElement.classList.remove('selected');
+                     selectorElement.classList.add('finished-input');
                   }
-
-                  selectorElement.classList.add('finished-input');
-                }
                }
             }
          }, false);
 
-          Array.prototype.forEach.call(document.getElementsByClassName('finished-input'), function (selectorElement) {
+         Array.prototype.forEach.call(document.getElementsByClassName('finished-input'), function (selectorElement) {
             var i, tmp;
 
             for (i = 0; i < 9; i += 1) {
                if (numCount[i] < 9) {
-                tmp = i + 1;
+                  tmp = i + 1;
 
-                if (selectorElement.id === tmp + 'b')
-                {
-                  if (selectorElement.classList.contains('finished-input')) {
-                    selectorElement.classList.remove('finished-input');
+                  if (selectorElement.id === tmp + 'b') {
+                     if (selectorElement.classList.contains('finished-input')) {
+                        selectorElement.classList.remove('finished-input');
+                     }
+                     //alert(numCount[i]);
+                     selectorElement.classList.add('input');
                   }
-
-                  selectorElement.classList.add('input');
-                }
                }
             }
          }, false);
       };
       document.querySelector('#clear').addEventListener('click', function () {
-         var userInputs, userErrors;
+         var userInputs, userErrors, oneButton, finishedInputs;
          /*userInputs = document.querySelectorAll('#user-input');
          userInputs.forEach(function (element) {
             element.classList.remove('user-input');
@@ -544,16 +540,30 @@ document.addEventListener('DOMContentLoaded', function () {
             deleteUserErrors();
             userErrors = Array.from(document.getElementsByClassName('user-errorr'));
          }
-
+         removeSelected();
+         finishedInputs = Array.from(document.getElementsByClassName('finished-input'));
+         while (finishedInputs.length > 0) {
+            removeFinishedInputs();
+            finishedInputs = Array.from(document.getElementsByClassName('finished-input'));
+         }
+         selectedNum = 1;
+         oneButton = document.getElementsByClassName('input')[0];
+         oneButton.classList.remove('input');
+         oneButton.classList.add('selected');
       });
-
+      removeFinishedInputs = function () {
+         Array.prototype.forEach.call(document.getElementsByClassName('finished-input'), function (element) {
+            if (element.classList.contains('finished-input')) {
+               element.classList.remove('finished-input');
+               element.classList.add('input');
+            }
+         });
+      };
       deleteUserInputs = function () {
          //alert('deleting');
          Array.prototype.forEach.call(document.getElementsByClassName('user-input'), function (element) {
             element.classList.remove('user-input');
             element.classList.add('empty-space');
-            //element.html('&nbsp');
-            //element.textContent = ""
             element.innerHTML = '&nbsp';
          });
       };
@@ -569,9 +579,15 @@ document.addEventListener('DOMContentLoaded', function () {
       };
 
       document.querySelector('#validate-always').addEventListener('click', function () {
+         var element;		
+         element = document.getElementById('validate-always');
          if (validateAsYouGo === false) {
+            element.classList.remove('utility');
+            element.classList.add('utility-toggle');
             validateAsYouGo = true;
          } else {
+            element.classList.remove('utility-toggle');		            validateAsYouGo = false;
+            element.classList.add('utility');
             validateAsYouGo = false;
          }
       });
@@ -596,6 +612,13 @@ document.addEventListener('DOMContentLoaded', function () {
          }, false);
 
       });
+      (function () {
+         var oneButton;
+         selectedNum = 1;
+         oneButton = document.getElementsByClassName('input')[0];
+         oneButton.classList.remove('input');
+         oneButton.classList.add('selected');
+      }());
       removeSelected = function () {
          //alert('removeSel');
          Array.prototype.forEach.call(document.getElementsByClassName('selected'), function (selectorElem) {
