@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function () {
                // select rowi
                insidePuzzlePlace = puzzlePlace.querySelector('#row' + i);
                //insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + name + ' ' + i + ',' + j +'</div>');
-               // If the array has a value here, 
+               // If the array has a value here,
                if (array[i][j] !== 0) {
                   // Insert that value inside of the div.
                   insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + array[i][j] + '</div>');
@@ -496,6 +496,25 @@ document.addEventListener('DOMContentLoaded', function () {
                   }
 
                   selectorElement.classList.add('finished-input');
+                }
+               }
+            }
+         }, false);
+
+          Array.prototype.forEach.call(document.getElementsByClassName('finished-input'), function (selectorElement) {
+            var i, tmp;
+
+            for (i = 0; i < 9; i += 1) {
+               if (numCount[i] < 9) {
+                tmp = i + 1;
+
+                if (selectorElement.id === tmp + 'b')
+                {
+                  if (selectorElement.classList.contains('finished-input')) {
+                    selectorElement.classList.remove('finished-input');
+                  }
+
+                  selectorElement.classList.add('input');
                 }
                }
             }
