@@ -257,6 +257,28 @@ tr:nth-child(3n) {
    text-decoration: none;
    width: 125px;
 }
+.user-input {
+   color: #4e749a;
+}
+.user-error {
+   color: red;
+}
+.selected {
+   background-color: #00A86B;
+   color: white;
+   font-size: 30px;
+   width: 60px;
+   height: 60px;
+   border-radius: 8px 8px 8px 8px;
+}
+.finished-input {
+   background-color: #A9A9A9;
+   color: white;
+   font-size: 30px;
+   width: 60px;
+   height: 60px;
+   border-radius: 8px 8px 8px 8px;
+}
 .input:hover {
    background-color: #688db3;
 }
