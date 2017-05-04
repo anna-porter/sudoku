@@ -257,11 +257,18 @@ document.addEventListener('DOMContentLoaded', function () {
          }, false);
       });
 
+      /*(function () {
+         var puzzleElement, whichPuzzle;
+         puzzleElement = document.getElementByClassName('puzzle-select');
+         whichPuzzle = 0;
+         displayPuzzle(puzzleElement, whichPuzzle);
+      }());*/
       displayPuzzle = function (puzzleElement, whichPuzzle) {
          // Try to make a puzzle appear
          var name, array, puzzlePlace, insidePuzzlePlace, i, j, k;
          // The name is the parent's parent's id, converted to a string with the number of whichPuzzle
          name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
+         //document.querySelector('#which-puzzle').textContent = name;
          // The array is stored as a property of puzzles
          array = puzzles[name];
          // Get the current puzzle element.
@@ -579,14 +586,15 @@ document.addEventListener('DOMContentLoaded', function () {
       };
 
       document.querySelector('#validate-always').addEventListener('click', function () {
-         var element;		
+         var element;
          element = document.getElementById('validate-always');
          if (validateAsYouGo === false) {
             element.classList.remove('utility');
             element.classList.add('utility-toggle');
             validateAsYouGo = true;
          } else {
-            element.classList.remove('utility-toggle');		            validateAsYouGo = false;
+            element.classList.remove('utility-toggle');
+            validateAsYouGo = false;
             element.classList.add('utility');
             validateAsYouGo = false;
          }
