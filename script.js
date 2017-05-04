@@ -4,14 +4,14 @@
 // Final Project: Sudoku Puzzles
 // YOUR NAME(S): Anna Porter and Michael McCarver
 
-/* 
+/*
 
    Solver
    selected button does not switch to gray after 9 spaces are filled
  */
 document.addEventListener('DOMContentLoaded', function () {
    'use strict';
-   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, userPuzzle, puzzles, h2, seconds, minutes, hours, timer, add, t;
+   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, puzzles, h2, seconds, minutes, hours, timer, add, t;
    // Hard code 15 default puzzles
    easy1 = [[7, 9, 0, 0, 0, 0, 3, 0, 0],
             [0, 0, 0, 0, 0, 6, 9, 0, 0],
@@ -163,15 +163,6 @@ document.addEventListener('DOMContentLoaded', function () {
                  [0, 0, 0, 2, 6, 0, 5, 0, 7],
                  [0, 6, 0, 0, 8, 0, 0, 0, 3]];
                  //https://www.sudoku.ws/extreme-3.html
-   userPuzzle = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0]];
    // Timer function.
    (function () {
       // The timer won't run when I put its variables in here
@@ -219,11 +210,11 @@ document.addEventListener('DOMContentLoaded', function () {
          timer();
       };
    }());
-   puzzles = {easy0: easy1, easy1: easy2, easy2: easy3, medium0: medium1, medium1: medium2, medium2: medium3, hard0: hard1, hard1: hard2, hard2: hard3, fiendish0: fiendish1, fiendish1: fiendish2, fiendish2: fiendish3, nightmare0: nightmare1, nightmare1: nightmare2, nightmare2: nightmare3, userPuzzle: userPuzzle};
+   puzzles = {easy0: easy1, easy1: easy2, easy2: easy3, medium0: medium1, medium1: medium2, medium2: medium3, hard0: hard1, hard1: hard2, hard2: hard3, fiendish0: fiendish1, fiendish1: fiendish2, fiendish2: fiendish3, nightmare0: nightmare1, nightmare1: nightmare2, nightmare2: nightmare3};
 
    // Displaying the puzzle, adding event listeners to empty spaces.
    (function () {
-      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, selectedNum, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle;
+      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, selectedNum, checkForGrayButtons, removeSelected, wrongCells;
       selectedNum = 1;
       sudokuValues = [];
       userInput = [];
@@ -238,58 +229,56 @@ document.addEventListener('DOMContentLoaded', function () {
             Array.prototype.forEach.call(buttonElement.getElementsByClassName('puzzle-select'), function (puzzleElement, whichPuzzle) {
                // TOOK EVENT OUT OF THE PARENTHESIS TO APPEASE JSLINT
                puzzleElement.onclick = function () {
-                  displayPuzzle(puzzleElement, whichPuzzle);
+                  // Try to make a puzzle appear
+                  var name, array, puzzlePlace, insidePuzzlePlace, i, j, k;
+                  name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
+                  array = puzzles[name];
+                  puzzlePlace = document.getElementById('currentPuzzle');
+
+                  while (puzzlePlace.hasChildNodes()) {
+                     puzzlePlace.removeChild(puzzlePlace.firstChild);
+                  }
+
+                  sudokuValues = []; // reset the values
+                  for (i = 0; i < 9; i += 1) {
+                     puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row' + i + '" class="happy">');
+                     for (j = 0; j < 9; j += 1) {
+                        insidePuzzlePlace = puzzlePlace.querySelector('#row' + i);
+                        //insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + name + ' ' + i + ',' + j +'</div>');
+                        if (array[i][j] !== 0) {
+                           insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + array[i][j] + '</div>');
+                           sudokuValues.push(array[i][j]);
+                           userInput.push(false);
+                        } else {
+                           //alert (j + ' * ' + 9 + ' + ' + i);
+                           k = i * 9 + j;
+                           insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div class="empty-space" id = ' + k + '>&nbsp</div>');
+                           sudokuValues.push(0);
+                           userInput.push(true);
+                           /*insidePuzzlePlace.lastElementChild.addEventListener('click', function (emptySpace) {
+                              emptySpace.textContent = selectedNum;
+                              if (emptySpace.classList.contains('empty-space')) {
+                                 emptySpace.classList.remove('empty-space');
+                                 emptySpace.classList.add('user-input');
+                              }
+                           }, false);*/
+                           //insidePuzzlePlace.getElementByID('empty-space').innerHTML = i;
+                        }
+                     }
+                     puzzlePlace.insertAdjacentHTML('beforeend', '</div>');
+                  }
+                  addEventListeners();
+                  clearTimeout(t);
+                  h2.textContent = '00:00:00';
+                  seconds = 0;
+                  minutes = 0;
+                  hours = 0;
+                  t = timer();
                };
+
             });
          }, false);
       });
-
-      displayPuzzle = function (puzzleElement, whichPuzzle) {
-         // Try to make a puzzle appear
-         var name, array, puzzlePlace, insidePuzzlePlace, i, j, k;
-         name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
-         //alert(whichPuzzle);
-         array = puzzles[name];
-         puzzlePlace = document.getElementById('currentPuzzle');
-         while (puzzlePlace.hasChildNodes()) {
-            puzzlePlace.removeChild(puzzlePlace.firstChild);
-         }
-         sudokuValues = []; // reset the values
-         for (i = 0; i < 9; i += 1) {
-            puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row' + i + '" class="happy">');
-            for (j = 0; j < 9; j += 1) {
-               insidePuzzlePlace = puzzlePlace.querySelector('#row' + i);
-               //insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + name + ' ' + i + ',' + j +'</div>');
-               if (array[i][j] !== 0) {
-                  insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + array[i][j] + '</div>');
-                  sudokuValues.push(array[i][j]);
-                  userInput.push(false);
-               } else {
-                  //alert (j + ' * ' + 9 + ' + ' + i);
-                  k = i * 9 + j;
-                  insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div class="empty-space" id = ' + k + '>&nbsp</div>');
-                  sudokuValues.push(0);
-                  userInput.push(true);
-                  /*insidePuzzlePlace.lastElementChild.addEventListener('click', function (emptySpace) {
-                  emptySpace.textContent = selectedNum;
-                  if (emptySpace.classList.contains('empty-space')) {
-                     emptySpace.classList.remove('empty-space');
-                     emptySpace.classList.add('user-input');
-                  }
-                  }, false);*/
-                  //insidePuzzlePlace.getElementByID('empty-space').innerHTML = i;
-               }
-            }
-            puzzlePlace.insertAdjacentHTML('beforeend', '</div>');
-         }
-         addEventListeners();
-         clearTimeout(t);
-         h2.textContent = '00:00:00';
-         seconds = 0;
-         minutes = 0;
-         hours = 0;
-         t = timer();
-      };
 
       addEventListeners = function () {
          var emptyCells = document.querySelectorAll('div.empty-space');
@@ -556,7 +545,7 @@ document.addEventListener('DOMContentLoaded', function () {
                selectorElement.classList.add('selected');
             }
          }, false);
-         
+
       });
       removeSelected = function () {
          //alert('removeSel');

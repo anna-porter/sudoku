@@ -1,5 +1,3 @@
-@charset "UTF-8";
-@import url(http://fonts.googleapis.com/css?family=Poiret+One);
 /*
 CS 3312, spring 2017
 Final Project
@@ -25,13 +23,26 @@ div {
 }
 
 .sidebar {
-/*   display: flex;
+   display: flex;
    flex-wrap: nowrap;
    flex-direction: column;
-   position: relative;
-   float: right;*/
-   /*margin-right: 19%;*/
+   /*position: relative;*/
+   float: right;
+   margin-right: 19%;
 }
+
+.top {
+   display: flex;
+   flex-wrap: nowrap;
+   flex-direction: row;
+}
+
+.bottom {
+   display: flex;
+   flex-wrap: nowrap;
+   flex-direction: row;
+}
+
 #currentPuzzle {
    /*position: relative;*/
    display: flex;
