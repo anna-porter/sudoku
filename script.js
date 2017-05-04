@@ -233,10 +233,13 @@ document.addEventListener('DOMContentLoaded', function () {
    // Displaying the puzzle, adding event listeners to empty spaces.
    (function () {
       var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle, deleteUserInputs, deleteUserErrors;
+      // Default the selectedNum to be placed in the cells next to one.
       selectedNum = 1;
+      // Initialize some arrays
       sudokuValues = [];
       userInput = [];
       wrongCells = [];
+      // By default, do not validate as you input numbers
       validateAsYouGo = false;
       // Add an event listener to every difficulty button
       Array.prototype.forEach.call(document.getElementsByClassName('dropdown'), function (buttonElement) {
@@ -247,6 +250,7 @@ document.addEventListener('DOMContentLoaded', function () {
             Array.prototype.forEach.call(buttonElement.getElementsByClassName('puzzle-select'), function (puzzleElement, whichPuzzle) {
                // TOOK EVENT OUT OF THE PARENTHESIS TO APPEASE JSLINT
                puzzleElement.onclick = function () {
+                  // Call displayPuzzle
                   displayPuzzle(puzzleElement, whichPuzzle);
                };
             });
@@ -256,43 +260,50 @@ document.addEventListener('DOMContentLoaded', function () {
       displayPuzzle = function (puzzleElement, whichPuzzle) {
          // Try to make a puzzle appear
          var name, array, puzzlePlace, insidePuzzlePlace, i, j, k;
+         // The name is the parent's parent's id, converted to a string with the number of whichPuzzle
          name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
-         //alert(name);
-         //alert(whichPuzzle);
+         // The array is stored as a property of puzzles
          array = puzzles[name];
+         // Get the current puzzle element.
          puzzlePlace = document.getElementById('currentPuzzle');
+         // If anything exists here, delete it.
          while (puzzlePlace.hasChildNodes()) {
             puzzlePlace.removeChild(puzzlePlace.firstChild);
          }
          sudokuValues = []; // reset the values
+         // For every cell,
          for (i = 0; i < 9; i += 1) {
+            // Insert a div with id row and class happy
             puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row' + i + '" class="happy">');
             for (j = 0; j < 9; j += 1) {
+               // select rowi
                insidePuzzlePlace = puzzlePlace.querySelector('#row' + i);
                //insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + name + ' ' + i + ',' + j +'</div>');
+               // If the array has a value here, 
                if (array[i][j] !== 0) {
+                  // Insert that value inside of the div.
                   insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div>' + array[i][j] + '</div>');
+                  // push this value onto the array for future use,
                   sudokuValues.push(array[i][j]);
+                  // Push false onto the userInput array to signify this cell as a value of the original puzzle
                   userInput.push(false);
                } else {
-                  //alert (j + ' * ' + 9 + ' + ' + i);
+                  // k is the raw index number. something from 0 to 80
                   k = i * 9 + j;
+                  // create an empty space, and give it the id of its index.
                   insidePuzzlePlace.insertAdjacentHTML('beforeend', '<div class="empty-space" id = ' + k + '>&nbsp</div>');
+                  // push 0 onto the values to represent an empty cell.
                   sudokuValues.push(0);
+                  // push true, to signify this cell can be edited.
                   userInput.push(true);
-                  /*insidePuzzlePlace.lastElementChild.addEventListener('click', function (emptySpace) {
-                  emptySpace.textContent = selectedNum;
-                  if (emptySpace.classList.contains('empty-space')) {
-                     emptySpace.classList.remove('empty-space');
-                     emptySpace.classList.add('user-input');
-                  }
-                  }, false);*/
-                  //insidePuzzlePlace.getElementByID('empty-space').innerHTML = i;
                }
             }
+            // close off the row div.
             puzzlePlace.insertAdjacentHTML('beforeend', '</div>');
          }
+         // Add event listeners to every empty cell.
          addEventListeners();
+         // Timer stuff
          clearTimeout(t);
          h2.textContent = '00:00:00';
          seconds = 0;
@@ -302,16 +313,20 @@ document.addEventListener('DOMContentLoaded', function () {
       };
 
       addEventListeners = function () {
+         // get every empty div and for each of them, add a click event listener
          var emptyCells = document.querySelectorAll('div.empty-space');
          emptyCells.forEach(function (emptyCellElement, whichBlank) {
             emptyCellElement.addEventListener('click', function () {
-               //var i;
+               // once clicked, the cell should contain the selected number
                emptyCellElement.textContent = selectedNum;
+               // It is no longer an empty space, but a space where the user has inputted.
                if (emptyCellElement.classList.contains('empty-space')) {
                   emptyCellElement.classList.remove('empty-space');
                   emptyCellElement.classList.add('user-input');
                }
+               // Update the values of the array
                updateValues(whichBlank, emptyCellElement);
+               // And check to see if any numbers have reached their maximum occurances.
                checkForGrayButtons();
             }, false);
          });
@@ -325,13 +340,8 @@ document.addEventListener('DOMContentLoaded', function () {
          sudokuValues.forEach(function () {
             if (whichBlankCopy >= 0) {
                if (sudokuValues[index] > 0 && !userInput[index]) {
-                  //alert(sudokuValues[index] + ' at ' + index);
-                  //alert('numCount of ' + sudokuValues[index] + '+= 1');
-                  //numCount[sudokuValues[index] - 1] += 1;
                   index += 1;
                } else {
-                  //alert(sudokuValues[index] + ' at ' + index);
-                  //alert(whichBlankCopy + ' = whichBlank');
                   index += 1;
                   whichBlankCopy -= 1;
                }
@@ -339,11 +349,7 @@ document.addEventListener('DOMContentLoaded', function () {
          });
          index -= 1;
          sudokuValues[index] = selectedNum;
-         //numCount[sudokuValues[index] - 1] += 1;
-         //if (validateAsYouGo) {
          validateAlways(index, emptyCellElement);
-         //}
-         //checkForGrayButtons();
       };
       validateAlways = function (index, emptyCellElement) {
          var row, column, i, j, k, lowerI, upperI, lowerJ, upperJ, errorFound;
@@ -495,7 +501,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
          }, false);
       };
-
       document.querySelector('#clear').addEventListener('click', function () {
          var userInputs, userErrors;
          /*userInputs = document.querySelectorAll('#user-input');
