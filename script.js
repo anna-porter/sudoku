@@ -254,6 +254,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Add an event listener to every difficulty button
       Array.prototype.forEach.call(document.getElementsByClassName('dropdown'), function (buttonElement) {
+
          // When the button is clicked, show the buttons underneath it
          buttonElement.addEventListener('click', function () {
             buttonElement.querySelector('#my-dropdown').classList.toggle('show');
@@ -373,6 +374,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }, false);
          });
       };
+
+      // Initialize board?
+      displayPuzzle(document.querySelector('#easy-1'), 0);
 
       updateValues = function (whichBlank, emptyCellElement) {
          var index, whichBlankCopy;
@@ -589,7 +593,6 @@ document.addEventListener('DOMContentLoaded', function () {
       document.querySelector('#clear').addEventListener('click', function () {
          var userInputs, userErrors, oneButton, finishedInputs;
 
-         //userInputs = document.getElementsByClassName('user-input');
          displayPuzzle(currentPuzzle[0], currentPuzzle[1]);
 
          userInputs = Array.from(document.getElementsByClassName('user-input'));
@@ -707,7 +710,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             element.classList.add('empty-space');
 
-            element.innerHTML = '&nbsp';
+            element.innerHTML = '&nbsp;';
          });
       };
 
