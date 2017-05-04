@@ -257,18 +257,31 @@ document.addEventListener('DOMContentLoaded', function () {
          }, false);
       });
 
+      /*var a = document.getElementsByClassName('puzzle-select')[0];
+      var evnt = a["onclick"];
+
+      if (typeof(evnt) == "function") {
+         evnt.call(a);
+      }*/
+      /*var elem = document.getElementsByClassName('puzzle-select')[0];
+      if (typeof elem.onclick == "function") {
+          elem.onclick.apply(elem);
+      }*/
       /*(function () {
          var puzzleElement, whichPuzzle;
          puzzleElement = document.getElementByClassName('puzzle-select');
          whichPuzzle = 0;
+         alert(puzzleElement);
          displayPuzzle(puzzleElement, whichPuzzle);
       }());*/
+
       displayPuzzle = function (puzzleElement, whichPuzzle) {
          // Try to make a puzzle appear
-         var name, array, puzzlePlace, insidePuzzlePlace, i, j, k;
+         var name, display, array, puzzlePlace, insidePuzzlePlace, i, j, k;
          // The name is the parent's parent's id, converted to a string with the number of whichPuzzle
          name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
-         //document.querySelector('#which-puzzle').textContent = name;
+         display = puzzleElement.parentNode.parentNode.id.toString() + ' ' + (whichPuzzle + 1);
+         document.getElementById('which-puzzle').textContent = display;
          // The array is stored as a property of puzzles
          array = puzzles[name];
          // Get the current puzzle element.
@@ -535,7 +548,7 @@ document.addEventListener('DOMContentLoaded', function () {
          });*/
          //userInputs = document.getElementsByClassName('user-input');
          userInputs = Array.from(document.getElementsByClassName('user-input'));
-         //alert(userInputs.length);
+         alert(userInputs.length);
          while (userInputs.length > 0) {
             //alert('callingDeleteInputs');
             deleteUserInputs();
@@ -557,6 +570,7 @@ document.addEventListener('DOMContentLoaded', function () {
          oneButton = document.getElementsByClassName('input')[0];
          oneButton.classList.remove('input');
          oneButton.classList.add('selected');
+         checkForGrayButtons();
       });
       removeFinishedInputs = function () {
          Array.prototype.forEach.call(document.getElementsByClassName('finished-input'), function (element) {
@@ -585,20 +599,38 @@ document.addEventListener('DOMContentLoaded', function () {
          });
       };
 
-      document.querySelector('#validate-always').addEventListener('click', function () {
+            document.querySelector('#validate-always').addEventListener('click', function () {
          var element;
          element = document.getElementById('validate-always');
          if (validateAsYouGo === false) {
             element.classList.remove('utility');
             element.classList.add('utility-toggle');
+
             validateAsYouGo = true;
+
+            wrongCells.forEach(function (element) {
+            if (element.classList.contains('user-input')) {
+               element.classList.remove('user-input');
+               element.classList.add('user-error');
+            }
+         });
+
          } else {
             element.classList.remove('utility-toggle');
-            validateAsYouGo = false;
             element.classList.add('utility');
+
             validateAsYouGo = false;
+
+            resetUserError();
          }
       });
+
+      resetUserError = function () {
+        document.querySelectorAll('.user-error').forEach(function (element) {
+          element.classList.remove('user-error');
+          element.classList.add('user-input');
+        })
+      };
       document.querySelector('#validate-once').addEventListener('click', function () {
          wrongCells.forEach(function (element) {
             if (element.classList.contains('user-input')) {
