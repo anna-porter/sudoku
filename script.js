@@ -11,7 +11,7 @@
  */
 document.addEventListener('DOMContentLoaded', function () {
    'use strict';
-   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, userPuzzle1, puzzles, h2, seconds, minutes, hours, timer, add, t;
+   var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, userPuzzle1, userPuzzle2, puzzles, h2, seconds, minutes, hours, timer, add, t, selectedNum;
    // Hard code 15 default puzzles
    easy1 = [[7, 9, 0, 0, 0, 0, 3, 0, 0],
             [0, 0, 0, 0, 0, 6, 9, 0, 0],
@@ -172,6 +172,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+   userPuzzle2 = [[7, 9, 0, 0, 0, 0, 3, 0, 0],
+            [0, 0, 0, 0, 0, 6, 9, 0, 0],
+            [8, 0, 0, 0, 3, 0, 0, 7, 6],
+            [0, 0, 0, 0, 0, 5, 0, 0, 2],
+            [0, 0, 5, 4, 1, 8, 7, 0, 0],
+            [4, 0, 0, 7, 0, 0, 0, 0, 0],
+            [6, 1, 0, 0, 9, 0, 0, 0, 8],
+            [0, 0, 2, 3, 0, 0, 0, 0, 0],
+            [0, 0, 9, 0, 0, 0, 0, 5, 4]];
    // Timer function.
    (function () {
       // The timer won't run when I put its variables in here
@@ -219,11 +228,11 @@ document.addEventListener('DOMContentLoaded', function () {
          timer();
       };
    }());
-   puzzles = {easy0: easy1, easy1: easy2, easy2: easy3, medium0: medium1, medium1: medium2, medium2: medium3, hard0: hard1, hard1: hard2, hard2: hard3, fiendish0: fiendish1, fiendish1: fiendish2, fiendish2: fiendish3, nightmare0: nightmare1, nightmare1: nightmare2, nightmare2: nightmare3, userPuzzle0: userPuzzle1};
+   puzzles = {easy0: easy1, easy1: easy2, easy2: easy3, medium0: medium1, medium1: medium2, medium2: medium3, hard0: hard1, hard1: hard2, hard2: hard3, fiendish0: fiendish1, fiendish1: fiendish2, fiendish2: fiendish3, nightmare0: nightmare1, nightmare1: nightmare2, nightmare2: nightmare3, userPuzzle0: userPuzzle1, userPuzzle1: userPuzzle2};
 
    // Displaying the puzzle, adding event listeners to empty spaces.
    (function () {
-      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, selectedNum, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle;
+      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle;
       selectedNum = 1;
       sudokuValues = [];
       userInput = [];
@@ -546,10 +555,30 @@ document.addEventListener('DOMContentLoaded', function () {
             }
          });
       });
+      Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement, whichButton) {
+         selectorElement.addEventListener('click', function () {
+            //alert('a');
+            removeSelected();
+            selectedNum = whichButton + 1;
+            if (selectorElement.classList.contains('input')) {
+               selectorElement.classList.remove('input');
+               selectorElement.classList.add('selected');
+            }
+         }, false);
 
+      });
+      removeSelected = function () {
+         //alert('removeSel');
+         Array.prototype.forEach.call(document.getElementsByClassName('selected'), function (selectorElem) {
+            selectorElem.classList.remove('selected');
+            selectorElem.classList.add('input');
+         });
+      };
+   }());
+   (function () {
       document.querySelector('#solve').addEventListener('click', function () {
          //alert('inside solve');
-         var kids, parents, solverValues, rows, i, solveSudoku, checkRow, checkCol, check3x3, findEmptySpace, isCellSafe, displaySolution;
+         var kids, parents, solverValues, rows, i, solveSudoku, checkRow, checkCol, check3x3, findEmptySpace, isCellSafe, displaySolution, testing, totalKids, rose;
          /*kids = Array.prototype.slice.call(children);
          alert(kids[0]);
          kids.forEach.call(children, function (child) {
@@ -559,43 +588,63 @@ document.addEventListener('DOMContentLoaded', function () {
          solverValues = [];
          rows = [];
          i = 0;
+         testing = 0
+         totalKids = 0;
          parents = document.querySelectorAll('div.happy');
          //alert(parents);
          parents.forEach(function (parentNode) {
             kids = parentNode.children;
             //alert(kids);
+            //totalKids += kids.length;
             kids = Array.from(kids);
+            totalKids += kids.length;
+
             kids.forEach(function (childNode) {
                //alert(childNode.textContent);
                //alert(childNode.textContent.length);
-               if (i < 9) {
-                  if (childNode.textContent === '1' || childNode.textContent === '2' || childNode.textContent === '3' || childNode.textContent === '4' || childNode.textContent === '5' || childNode.textContent === '6' || childNode.textContent === '7' || childNode.textContent === '8' || childNode.textContent === '9') {
+               //if (i < 9) {
+                  if (childNode.textContent === '1' || childNode.textContent === '2' || childNode.textContent === '3' || childNode.textContent === '4' || childNode.textContent === '5' || childNode.textContent === '6' || childNode.textContent === '7' || childNode.textContent === '8' || childNode.textContent === '9') { 
+                  //if (typeof parseInt(childNode.textContent) === 'number' ){
                      rows.push(childNode.textContent);
-                     //alert(row);
+                     //alert(rows);
                      i += 1;
+                     testing += 1;
                   } else {
                      //alert('pushing 0');
-                     rows.push(0);
+                     rows.push('0');
                      i += 1;
+                     testing += 1;
                   }
-               } else {
+               /*} else {
                   //alert(row);
                   solverValues.push(rows);
                   rows = [];
                   i = 0;
-               }
+               }*/
             });
-            alert('calling Solver');
-            solveSudoku(solverValues);
-            alert(solverValues);
          });
-         solveSudoku = function (solverValues) {
+         //rose = [];
+         for (i = 0; i < 9; i += 1) {
+            rose = rows.slice(i * 9, (i + 1) * 9);
+            solverValues.push(rose);
+         }
+         //alert(rose);
+         //alert(solverValues);
+         //alert('calling Solver');
+         alert(solveSudoku(solverValues));
+         alert(solverValues);
+//         alert(totalKids);
+  //       alert(testing);
+    //     alert(solverValues);
+         //alert(solverValues);
+         /*solveSudoku = function (solverValues) {
             var emptyCell, row, column, numberToTry;
-            emptyCell = findEmptySpace(solverValues, row, column);
+            
+            emptyCell = findEmptySpace(solverValues, 0, 0);
             row = emptyCell[0];
             column = emptyCell[1];
             // base case: if no empty cell  
-            if (row === -1) {
+            if (row === -10) {
                return true;
             }
 
@@ -673,28 +722,8 @@ document.addEventListener('DOMContentLoaded', function () {
                }
             }
             return true;
-         };
+         };*/
       });
-
-      Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement, whichButton) {
-         selectorElement.addEventListener('click', function () {
-            //alert('a');
-            removeSelected();
-            selectedNum = whichButton + 1;
-            if (selectorElement.classList.contains('input')) {
-               selectorElement.classList.remove('input');
-               selectorElement.classList.add('selected');
-            }
-         }, false);
-
-      });
-      removeSelected = function () {
-         //alert('removeSel');
-         Array.prototype.forEach.call(document.getElementsByClassName('selected'), function (selectorElem) {
-            selectorElem.classList.remove('selected');
-            selectorElem.classList.add('input');
-         });
-      };
       window.onclick = function (event) {
          Array.prototype.forEach.call(document.getElementsByClassName("dropdown-content"), function (dropdownElement) {
             if (dropdownElement.parentNode.id !== event.target.parentNode.id) {
