@@ -24,18 +24,10 @@ div {
    height: 20px;
 }
 
-.visual {
-   position: absolute;
-   width: 90%;
-   /*margin: 5%;*/
-   display: flex;
-   /*flex-wrap: wrap;*/
-}
 
 .sidebar {
    float: right;
-   /*margin-right: 19%;*/
-   justify-content: center;
+   margin-right: 19%;
 }
 #currentPuzzle {
    /*position: relative;*/
