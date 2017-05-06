@@ -35,7 +35,7 @@ div {
    flex-wrap: nowrap;
    flex-direction: column;
    float: right;
-   margin-left: 10%;
+   margin-left: 5%;
    justify-content: space-around;
    min-height: 450px;
 }
@@ -64,7 +64,7 @@ div {
    width: 30%;
    /*height: 600px;*/
    float: left;
-   margin-left: 25%;
+   /*margin-left: 25%;*/
    min-width: 450px;
    /*padding-bottom: 5%;*/
    flex-direction: column;
