@@ -386,29 +386,31 @@ document.addEventListener('DOMContentLoaded', function () {
       updateValues = function (whichBlank, emptyCellElement) {
          var index, whichBlankCopy;
 
-         
+         // Make a copy of whichBlank, because I'm too nervous to change the original
          whichBlankCopy = whichBlank;
-
+         // set the index to zero.
          index = 0;
-
+         // For each sudoku value,
          sudokuValues.forEach(function () {
+            // If we still ahve blanks,
             if (whichBlankCopy >= 0) {
+               // And the value of our index is positive, and not a user input
                if (sudokuValues[index] > 0 && !userInput[index]) {
-
+                  // increment index.
                   index += 1;
-
                } else {
+                  // increment index and decrement whichblank.
                   index += 1;
-
                   whichBlankCopy -= 1;
                }
             }
          });
-
+         // decrement index, not sure why we have to do this, but it works
+         // so don't dwell on it.
          index -= 1;
-
+         // at that index, make it the selected num.
          sudokuValues[index] = selectedNum;
-
+         // call Validatealways.
          validateAlways(index, emptyCellElement);
       };
 
@@ -423,10 +425,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
          // checking the rest of the row
          for (i = 9 * row; i < 9 * row + 9; i += 1) {
+            // Make sure its not comparing against itself
             if (index !== i) {
+               // If our number matches, we have an error
                if (selectedNum === sudokuValues[i]) {
                   errorFound = true;
-
+                  // If it was user input,
                   if (userInput[i]) {
                      //FIX TO QUERYSELECTOR
                      var fix;
@@ -434,8 +438,9 @@ document.addEventListener('DOMContentLoaded', function () {
                      
                      wrongCells.push(document.getElementById(i));
                   }
-
+                  // If we are validating as we go,
                   if (validateAsYouGo) {
+                     // change the class to user error.
                      if (emptyCellElement.classList.contains('user-input')) {
                         emptyCellElement.classList.remove('user-input');
 
@@ -448,67 +453,59 @@ document.addEventListener('DOMContentLoaded', function () {
 
          // Checking the rest of the column
          for (i = column; i < 81; i += 9) {
+            // dont check urself
             if (index !== i) {
+               // if its the same
                if (selectedNum === sudokuValues[i]) {
-
+                  // we found an error
                   errorFound = true;
-
+                  // if we're validating as we go, change it to a user error.
                   if (validateAsYouGo) {
                      if (emptyCellElement.classList.contains('user-input')) {
                         emptyCellElement.classList.remove('user-input');
-
                         emptyCellElement.classList.add('user-error');
                      }
                   }
                }
             }
          }
-
+         // For checking a 3x3 grid, set the upper and lower bounds of i and j
          if (column < 3) {
             lowerI = 0;
-
             upperI = 3;
-
          } else if (column >= 3 && column < 6) {
             lowerI = 3;
-
             upperI = 6;
-
          } else {
             lowerI = 6;
-
             upperI = 9;
          }
-
          if (row < 3) {
             lowerJ = 0;
-
             upperJ = 3;
-
          } else if (row >= 3 && row < 6) {
             lowerJ = 3;
-
             upperJ = 6;
-
          } else {
             lowerJ = 6;
-
             upperJ = 9;
          }
 
          // Checking the 3x3
          for (i = lowerI; i < upperI; i += 1) {
             for (j = lowerJ; j < upperJ; j += 1) {
+               // Get the index of the cell
                k = j * 9 + i;
-
+               // As long as we aren't checking ourselves
                if (index !== k) {
+                  // And the number is the same as our value
                   if (selectedNum === sudokuValues[k]) {
+                     // We have an error
                      errorFound = true;
-
+                     // if we're validating as we go, change the class of it.
                      if (validateAsYouGo) {
                         if (emptyCellElement.classList.contains('user-input')) {
                            emptyCellElement.classList.remove('user-input');
-
                            emptyCellElement.classList.add('user-error');
                         }
                      }
@@ -517,16 +514,18 @@ document.addEventListener('DOMContentLoaded', function () {
             }
          }
 
+         // If we found an error, but we aren't validating as we go
          if (errorFound && !validateAsYouGo) {
+            // push it onto a wrong cells array, to change things to red if we validate once
             wrongCells.push(emptyCellElement);
          }
-
+         // if we didn't find an error, but our cell says it is, fix that.
          if (!errorFound && emptyCellElement.classList.contains('user-error')) {
             emptyCellElement.classList.remove('user-error');
-
             emptyCellElement.classList.add('user-input');
-
+            // For all the wrong cells,
             for (i = 0; i < wrongCells.length; i += 1) {
+               // CARVER COMMENT THIS
                if (emptyCellElement.isEqualNode(wrongCells[i])) {
                   wrongCells.splice(i, 1);
                }
@@ -534,63 +533,68 @@ document.addEventListener('DOMContentLoaded', function () {
          }
       };
 
+      // Checking to see if we have 9 of a number, then making the button gray.
       checkForGrayButtons = function () {
          var numCount;
          numCount = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-
+         // for each nonzero value, increment the corresponding element of the array.
          sudokuValues.forEach(function (sudokuElement) {
             if (sudokuElement > 0) {
                numCount[sudokuElement - 1] += 1;
             }
          });
 
-         //alert(numCount);
+         // for each input button,
          Array.prototype.forEach.call(document.querySelectorAll('.input'), function (selectorElement) {
             var i, tmp;
+            // check to see if the numCount has gotten too big.
             for (i = 0; i < 9; i += 1) {
                if (numCount[i] >= 9) {
+                  // increment tmp,
                   tmp = i + 1;
+                  // get the element's id and see if its equal to temp with b on hte end.
+                  //https://developer.mozilla.org/en-US/docs/Web/API/Element/id
                   if (selectorElement.id === tmp + 'b') {
+                     // Remove the input class, and add the finished input class.
                      if (selectorElement.classList.contains('input')) {
                         selectorElement.classList.remove('input');
                      }
-
                      selectorElement.classList.add('finished-input');
                   }
                }
             }
          }, false);
 
+         // To change the selected button from gray to green when 9 of that number happen.
          Array.prototype.forEach.call(document.querySelectorAll('.selected'), function (selectorElement) {
             var i, tmp;
+            // go through and see if any have reached 9 or higher.
             for (i = 0; i < 9; i += 1) {
+               // similar to the above stuff.
                if (numCount[i] >= 9) {
                   tmp = i + 1;
-
                   if (selectorElement.id === tmp + 'b') {
                      if (selectorElement.classList.contains('selected')) {
                         selectorElement.classList.remove('selected');
                      }
-
                      selectorElement.classList.add('finished-input');
                   }
                }
             }
          }, false);
-
+         // To change back if the numbers change,
          Array.prototype.forEach.call(document.querySelectorAll('.finished-input'), function (selectorElement) {
             var i, tmp;
-
+            // check to see if the numCount is less than 9
             for (i = 0; i < 9; i += 1) {
                if (numCount[i] < 9) {
                   tmp = i + 1;
-
+                  // if it is, grab the id and throw a b onto it.
                   if (selectorElement.id === tmp + 'b') {
+                     // and change its class from finished-input back to input.
                      if (selectorElement.classList.contains('finished-input')) {
-                        //alert('a');
                         selectorElement.classList.remove('finished-input');
                      }
-
                      selectorElement.classList.add('input');
                   }
                }
@@ -598,81 +602,19 @@ document.addEventListener('DOMContentLoaded', function () {
          });
       };
 
+      // when the cear button is clicked,
       document.querySelector('#clear').addEventListener('click', function () {
          var userInputs, userErrors, oneButton, finishedInputs;
-
+         // redisplay the current puzzle.
          displayPuzzle(currentPuzzle[0], currentPuzzle[1]);
 
-         userInputs = Array.from(document.getElementsByClassName('user-input'));
+         userInputs = Array.from(document.querySelectorAll('.user-input'));
 
          while (userInputs.length > 0) {
             deleteUserInputs();
-            userInputs = Array.from(document.getElementsByClassName('user-input'));
+            userInputs = Array.from(document.querySelectorAll('.user-input'));
          }
-
-         userErrors = Array.from(document.getElementsByClassName('user-error'));
-
-         while (userErrors.length > 0) {
-            deleteUserErrors();
-            userErrors = Array.from(document.getElementsByClassName('user-error'));
-         }
-
-         userErrors = Array.from(document.getElementsByClassName('user-error'));
-
-         while (userErrors.length > 0) {
-            deleteUserErrors();
-            userErrors = Array.from(document.getElementsByClassName('user-error'));
-         }
-
-         userErrors = Array.from(document.getElementsByClassName('user-error'));
-
-         while (userErrors.length > 0) {
-            deleteUserErrors();
-
-            userErrors = Array.from(document.getElementsByClassName('user-error'));
-         }
-
-         userErrors = Array.from(document.getElementsByClassName('user-error'));
-
-         while (userErrors.length > 0) {
-            deleteUserErrors();
-
-            userErrors = Array.from(document.getElementsByClassName('user-error'));
-         }
-
-         userErrors = Array.from(document.getElementsByClassName('user-error'));
-
-         while (userErrors.length > 0) {
-            deleteUserErrors();
-
-            userErrors = Array.from(document.getElementsByClassName('user-error'));
-         }
-
-         userErrors = Array.from(document.getElementsByClassName('user-error'));
-
-         while (userErrors.length > 0) {
-            deleteUserErrors();
-
-            userErrors = Array.from(document.getElementsByClassName('user-error'));
-         }
-
-         userErrors = Array.from(document.getElementsByClassName('user-error'));
-
-         while (userErrors.length > 0) {
-            deleteUserErrors();
-
-            userErrors = Array.from(document.getElementsByClassName('user-error'));
-         }
-
-         removeSelected();
-
-         finishedInputs = Array.from(document.getElementsByClassName('finished-input'));
-
-         while (finishedInputs.length > 0) {
-            removeFinishedInputs();
-
-            finishedInputs = Array.from(document.getElementsByClassName('finished-input'));
-         }
+         // default the selected number back to 1,
          selectedNum = 1;
          oneButton = document.getElementsByClassName('input')[0];
          oneButton.classList.remove('input');
