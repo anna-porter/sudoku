@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
    // Displaying the puzzle, adding event listeners to empty spaces.
    (function () {
-      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle, deleteUserInputs, removeSelectedInputs, deleteUserErrors, removeFinishedInputs, currentPuzzle;
+      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle, deleteUserInputs, removeSelectedInputs, displayFinished, deleteUserErrors, removeFinishedInputs, currentPuzzle;
 
       // Default the selectedNum to be placed in the cells next to one.
       selectedNum = 1;
@@ -351,7 +351,8 @@ document.addEventListener('DOMContentLoaded', function () {
       // Add event listeners for every empty cell.
       addEventListeners = function () {
          // get every empty div and for each of them, add a click event listener
-         var emptyCells = document.querySelectorAll('div.empty-space');
+         var emptyCells;
+         emptyCells = document.querySelectorAll('div.empty-space');
 
          emptyCells.forEach(function (emptyCellElement, whichBlank) {
             emptyCellElement.addEventListener('click', function () {
@@ -366,6 +367,7 @@ document.addEventListener('DOMContentLoaded', function () {
                updateValues(whichBlank, emptyCellElement);
                // And check to see if any numbers have reached their maximum occurances.
                checkForGrayButtons();
+               displayFinished();
             }, false);
          });
       };
@@ -594,6 +596,17 @@ document.addEventListener('DOMContentLoaded', function () {
          });
       };
 
+      // Check if the user has correctly finished the puzzle
+      displayFinished = function () {
+         var emptyCells, errorCells;
+         // get arrays of the empty space and user errors
+         emptyCells = document.querySelectorAll('div.empty-space');
+         errorCells = document.querySelectorAll('div.user-error');
+         // If these are both of length zero, they finished correctly
+         if (emptyCells.length === 0 && errorCells.length === 0) {
+            alert('Congratulations! You finished the puzzle correctly!');
+         }
+      };
       // when the cear button is clicked,
       document.querySelector('#clear').addEventListener('click', function () {
          // took out userErrors and finishedInputs
