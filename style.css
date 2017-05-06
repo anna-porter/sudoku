@@ -1,5 +1,3 @@
-@charset "UTF-8";
-
 /*
 CS 3312, spring 2017
 Final Project
@@ -12,7 +10,95 @@ html {
 }
 body {
    background-image: url(wood.jpg);
+   margin: 0 auto;
+   width: 100%;
+   text-align: center;
+   padding-top: 1em;
 }
+div {
+   margin: 0 auto;
+}
+.ghetto-padding {
+   height: 20px;
+}
+
+.sidebar {
+   display: flex;
+   flex-wrap: nowrap;
+   flex-direction: column;
+   /*position: relative;*/
+   float: right;
+   margin-right: 19%;
+}
+
+.top {
+   display: flex;
+   flex-wrap: nowrap;
+   flex-direction: row;
+}
+
+.bottom {
+   display: flex;
+   flex-wrap: nowrap;
+   flex-direction: row;
+}
+
+#currentPuzzle {
+   /*position: relative;*/
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   width: 30%;
+   /*height: 600px;*/
+   float: left;
+   margin-left: 25%;
+   min-width: 350px;
+   /*padding-bottom: 5%;*/
+   flex-direction: column;
+   /*flex: 1 1 auto;*/
+   /*padding-bottom:30%;*/
+   background-image: url(paper.png);
+}
+
+.happy {
+   padding: 0px;
+   margin: 0px;
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: row;
+   justify-content: center;
+   font-size: 250%;
+   flex: 1 1 auto;
+}
+
+.happy div {
+/*   width: 43px;
+   height: 43px;*/
+   padding: 0px;
+   margin: 0px;
+   width: 10%;
+   flex: 1 1 auto;
+   height: 100%;
+}
+
+.happy div {
+   border: 1px solid;
+}
+
+.happy:nth-child(9), .happy:nth-child(3), .happy:nth-child(6) {
+   border-bottom: 3px solid;
+}
+
+.happy div:nth-child(9), .happy div:nth-child(3), .happy div:nth-child(6) {
+   border-right: 3px solid;
+}
+.happy div:first-child {
+   border-left: 3px solid;
+}
+.happy:first-child {
+   border-top: 3px solid;
+}
+
 /* Normally the * selector is smart to avoid, but for this purpose it's fine. */
 *, *:before, *:after {
    box-sizing: inherit;
@@ -42,19 +128,24 @@ tr:nth-child(3n) {
    border-bottom:solid;
 }
 .dropbtn {
-   background-color: #3CAF50;
+   background-color: black;
    color: white;
    padding: 16px;
    font-size: 16px;
    border: none;
    cursor: pointer;
+   border-radius: 10px 10px 10px 10px;
+   width: 150px;
 }
 .dropbtn:hover, .dropbtn:focus {
-   background-color: #3e8e41
+   background-color: gray;
+   border-radius: 10px 10px 10px 10px;
 }
 .dropdown {
    position: relative;
    display: inline-block;
+   border-radius: 10px 10px 10px 10px;
+   width: 150px;
 }
 .dropdown-content {
    display: none;
@@ -65,6 +156,7 @@ tr:nth-child(3n) {
 /*   min-width: 100px;*/
    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
    z-index: 1;
+   width: 150px;
 }
 
 /* Links inside the dropdown */
@@ -73,15 +165,163 @@ tr:nth-child(3n) {
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    width: 150px;
 }
+#nightmare {
+   background-color: #012345;
+}
+
+#nightmare-1 {
+   background-color: #01305e;
+   color: white;
+}
+#nightmare-2 {
+   background-color: #023d77;
+   color: white;
+}
+#nightmare-3 {
+   background-color: #024990;
+   color: white;
+}
+#fiendish {
+   background-color: #123456;
+   color: white;
+}
+#fiendish-1 {
+   background-color: #16416b;
+   color: white;
+}
+#fiendish-2 {
+   background-color: #1b4e80;
+   color: white;
+}
+
+#fiendish-3 {
+   background-color: #1f5a95;
+   color: white;
+}
+
+#hard {
+   background-color: #233467;
+   color: white;
+}
+#hard-1 {
+   background-color: #293e7a;
+   color: white;
+}
+#hard-2 {
+   background-color: #30478d;
+   color: white;
+}
+#hard-3 {
+   background-color: #2651a0;
+   color: white;
+}
+#medium {
+   background-color: #345678;
+   color: white;
+}
+#medium-1 {
+   background-color: #3c638a;
+   color: white;
+}
+#medium-2 {
+   background-color: #43709c;
+   color: white;
+}
+#medium-3 {
+   background-color: #4b7cad;
+   color: white;
+}
+#easy {
+   background-color: #456789;
+   color: white;
+}
+#easy-1 {
+   background-color: #4e749a;
+   color: white;
+}
+#easy-2 {
+   background-color: #5781aa;
+   color: white;
+}
+#easy-3 {
+   background-color: #688db3;
+   color: white;
+}
+#userinput-1 {
+   background-color: #4e749a;
+   color: white;
+   /*width: 150px;*/
+}
+.input {
+   background-color: #5781aa;
+   color: white;
+   font-size: 30px;
+   width: 60px;
+   height: 60px;
+   border-radius: 8px 8px 8px 8px;
+   /*justify-content: center;*/
+}
+#input-buttons {
+   /*float: center;*/
+   /*justify-content: center;*/
+   /*position: relative;*/
+   margin: 0 auto;
+}
+.utility {
+   white-space: normal;
+   width: 15%;
+   height: 40px;
+   margin: 0.5%;
+   color: white;
+   background-color: #293e7a;
+   text-decoration: none;
+   width: 150px;
+}
+.utility-toggle {
+   white-space: normal;
+   height: 39px;
+   margin: 0.5%;
+   color: white;
+   background-color: #00A86B;
+   text-decoration: none;
+   width: 115px;
+}
+.user-input {
+   color: #4e749a;
+}
+.user-error {
+   color: red;
+}
+.selected {
+   background-color: #00A86B;
+   color: white;
+   font-size: 30px;
+   width: 60px;
+   height: 60px;
+   border-radius: 8px 8px 8px 8px;
+}
+.finished-input {
+   background-color: #A9A9A9;
+   color: white;
+   font-size: 30px;
+   width: 60px;
+   height: 60px;
+   border-radius: 8px 8px 8px 8px;
+}
+.input:hover {
+   background-color: #688db3;
+}
+tr .noborder {
+   border: none;
+   /*background-image: url(paper.png);*/
+
+}
+
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #f1f1f1}
-
-#row {
-   display: flex;
-   flex-wrap: wrap;
-}
 
 .show {
    display: block;
