@@ -191,35 +191,44 @@ document.addEventListener('DOMContentLoaded', function () {
    (function () {
       // The timer won't run when I put its variables in here
       // For the entire timer, Anna used https://jsfiddle.net/Daniel_Hug/pvk6p/
-      // h2 = document.querySelector('#timer');
-      // STILL BY TAG
+      // Get the timer span and initialize minutes, seconds and hours to 0
       h2 = document.querySelector('.timer');
       seconds = 0;
       minutes = 0;
       hours = 0;
-
+      // make a timer function that sets t to calls add every 1000 milliseconds 
+      // and return t
       timer = function () {
          t = setTimeout(add, 1000);
          return t;
       };
       add = function () {
          var timeString;
+         // increment seconds
          seconds += 1;
+         // if seconds is greater than or equal to sixty
          if (seconds >= 60) {
+            // reset seconds to zero and add a minute
             seconds = 0;
             minutes += 1;
+            // if minutes is greater than sixty
             if (minutes >= 60) {
+               // reset minutes to zero and add an hour.
                minutes = 0;
                hours += 1;
             }
          }
-
+         // initialize timestring
          timeString = "";
+         // if hours is greater than 9, no problem, add it to the string
+         // followed by :
          if (hours > 9) {
             timeString += hours + ':';
          } else {
+            // otherwise, we need a leading zero
             timeString += '0' + hours + ':';
          }
+         // similarly for everything else
          if (minutes > 9) {
             timeString += minutes + ':';
          } else {
@@ -230,7 +239,9 @@ document.addEventListener('DOMContentLoaded', function () {
          } else {
             timeString += '0' + seconds;
          }
+         // set the textContent of the span to the new timeString
          h2.textContent = timeString;
+         // and call timer.
          timer();
       };
    }());
@@ -258,10 +269,12 @@ document.addEventListener('DOMContentLoaded', function () {
             buttonElement.querySelector('#my-dropdown').classList.toggle('show');
             // Add event listener to the drop-down buttons
             Array.prototype.forEach.call(buttonElement.querySelectorAll('.puzzle-select'), function (puzzleElement, whichPuzzle) {
-               puzzleElement.onclick = function () {
+               // when the buttons in the drop down are clicked
+               puzzleElement.addEventListener('click', function () {
+                  // set the current puzzle to the one selected and display it.
                   currentPuzzle = [puzzleElement, whichPuzzle];
                   displayPuzzle(puzzleElement, whichPuzzle);
-               };
+               });
             });
          }, false);
       });
@@ -273,8 +286,9 @@ document.addEventListener('DOMContentLoaded', function () {
          // The name is the parent's parent's id, converted to a string with the number of whichPuzzle
          name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
 
+         // MCCARVER COMMENT THIS LINE
          display = puzzleElement.parentNode.parentNode.id.toString() + ' ' + (whichPuzzle + 1);
-
+         // the text content of the whichpuzzle span is the display.
          document.querySelector('#which-puzzle').textContent = display;
 
          // The array is stored as a property of puzzles
@@ -292,7 +306,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
          // For every cell,
          for (i = 0; i < 9; i += 1) {
-            // Insert a div with id row and class happy
+            // Insert a div with id row and class happy, because this was before
+            // our souls were crushed
             puzzlePlace.insertAdjacentHTML('beforeend', '<div id="row' + i + '" class="happy">');
 
             for (j = 0; j < 9; j += 1) {
@@ -599,22 +614,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
          while (userErrors.length > 0) {
             deleteUserErrors();
-            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+            userErrors = Array.from(document.getElementsByClassName('user-error'));
          }
 
          userErrors = Array.from(document.getElementsByClassName('user-error'));
 
          while (userErrors.length > 0) {
             deleteUserErrors();
-            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
-         }
-
-         userErrors = Array.from(document.getElementsByClassName('user-error'));
-
-         while (userErrors.length > 0) {
-            deleteUserErrors();
-
-            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+            userErrors = Array.from(document.getElementsByClassName('user-error'));
          }
 
          userErrors = Array.from(document.getElementsByClassName('user-error'));
@@ -622,7 +629,7 @@ document.addEventListener('DOMContentLoaded', function () {
          while (userErrors.length > 0) {
             deleteUserErrors();
 
-            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+            userErrors = Array.from(document.getElementsByClassName('user-error'));
          }
 
          userErrors = Array.from(document.getElementsByClassName('user-error'));
@@ -630,7 +637,7 @@ document.addEventListener('DOMContentLoaded', function () {
          while (userErrors.length > 0) {
             deleteUserErrors();
 
-            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+            userErrors = Array.from(document.getElementsByClassName('user-error'));
          }
 
          userErrors = Array.from(document.getElementsByClassName('user-error'));
@@ -638,7 +645,7 @@ document.addEventListener('DOMContentLoaded', function () {
          while (userErrors.length > 0) {
             deleteUserErrors();
 
-            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+            userErrors = Array.from(document.getElementsByClassName('user-error'));
          }
 
          userErrors = Array.from(document.getElementsByClassName('user-error'));
@@ -646,7 +653,15 @@ document.addEventListener('DOMContentLoaded', function () {
          while (userErrors.length > 0) {
             deleteUserErrors();
 
-            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+            userErrors = Array.from(document.getElementsByClassName('user-error'));
+         }
+
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+
+            userErrors = Array.from(document.getElementsByClassName('user-error'));
          }
 
          removeSelected();
@@ -658,29 +673,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             finishedInputs = Array.from(document.getElementsByClassName('finished-input'));
          }
-
          selectedNum = 1;
-
          oneButton = document.getElementsByClassName('input')[0];
-
          oneButton.classList.remove('input');
-
          oneButton.classList.add('selected');
-
          checkForGrayButtons();
-
          removeFinishedInputs();
-
          clearTimeout(t);
-
          h2.textContent = '00:00:00';
-
          seconds = 0;
-
          minutes = 0;
-
          hours = 0;
-
          t = timer();
       });
 
@@ -836,7 +839,7 @@ document.addEventListener('DOMContentLoaded', function () {
          }
       });
       // https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Event_handlers
-      window.onclick = function (event) {
+      window.addEventListener('click', function (event) {
          Array.prototype.forEach.call(document.querySelectorAll('.dropdown-content'), function (dropdownElement) {
             if (dropdownElement.parentNode.id !== event.target.parentNode.id) {
                if (dropdownElement.classList.contains('show')) {
@@ -844,6 +847,6 @@ document.addEventListener('DOMContentLoaded', function () {
                }
             }
          });
-      };
+      });
    }());
 }, false);
