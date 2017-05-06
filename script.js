@@ -187,9 +187,56 @@ document.addEventListener('DOMContentLoaded', function () {
                   [0, 0, 9, 0, 0, 0, 0, 5, 4]];
 
    puzzles = {easy0: easy0, easy1: easy1, easy2: easy2, medium0: medium0, medium1: medium1, medium2: medium2, hard0: hard0, hard1: hard1, hard2: hard2, fiendish0: fiendish0, fiendish1: fiendish1, fiendish2: fiendish2, nightmare0: nightmare0, nightmare1: nightmare1, nightmare2: nightmare2, userPuzzle0: userPuzzle0, userPuzzle1: userPuzzle1};
+   (function () {
+      // The timer won't run when I put its variables in here
+      // For the entire timer, Anna used https://jsfiddle.net/Daniel_Hug/pvk6p/
+      // h2 = document.querySelector('#timer');
+      // STILL BY TAG
+      h2 = document.getElementsByTagName('h2')[0];
+      seconds = 0;
+      minutes = 0;
+      hours = 0;
+
+      timer = function () {
+         t = setTimeout(add, 1000);
+         return t;
+      };
+      add = function () {
+         var timeString;
+         seconds += 1;
+         if (seconds >= 60) {
+            seconds = 0;
+            minutes += 1;
+            if (minutes >= 60) {
+               minutes = 0;
+               hours += 1;
+            }
+         }
+
+         timeString = "";
+         if (hours > 9) {
+            timeString += hours + ':';
+         } else {
+            timeString += '0' + hours + ':';
+         }
+         if (minutes > 9) {
+            timeString += minutes + ':';
+         } else {
+            timeString += '0' + minutes + ':';
+         }
+         if (seconds > 9) {
+            timeString += seconds;
+         } else {
+            timeString += '0' + seconds;
+         }
+         h2.textContent = timeString;
+         timer();
+      };
+   }());
+
    // Displaying the puzzle, adding event listeners to empty spaces.
    (function () {
-      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle, deleteUserInputs, deleteUserErrors, removeFinishedInputs, currentPuzzle;
+      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle, deleteUserInputs, deleteUserErrors, removeFinishedInputs, currentPuzzle, removeShow;
 
       // Default the selectedNum to be placed in the cells next to one.
       selectedNum = 1;
@@ -207,21 +254,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
          // When the button is clicked, show the buttons underneath it
          buttonElement.addEventListener('click', function () {
+            removeShow();
             buttonElement.querySelector('#my-dropdown').classList.toggle('show');
-
             // Add event listener to the drop-down buttons
-            Array.prototype.forEach.call(buttonElement.getElementsByClassName('puzzle-select'), function (puzzleElement, whichPuzzle) {
-               // TOOK EVENT OUT OF THE PARENTHESIS TO APPEASE JSLINT
+            Array.prototype.forEach.call(buttonElement.querySelectorAll('.puzzle-select'), function (puzzleElement, whichPuzzle) {
                puzzleElement.onclick = function () {
-                  // Call displayPuzzle
                   currentPuzzle = [puzzleElement, whichPuzzle];
-
                   displayPuzzle(puzzleElement, whichPuzzle);
                };
             });
          }, false);
       });
 
+      removeShow = function () {
+         Array.prototype.forEach.call(document.querySelectorAll('.dropdown'), function (buttonElement) {
+            if (buttonElement.querySelector('#my-dropdown').classList.contains('show')) {
+               buttonElement.querySelector('#my-dropdown').classList.remove('show');
+            }
+         });
+      }
       displayPuzzle = function (puzzleElement, whichPuzzle) {
          // Try to make a puzzle appear
          var name, display, array, puzzlePlace, insidePuzzlePlace, i, j, k;
@@ -231,13 +282,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
          display = puzzleElement.parentNode.parentNode.id.toString() + ' ' + (whichPuzzle + 1);
 
-         document.getElementById('which-puzzle').textContent = display;
+         document.querySelector('#which-puzzle').textContent = display;
 
          // The array is stored as a property of puzzles
          array = puzzles[name];
 
          // Get the current puzzle element.
-         puzzlePlace = document.getElementById('currentPuzzle');
+         puzzlePlace = document.querySelector('#currentPuzzle');
 
          // If anything exists here, delete it.
          while (puzzlePlace.hasChildNodes()) {
@@ -475,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function () {
       };
 
       checkForGrayButtons = function () {
-         var numCount, k;
+         var numCount;
 
          numCount = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -674,43 +725,33 @@ document.addEventListener('DOMContentLoaded', function () {
          });
       };
 
-         document.querySelector('#validate-always').addEventListener('click', function () {
+      document.querySelector('#validate-always').addEventListener('click', function () {
          var element;
-
          element = document.getElementById('validate-always');
-
          if (validateAsYouGo === false) {
             element.classList.remove('utility');
-
             element.classList.add('utility-toggle');
-
             validateAsYouGo = true;
-
             wrongCells.forEach(function (element) {
-            if (element.classList.contains('user-input')) {
-               element.classList.remove('user-input');
-
-               element.classList.add('user-error');
-            }
-         });
-
+               if (element.classList.contains('user-input')) {
+                  element.classList.remove('user-input');
+                  element.classList.add('user-error');
+               }
+            });
          } else {
             element.classList.remove('utility-toggle');
-
             element.classList.add('utility');
-
             validateAsYouGo = false;
-
             resetUserError();
          }
       });
 
       resetUserError = function () {
-        document.querySelectorAll('.user-error').forEach(function (element) {
-          element.classList.remove('user-error');
+         document.querySelectorAll('.user-error').forEach(function (element) {
+            element.classList.remove('user-error');
 
-          element.classList.add('user-input');
-        })
+            element.classList.add('user-input');
+         });
       };
 
       document.querySelector('#validate-once').addEventListener('click', function () {
@@ -739,7 +780,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       (function () {
          var oneButton;
-
+         //alert('selected')
          selectedNum = 1;
 
          oneButton = document.getElementsByClassName('input')[0];
