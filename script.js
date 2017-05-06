@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
    // Displaying the puzzle, adding event listeners to empty spaces.
    (function () {
-      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle, deleteUserInputs, deleteUserErrors, removeFinishedInputs, currentPuzzle, removeShow;
+      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle, deleteUserInputs, deleteUserErrors, removeFinishedInputs, currentPuzzle;
 
       // Default the selectedNum to be placed in the cells next to one.
       selectedNum = 1;
@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function () {
       displayPuzzle = function (puzzleElement, whichPuzzle) {
          // Try to make a puzzle appear
          var name, display, array, puzzlePlace, insidePuzzlePlace, i, j, k;
-
+         // https://developer.mozilla.org/en-US/docs/Web/API/ParentNode
          // The name is the parent's parent's id, converted to a string with the number of whichPuzzle
          name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
 
@@ -520,7 +520,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
       checkForGrayButtons = function () {
          var numCount;
-
          numCount = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
          sudokuValues.forEach(function (sudokuElement) {
@@ -528,14 +527,12 @@ document.addEventListener('DOMContentLoaded', function () {
                numCount[sudokuElement - 1] += 1;
             }
          });
-         //FIX THIS
-         Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement) {
+         //alert(numCount);
+         Array.prototype.forEach.call(document.querySelectorAll('.input'), function (selectorElement) {
             var i, tmp;
-
             for (i = 0; i < 9; i += 1) {
                if (numCount[i] >= 9) {
                   tmp = i + 1;
-
                   if (selectorElement.id === tmp + 'b') {
                      if (selectorElement.classList.contains('input')) {
                         selectorElement.classList.remove('input');
@@ -546,10 +543,8 @@ document.addEventListener('DOMContentLoaded', function () {
                }
             }
          }, false);
-         //FIX THIS
-         Array.prototype.forEach.call(document.getElementsByClassName('selected'), function (selectorElement) {
+         Array.prototype.forEach.call(document.querySelectorAll('.selected'), function (selectorElement) {
             var i, tmp;
-
             for (i = 0; i < 9; i += 1) {
                if (numCount[i] >= 9) {
                   tmp = i + 1;
@@ -565,15 +560,17 @@ document.addEventListener('DOMContentLoaded', function () {
             }
          }, false);
 
-         Array.prototype.forEach.call(document.getElementsByClassName('selected'), function (selectorElement) {
+         Array.prototype.forEach.call(document.querySelectorAll('.selected'), function (selectorElement) {
             var i, tmp;
-
+            
             for (i = 0; i < 9; i += 1) {
                if (numCount[i] < 9) {
                   tmp = i + 1;
-
+                  
                   if (selectorElement.id === tmp + 'b') {
+                     alert(selectorElement.classList);
                      if (selectorElement.classList.contains('finished-input')) {
+                        //alert('a');
                         selectorElement.classList.remove('finished-input');
                      }
 
@@ -593,7 +590,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
          while (userInputs.length > 0) {
             deleteUserInputs();
-
             userInputs = Array.from(document.getElementsByClassName('user-input'));
          }
 
@@ -601,7 +597,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
          while (userErrors.length > 0) {
             deleteUserErrors();
-
             userErrors = Array.from(document.getElementsByClassName('user-errorr'));
          }
 
@@ -609,7 +604,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
          while (userErrors.length > 0) {
             deleteUserErrors();
-
             userErrors = Array.from(document.getElementsByClassName('user-errorr'));
          }
 
@@ -720,7 +714,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       document.querySelector('#validate-always').addEventListener('click', function () {
          var element;
-         element = document.getElementById('validate-always');
+         element = document.querySelector('#validate-always');
          if (validateAsYouGo === false) {
             element.classList.remove('utility');
             element.classList.add('utility-toggle');
@@ -757,7 +751,7 @@ document.addEventListener('DOMContentLoaded', function () {
          });
       });
 
-      Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement, whichButton) {
+      Array.prototype.forEach.call(document.querySelectorAll('.input'), function (selectorElement, whichButton) {
          selectorElement.addEventListener('click', function () {
             removeSelected();
 
@@ -776,7 +770,7 @@ document.addEventListener('DOMContentLoaded', function () {
          //alert('selected')
          selectedNum = 1;
 
-         oneButton = document.getElementsByClassName('input')[0];
+         oneButton = document.querySelector('.input');
 
          oneButton.classList.remove('input');
 
@@ -784,7 +778,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }());
 
       removeSelected = function () {
-         Array.prototype.forEach.call(document.getElementsByClassName('selected'), function (selectorElem) {
+         Array.prototype.forEach.call(document.querySelectorAll('.selected'), function (selectorElem) {
             selectorElem.classList.remove('selected');
 
             selectorElem.classList.add('input');
@@ -807,7 +801,7 @@ document.addEventListener('DOMContentLoaded', function () {
          totalKids = 0;
 
          parents = document.querySelectorAll('div.happy');
-
+         //https://developer.mozilla.org/en-US/docs/Web/API/ParentNode/children
          parents.forEach(function (parentNode) {
             kids = parentNode.children;
 
