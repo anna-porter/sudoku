@@ -516,7 +516,8 @@ document.addEventListener('DOMContentLoaded', function () {
             emptyCellElement.classList.add('user-input');
             // For all the wrong cells,
             for (i = 0; i < wrongCells.length; i += 1) {
-               // CARVER COMMENT THIS
+               // https://developer.mozilla.org/en-US/docs/Web/API/Node/isEqualNode
+               // If the empty cell is the same as the wrong cell, delete it from wrongCells
                if (emptyCellElement.isEqualNode(wrongCells[i])) {
                   wrongCells.splice(i, 1);
                }
@@ -601,16 +602,16 @@ document.addEventListener('DOMContentLoaded', function () {
          displayPuzzle(currentPuzzle[0], currentPuzzle[1]);
          // default the selected number back to 1,
          selectedNum = 1;
+         // Remove selected and finished classes from the buttons
          removeFinishedInputs();
          removeSelectedInputs();
+         // set oneButton to the first button in the table
          oneButton = document.querySelector('table button');
          // remove the input class and add the selected class
          if (oneButton.classList.contains('input')) {
             oneButton.classList.remove('input');
          }
          oneButton.classList.add('selected');
-         // check for gray buttons and remove all finished inputs.
-         
          // Reset the timer,
          clearTimeout(t);
          h2.textContent = '00:00:00';
