@@ -19,16 +19,29 @@ div {
    margin: 0 auto;
 }
 .ghetto-padding {
-   height: 20px;
+   height: 40px;
+}
+
+.neat {
+   width: 100%;
+   min-height: 450px;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
 }
 
 .sidebar {
    display: flex;
    flex-wrap: nowrap;
    flex-direction: column;
-   /*position: relative;*/
    float: right;
-   margin-right: 19%;
+   margin-left: 10%;
+   justify-content: space-around;
+   min-height: 450px;
+}
+
+.maybe {
+   margin-right: 0%;
 }
 
 .top {
@@ -52,7 +65,7 @@ div {
    /*height: 600px;*/
    float: left;
    margin-left: 25%;
-   min-width: 350px;
+   min-width: 450px;
    /*padding-bottom: 5%;*/
    flex-direction: column;
    /*flex: 1 1 auto;*/
