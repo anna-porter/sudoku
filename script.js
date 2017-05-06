@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
    // Displaying the puzzle, adding event listeners to empty spaces.
    (function () {
-      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle, deleteUserInputs, deleteUserErrors, removeFinishedInputs, currentPuzzle;
+      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle, deleteUserInputs, removeSelectedInputs, deleteUserErrors, removeFinishedInputs, currentPuzzle;
 
       // Default the selectedNum to be placed in the cells next to one.
       selectedNum = 1;
@@ -596,23 +596,21 @@ document.addEventListener('DOMContentLoaded', function () {
       // when the cear button is clicked,
       document.querySelector('#clear').addEventListener('click', function () {
          // took out userErrors and finishedInputs
-         var oneButton, finishedInputs;
+         var oneButton;
          // redisplay the current puzzle.
          displayPuzzle(currentPuzzle[0], currentPuzzle[1]);
-
-         finishedInputs = Array.from(document.querySelectorAll('.finished-input'));
          // default the selected number back to 1,
          selectedNum = 1;
+         removeFinishedInputs();
+         removeSelectedInputs();
          oneButton = document.querySelector('table button');
-         alert('hey');
          // remove the input class and add the selected class
          if (oneButton.classList.contains('input')) {
             oneButton.classList.remove('input');
          }
          oneButton.classList.add('selected');
          // check for gray buttons and remove all finished inputs.
-         //checkForGrayButtons();
-         removeFinishedInputs();
+         
          // Reset the timer,
          clearTimeout(t);
          h2.textContent = '00:00:00';
@@ -621,6 +619,13 @@ document.addEventListener('DOMContentLoaded', function () {
          hours = 0;
          t = timer();
       });
+      removeSelectedInputs = function () {
+         // for every finished input button, remove that and put input
+         Array.prototype.forEach.call(document.querySelectorAll('.selected'), function (element) {
+            element.classList.remove('selected');
+            element.classList.add('input');
+         });
+      };
       
       removeFinishedInputs = function () {
          // for every finished input button, remove that and put input
@@ -631,6 +636,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
          });
       };
+
       // when validate alwyas is clicked,
       document.querySelector('#validate-always').addEventListener('click', function () {
          var element;
