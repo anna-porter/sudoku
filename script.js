@@ -4,15 +4,6 @@
 // Final Project: Sudoku Puzzles
 // YOUR NAME(S): Anna Porter and Michael McCarver
 
-
-// ASK ABOUT INNERHTML
-// ASK ABOUT BYID AND BYCLASS
-// neat and maybe to check in css find old version
-/*
-
-   Solver
-   selected button does not switch to gray after 9 spaces are filled
- */
 document.addEventListener('DOMContentLoaded', function () {
    'use strict';
    var easy0, easy1, easy2, medium0, medium1, medium2, hard0, hard1, hard2, fiendish0, fiendish1, fiendish2, nightmare0, nightmare1, nightmare2, userPuzzle0, userPuzzle1, puzzles, h2, seconds, minutes, hours, timer, add, t, selectedNum, resetUserError;
@@ -257,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function () {
       sudokuValues = [];
       userInput = [];
       wrongCells = [];
-      
+
       // Set up default values for currentPuzzle so that the clear button will work from the beginning
       currentPuzzle = [document.querySelector('#easy-1'), 0];
 
@@ -435,7 +426,7 @@ document.addEventListener('DOMContentLoaded', function () {
                      //FIX TO QUERYSELECTOR
                      var fix;
                      fix = '#' + i;
-                     
+
                      wrongCells.push(document.getElementById(i));
                   }
                   // If we are validating as we go,
@@ -604,23 +595,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // when the cear button is clicked,
       document.querySelector('#clear').addEventListener('click', function () {
-         var userInputs, userErrors, oneButton, finishedInputs;
+         // took out userErrors and finishedInputs
+         var oneButton, finishedInputs;
          // redisplay the current puzzle.
          displayPuzzle(currentPuzzle[0], currentPuzzle[1]);
 
-         userInputs = Array.from(document.querySelectorAll('.user-input'));
-
-         while (userInputs.length > 0) {
-            deleteUserInputs();
-            userInputs = Array.from(document.querySelectorAll('.user-input'));
-         }
+         finishedInputs = Array.from(document.querySelectorAll('.finished-input'));
          // default the selected number back to 1,
          selectedNum = 1;
-         oneButton = document.getElementsByClassName('input')[0];
-         oneButton.classList.remove('input');
+         oneButton = document.querySelector('table button');
+         alert('hey');
+         // remove the input class and add the selected class
+         if (oneButton.classList.contains('input')) {
+            oneButton.classList.remove('input');
+         }
          oneButton.classList.add('selected');
-         checkForGrayButtons();
+         // check for gray buttons and remove all finished inputs.
+         //checkForGrayButtons();
          removeFinishedInputs();
+         // Reset the timer,
          clearTimeout(t);
          h2.textContent = '00:00:00';
          seconds = 0;
@@ -628,50 +621,36 @@ document.addEventListener('DOMContentLoaded', function () {
          hours = 0;
          t = timer();
       });
-
+      
       removeFinishedInputs = function () {
-         Array.prototype.forEach.call(document.getElementsByClassName('finished-input'), function (element) {
+         // for every finished input button, remove that and put input
+         Array.prototype.forEach.call(document.querySelectorAll('.finished-input'), function (element) {
             if (element.classList.contains('finished-input')) {
                element.classList.remove('finished-input');
-
                element.classList.add('input');
             }
          });
       };
-
-      deleteUserInputs = function () {
-         Array.prototype.forEach.call(document.getElementsByClassName('user-input'), function (element) {
-            element.classList.remove('user-input');
-
-            element.classList.add('empty-space');
-
-            element.innerHTML = '&nbsp;';
-         });
-      };
-
-      deleteUserErrors = function () {
-         Array.prototype.forEach.call(document.getElementsByClassName('user-error'), function (element) {
-            element.classList.remove('user-error');
-
-            element.classList.add('empty-space');
-
-            element.innerHTML = '&nbsp';
-         });
-      };
-
+      // when validate alwyas is clicked,
       document.querySelector('#validate-always').addEventListener('click', function () {
          var element;
+         // for the validate always element
          element = document.querySelector('#validate-always');
+         // If we weren't validating before, we are now, change the color to green
+         // and set validateAsYouGo to true.
          if (validateAsYouGo === false) {
             element.classList.remove('utility');
             element.classList.add('utility-toggle');
             validateAsYouGo = true;
+            // for every wrong cell, change it to user error from user input.
             wrongCells.forEach(function (element) {
                if (element.classList.contains('user-input')) {
                   element.classList.remove('user-input');
                   element.classList.add('user-error');
                }
             });
+         // otherwise, we aren't validating as we go anymore, so change back to blue,
+         // and set the boolean to false, and reset all  user errors
          } else {
             element.classList.remove('utility-toggle');
             element.classList.add('utility');
@@ -680,60 +659,62 @@ document.addEventListener('DOMContentLoaded', function () {
          }
       });
 
+      // take away all the user errors and change them to user inputs,
       resetUserError = function () {
          document.querySelectorAll('.user-error').forEach(function (element) {
             element.classList.remove('user-error');
-
             element.classList.add('user-input');
          });
       };
 
+      // when validate once is clicked, 
       document.querySelector('#validate-once').addEventListener('click', function () {
+         // for all the wrong cells, if they contained user input, change to user error
          wrongCells.forEach(function (element) {
             if (element.classList.contains('user-input')) {
                element.classList.remove('user-input');
-
                element.classList.add('user-error');
             }
          });
       });
 
+      // for every input button
       Array.prototype.forEach.call(document.querySelectorAll('.input'), function (selectorElement, whichButton) {
+         // when its clicked,
          selectorElement.addEventListener('click', function () {
+            // remove selected from all other buttons
             removeSelected();
-
+            // the new selected number is one more than which button
             selectedNum = whichButton + 1;
-
+            // change the class from input to selected
             if (selectorElement.classList.contains('input')) {
                selectorElement.classList.remove('input');
-
                selectorElement.classList.add('selected');
             }
          }, false);
       });
-
+       // IFFE
       (function () {
+         // set the default number to 1 and make the button green
          var oneButton;
-         //alert('selected')
          selectedNum = 1;
-
          oneButton = document.querySelector('.input');
-
          oneButton.classList.remove('input');
-
          oneButton.classList.add('selected');
       }());
 
+      // removing the selected class from all buttons
       removeSelected = function () {
+         // for every selected button
          Array.prototype.forEach.call(document.querySelectorAll('.selected'), function (selectorElem) {
+            // switch from selected back to input.
             selectorElem.classList.remove('selected');
-
             selectorElem.classList.add('input');
          });
       };
    }());
 
-   (function () {
+   /*(function () {
       document.querySelector('#solve').addEventListener('click', function () {
          var kids, parents, solverValues, rows, i, solveSudoku, checkRow, checkCol, check3x3, findEmptySpace, isCellSafe, displaySolution, testing, totalKids, rose;
 
@@ -780,7 +761,9 @@ document.addEventListener('DOMContentLoaded', function () {
             solverValues.push(rose);
          }
       });
+      */
       // https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Event_handlers
+      // when anywhere in the window is clicked, make the dropdowns disappear
       window.addEventListener('click', function (event) {
          Array.prototype.forEach.call(document.querySelectorAll('.dropdown-content'), function (dropdownElement) {
             if (dropdownElement.parentNode.id !== event.target.parentNode.id) {
@@ -790,5 +773,4 @@ document.addEventListener('DOMContentLoaded', function () {
             }
          });
       });
-   }());
 }, false);
