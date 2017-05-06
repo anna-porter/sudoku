@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // For the entire timer, Anna used https://jsfiddle.net/Daniel_Hug/pvk6p/
       // h2 = document.querySelector('#timer');
       // STILL BY TAG
-      h2 = document.getElementsByTagName('h2')[0];
+      h2 = document.querySelector('.timer');
       seconds = 0;
       minutes = 0;
       hours = 0;
@@ -254,7 +254,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
          // When the button is clicked, show the buttons underneath it
          buttonElement.addEventListener('click', function () {
-            removeShow();
             buttonElement.querySelector('#my-dropdown').classList.toggle('show');
             // Add event listener to the drop-down buttons
             Array.prototype.forEach.call(buttonElement.querySelectorAll('.puzzle-select'), function (puzzleElement, whichPuzzle) {
@@ -266,13 +265,6 @@ document.addEventListener('DOMContentLoaded', function () {
          }, false);
       });
 
-      removeShow = function () {
-         Array.prototype.forEach.call(document.querySelectorAll('.dropdown'), function (buttonElement) {
-            if (buttonElement.querySelector('#my-dropdown').classList.contains('show')) {
-               buttonElement.querySelector('#my-dropdown').classList.remove('show');
-            }
-         });
-      }
       displayPuzzle = function (puzzleElement, whichPuzzle) {
          // Try to make a puzzle appear
          var name, display, array, puzzlePlace, insidePuzzlePlace, i, j, k;
@@ -423,6 +415,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   errorFound = true;
 
                   if (userInput[i]) {
+                     //FIX TO QUERYSELECTOR
                      wrongCells.push(document.getElementById(i));
                   }
 
@@ -535,7 +528,7 @@ document.addEventListener('DOMContentLoaded', function () {
                numCount[sudokuElement - 1] += 1;
             }
          });
-
+         //FIX THIS
          Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement) {
             var i, tmp;
 
@@ -553,7 +546,7 @@ document.addEventListener('DOMContentLoaded', function () {
                }
             }
          }, false);
-
+         //FIX THIS
          Array.prototype.forEach.call(document.getElementsByClassName('selected'), function (selectorElement) {
             var i, tmp;
 
@@ -846,9 +839,9 @@ document.addEventListener('DOMContentLoaded', function () {
             solverValues.push(rose);
          }
       });
-
+      // https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Event_handlers
       window.onclick = function (event) {
-         Array.prototype.forEach.call(document.getElementsByClassName("dropdown-content"), function (dropdownElement) {
+         Array.prototype.forEach.call(document.querySelectorAll('.dropdown-content'), function (dropdownElement) {
             if (dropdownElement.parentNode.id !== event.target.parentNode.id) {
                if (dropdownElement.classList.contains('show')) {
                   dropdownElement.classList.remove('show');
