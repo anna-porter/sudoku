@@ -16,6 +16,7 @@
 document.addEventListener('DOMContentLoaded', function () {
    'use strict';
    var easy0, easy1, easy2, medium0, medium1, medium2, hard0, hard1, hard2, fiendish0, fiendish1, fiendish2, nightmare0, nightmare1, nightmare2, userPuzzle0, userPuzzle1, puzzles, h2, seconds, minutes, hours, timer, add, t, selectedNum, resetUserError;
+
    // Hard code 15 default puzzles
    easy0 = [[7, 9, 0, 0, 0, 0, 3, 0, 0],
             [0, 0, 0, 0, 0, 6, 9, 0, 0],
@@ -527,6 +528,7 @@ document.addEventListener('DOMContentLoaded', function () {
                numCount[sudokuElement - 1] += 1;
             }
          });
+
          //alert(numCount);
          Array.prototype.forEach.call(document.querySelectorAll('.input'), function (selectorElement) {
             var i, tmp;
@@ -543,6 +545,7 @@ document.addEventListener('DOMContentLoaded', function () {
                }
             }
          }, false);
+
          Array.prototype.forEach.call(document.querySelectorAll('.selected'), function (selectorElement) {
             var i, tmp;
             for (i = 0; i < 9; i += 1) {
@@ -560,15 +563,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }
          }, false);
 
-         Array.prototype.forEach.call(document.querySelectorAll('.selected'), function (selectorElement) {
+         Array.prototype.forEach.call(document.querySelectorAll('.finished-input'), function (selectorElement) {
             var i, tmp;
-            
+
             for (i = 0; i < 9; i += 1) {
                if (numCount[i] < 9) {
                   tmp = i + 1;
-                  
+
                   if (selectorElement.id === tmp + 'b') {
-                     alert(selectorElement.classList);
                      if (selectorElement.classList.contains('finished-input')) {
                         //alert('a');
                         selectorElement.classList.remove('finished-input');
