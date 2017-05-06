@@ -257,6 +257,9 @@ document.addEventListener('DOMContentLoaded', function () {
       sudokuValues = [];
       userInput = [];
       wrongCells = [];
+      
+      // Set up default values for currentPuzzle so that the clear button will work from the beginning
+      currentPuzzle = [document.querySelector('#easy-1'), 0];
 
       // By default, do not validate as you input numbers
       validateAsYouGo = false;
@@ -345,20 +348,16 @@ document.addEventListener('DOMContentLoaded', function () {
          // Add event listeners to every empty cell.
          addEventListeners();
 
-         // Timer stuff
+         // Reset timer stuff
          clearTimeout(t);
-
          h2.textContent = '00:00:00';
-
          seconds = 0;
-
          minutes = 0;
-
          hours = 0;
-
          t = timer();
       };
 
+      // Add event listeners for every empty cell.
       addEventListeners = function () {
          // get every empty div and for each of them, add a click event listener
          var emptyCells = document.querySelectorAll('div.empty-space');
@@ -367,29 +366,27 @@ document.addEventListener('DOMContentLoaded', function () {
             emptyCellElement.addEventListener('click', function () {
                // once clicked, the cell should contain the selected number
                emptyCellElement.textContent = selectedNum;
-
                // It is no longer an empty space, but a space where the user has inputted.
                if (emptyCellElement.classList.contains('empty-space')) {
                   emptyCellElement.classList.remove('empty-space');
-
                   emptyCellElement.classList.add('user-input');
                }
-
                // Update the values of the array
                updateValues(whichBlank, emptyCellElement);
-
                // And check to see if any numbers have reached their maximum occurances.
                checkForGrayButtons();
             }, false);
          });
       };
 
-      // Initialize board?
+      // Initialize board to the first easy puzzle
       displayPuzzle(document.querySelector('#easy-1'), 0);
 
+      // Update the values of our stuff.
       updateValues = function (whichBlank, emptyCellElement) {
          var index, whichBlankCopy;
 
+         
          whichBlankCopy = whichBlank;
 
          index = 0;
@@ -432,6 +429,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                   if (userInput[i]) {
                      //FIX TO QUERYSELECTOR
+                     var fix;
+                     fix = '#' + i;
+                     
                      wrongCells.push(document.getElementById(i));
                   }
 
