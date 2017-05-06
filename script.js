@@ -4,6 +4,13 @@
 // Final Project: Sudoku Puzzles
 // YOUR NAME(S): Anna Porter and Michael McCarver
 
+<<<<<<< HEAD
+=======
+
+// ASK ABOUT INNERHTML
+// ASK ABOUT BYID AND BYCLASS
+// neat and maybe to check in css find old version
+>>>>>>> michaelEdit
 /*
 
    Solver
@@ -11,9 +18,13 @@
  */
 document.addEventListener('DOMContentLoaded', function () {
    'use strict';
+<<<<<<< HEAD
    var easy1, easy2, easy3, medium1, medium2, medium3, hard1, hard2, hard3, fiendish1, fiendish2, fiendish3, nightmare1, nightmare2, nightmare3, userPuzzle1, userPuzzle2, puzzles, h2, seconds, minutes, hours, timer, add, t, selectedNum, resetUserError;
+=======
+   var easy0, easy1, easy2, medium0, medium1, medium2, hard0, hard1, hard2, fiendish0, fiendish1, fiendish2, nightmare0, nightmare1, nightmare2, userPuzzle0, userPuzzle1, puzzles, h2, seconds, minutes, hours, timer, add, t, selectedNum, resetUserError;
+>>>>>>> michaelEdit
    // Hard code 15 default puzzles
-   easy1 = [[7, 9, 0, 0, 0, 0, 3, 0, 0],
+   easy0 = [[7, 9, 0, 0, 0, 0, 3, 0, 0],
             [0, 0, 0, 0, 0, 6, 9, 0, 0],
             [8, 0, 0, 0, 3, 0, 0, 7, 6],
             [0, 0, 0, 0, 0, 5, 0, 0, 2],
@@ -23,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
             [0, 0, 2, 3, 0, 0, 0, 0, 0],
             [0, 0, 9, 0, 0, 0, 0, 5, 4]];
             //https://www.sudoku.ws/1-1.png
-   easy2 = [[0, 0, 3, 0, 4, 2, 0, 9, 0],
+   easy1 = [[0, 0, 3, 0, 4, 2, 0, 9, 0],
             [0, 9, 0, 0, 6, 0, 5, 0, 0],
             [5, 0, 0, 0, 0, 0, 0, 1, 0],
             [0, 0, 1, 7, 0, 0, 2, 8, 5],
@@ -33,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
             [0, 0, 5, 0, 9, 0, 0, 2, 0],
             [0, 8, 0, 2, 1, 0, 6, 0, 0]];
             //https://www.sudoku.ws/1-11.png
-   easy3 = [[0, 0, 0, 0, 9, 0, 0, 0, 4],
+   easy2 = [[0, 0, 0, 0, 9, 0, 0, 0, 4],
             [4, 1, 0, 0, 0, 3, 0, 0, 0],
             [8, 0, 7, 6, 0, 4, 2, 1, 0],
             [0, 0, 1, 0, 0, 7, 0, 0, 2],
@@ -43,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
             [0, 0, 0, 4, 0, 0, 0, 2, 1],
             [6, 0, 0, 0, 1, 0, 0, 0, 0]];
             //https://www.sudoku.ws/1-6.png
-   medium1 = [[0, 0, 5, 0, 9, 0, 0, 0, 1],
+   medium0 = [[0, 0, 5, 0, 9, 0, 0, 0, 1],
               [0, 0, 0, 0, 0, 2, 0, 7, 3],
               [7, 6, 0, 0, 0, 8, 2, 0, 0],
               [0, 1, 2, 0, 0, 9, 0, 0, 4],
@@ -53,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
               [9, 7, 0, 5, 0, 0, 0, 0, 0],
               [5, 0, 0, 0, 3, 0, 7, 0, 0]];
               //https://www.sudoku.ws/standard-1.htm
-   medium2 = [[0, 6, 0, 0, 0, 3, 2, 0, 0],
+   medium1 = [[0, 6, 0, 0, 0, 3, 2, 0, 0],
               [0, 1, 0, 9, 0, 0, 6, 0, 4],
               [0, 0, 0, 0, 8, 0, 0, 0, 5],
               [0, 0, 0, 8, 0, 0, 7, 4, 0],
@@ -63,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
               [2, 0, 7, 0, 0, 9, 0, 6, 0],
               [0, 0, 6, 7, 0, 0, 0, 9, 0]];
                //https://www.sudoku.ws/standard-2.htm
-   medium3 = [[1, 0, 8, 0, 0, 5, 0, 0, 6],
+   medium2 = [[1, 0, 8, 0, 0, 5, 0, 0, 6],
               [0, 0, 0, 0, 0, 0, 0, 0, 0],
               [5, 0, 3, 8, 2, 0, 7, 0, 0],
               [2, 0, 0, 1, 5, 0, 9, 0, 8],
@@ -73,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
               [0, 0, 0, 0, 0, 0, 0, 0, 0],
               [9, 0, 0, 2, 0, 0, 6, 0, 1]];
               //https://www.sudoku.ws/standard-3.htm
-   hard1 = [[0, 0, 0, 2, 0, 0, 0, 6, 3],
+   hard0 = [[0, 0, 0, 2, 0, 0, 0, 6, 3],
             [3, 0, 0, 0, 0, 5, 4, 0, 1],
             [0, 0, 1, 0, 0, 3, 9, 8, 0],
             [0, 0, 0, 0, 0, 0, 0, 9, 0],
@@ -83,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
             [5, 0, 3, 7, 0, 0, 0, 0, 8],
             [4, 7, 0, 0, 0, 1, 0, 0, 0]];
             //https://www.sudoku.ws/hard-1.htm
-   hard2 = [[0, 1, 0, 0, 0, 4, 0, 0, 0],
+   hard1 = [[0, 1, 0, 0, 0, 4, 0, 0, 0],
             [0, 0, 6, 8, 0, 5, 0, 0, 1],
             [5, 0, 3, 7, 0, 1, 9, 0, 0],
             [8, 0, 4, 0, 0, 7, 0, 0, 0],
@@ -93,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
             [6, 0, 0, 4, 0, 3, 1, 0, 0],
             [0, 0, 0, 2, 0, 0, 0, 5, 0]];
             //https://www.sudoku.ws/hard-2.htm
-   hard3 = [[1, 3, 0, 0, 0, 0, 0, 0, 0],
+   hard2 = [[1, 3, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 2, 0, 5, 0, 0, 3, 0],
             [0, 0, 9, 0, 0, 2, 0, 8, 0],
             [5, 0, 0, 3, 0, 0, 0, 1, 0],
@@ -103,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
             [0, 8, 0, 0, 2, 0, 5, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 6, 4]];
             //https://www.sudoku.ws/hard-3.htm
-   fiendish1 = [[0, 0, 6, 0, 0, 0, 0, 0, 4],
+   fiendish0 = [[0, 0, 6, 0, 0, 0, 0, 0, 4],
                 [0, 0, 0, 8, 6, 0, 7, 3, 0],
                 [0, 4, 0, 3, 5, 0, 0, 0, 2],
                 [1, 7, 0, 4, 0, 0, 6, 0, 0],
@@ -113,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 [0, 6, 7, 0, 4, 3, 0, 0, 0],
                 [8, 0, 0, 0, 0, 0, 3, 0, 0]];
                 //https://www.sudoku.ws/expert-1.htm
-   fiendish2 = [[7, 0, 9, 0, 0, 0, 0, 0, 8],
+   fiendish1 = [[7, 0, 9, 0, 0, 0, 0, 0, 8],
                 [0, 0, 0, 1, 9, 0, 0, 0, 2],
                 [0, 2, 0, 8, 0, 0, 0, 9, 0],
                 [0, 7, 0, 0, 0, 0, 0, 4, 3],
@@ -123,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 [8, 0, 0, 0, 2, 3, 0, 0, 0],
                 [5, 0, 0, 0, 0, 0, 3, 0, 7]];
                 //https://www.sudoku.ws/expert-2.htm
-   fiendish3 = [[3, 7, 0, 4, 0, 0, 0, 0, 0],
+   fiendish2 = [[3, 7, 0, 4, 0, 0, 0, 0, 0],
                 [0, 2, 0, 0, 7, 6, 4, 3, 0],
                 [0, 0, 0, 0, 8, 2, 0, 0, 0],
                 [0, 0, 8, 0, 5, 4, 0, 0, 0],
@@ -133,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 [0, 6, 9, 7, 4, 0, 0, 2, 0],
                 [0, 0, 0, 0, 0, 9, 0, 6, 8]];
                 //https://www.sudoku.ws/expert-3.htm
-   nightmare1 = [[0, 0, 9, 7, 4, 8, 0, 0, 0],
+   nightmare0 = [[0, 0, 9, 7, 4, 8, 0, 0, 0],
                  [7, 0, 0, 0, 0, 0, 0, 0, 0],
                  [0, 2, 0, 1, 0, 9, 0, 0, 0],
                  [0, 0, 7, 0, 0, 0, 2, 4, 0],
@@ -143,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
                  [0, 0, 0, 0, 0, 0, 0, 0, 6],
                  [0, 0, 0, 2, 7, 5, 9, 0, 0]];
                  //https://www.sudoku.ws/extreme-1.htm
-   nightmare2 = [[0, 0, 0, 3, 0, 8, 0, 7, 0],
+   nightmare1 = [[0, 0, 0, 3, 0, 8, 0, 7, 0],
                  [3, 0, 0, 7, 1, 0, 0, 0, 4],
                  [6, 0, 0, 0, 4, 0, 0, 0, 0],
                  [1, 0, 0, 0, 0, 0, 6, 3, 0],
@@ -153,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
                  [7, 0, 0, 0, 6, 4, 0, 0, 5],
                  [0, 1, 0, 2, 0, 7, 0, 0, 0]];
                     //https://www.sudoku.ws/extreme-2.htm
-   nightmare3 = [[2, 0, 0, 0, 1, 0, 0, 5, 0],
+   nightmare2 = [[2, 0, 0, 0, 1, 0, 0, 5, 0],
                  [3, 0, 5, 0, 4, 2, 0, 0, 0],
                  [0, 1, 8, 0, 0, 9, 0, 0, 2],
                  [0, 3, 2, 1, 0, 0, 8, 0, 0],
@@ -163,7 +174,11 @@ document.addEventListener('DOMContentLoaded', function () {
                  [0, 0, 0, 2, 6, 0, 5, 0, 7],
                  [0, 6, 0, 0, 8, 0, 0, 0, 3]];
                  //https://www.sudoku.ws/extreme-3.html
+<<<<<<< HEAD
    userPuzzle1 = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+=======
+   userPuzzle0 = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+>>>>>>> michaelEdit
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -172,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0]];
+<<<<<<< HEAD
    userPuzzle2 = [[7, 9, 0, 0, 0, 0, 3, 0, 0],
             [0, 0, 0, 0, 0, 6, 9, 0, 0],
             [8, 0, 0, 0, 3, 0, 0, 7, 6],
@@ -186,6 +202,25 @@ document.addEventListener('DOMContentLoaded', function () {
       // The timer won't run when I put its variables in here
    // For the entire timer, Anna used https://jsfiddle.net/Daniel_Hug/pvk6p/
       h2 = document.getElementsByTagName('h2')[0];
+=======
+   userPuzzle1 = [[7, 9, 0, 0, 0, 0, 3, 0, 0],
+                  [0, 0, 0, 0, 0, 6, 9, 0, 0],
+                  [8, 0, 0, 0, 3, 0, 0, 7, 6],
+                  [0, 0, 0, 0, 0, 5, 0, 0, 2],
+                  [0, 0, 5, 4, 1, 8, 7, 0, 0],
+                  [4, 0, 0, 7, 0, 0, 0, 0, 0],
+                  [6, 1, 0, 0, 9, 0, 0, 0, 8],
+                  [0, 0, 2, 3, 0, 0, 0, 0, 0],
+                  [0, 0, 9, 0, 0, 0, 0, 5, 4]];
+
+   puzzles = {easy0: easy0, easy1: easy1, easy2: easy2, medium0: medium0, medium1: medium1, medium2: medium2, hard0: hard0, hard1: hard1, hard2: hard2, fiendish0: fiendish0, fiendish1: fiendish1, fiendish2: fiendish2, nightmare0: nightmare0, nightmare1: nightmare1, nightmare2: nightmare2, userPuzzle0: userPuzzle0, userPuzzle1: userPuzzle1};
+   (function () {
+      // The timer won't run when I put its variables in here
+      // For the entire timer, Anna used https://jsfiddle.net/Daniel_Hug/pvk6p/
+      // h2 = document.querySelector('#timer');
+      // STILL BY TAG
+      h2 = document.querySelector('.timer');
+>>>>>>> michaelEdit
       seconds = 0;
       minutes = 0;
       hours = 0;
@@ -194,7 +229,10 @@ document.addEventListener('DOMContentLoaded', function () {
          t = setTimeout(add, 1000);
          return t;
       };
+<<<<<<< HEAD
 
+=======
+>>>>>>> michaelEdit
       add = function () {
          var timeString;
          seconds += 1;
@@ -208,6 +246,7 @@ document.addEventListener('DOMContentLoaded', function () {
          }
 
          timeString = "";
+<<<<<<< HEAD
 
          if (hours > 9) {
             timeString += hours + ':';
@@ -230,16 +269,39 @@ document.addEventListener('DOMContentLoaded', function () {
             timeString += '0' + seconds;
          }
 
+=======
+         if (hours > 9) {
+            timeString += hours + ':';
+         } else {
+            timeString += '0' + hours + ':';
+         }
+         if (minutes > 9) {
+            timeString += minutes + ':';
+         } else {
+            timeString += '0' + minutes + ':';
+         }
+         if (seconds > 9) {
+            timeString += seconds;
+         } else {
+            timeString += '0' + seconds;
+         }
+>>>>>>> michaelEdit
          h2.textContent = timeString;
          timer();
       };
    }());
 
+<<<<<<< HEAD
    puzzles = {easy0: easy1, easy1: easy2, easy2: easy3, medium0: medium1, medium1: medium2, medium2: medium3, hard0: hard1, hard1: hard2, hard2: hard3, fiendish0: fiendish1, fiendish1: fiendish2, fiendish2: fiendish3, nightmare0: nightmare1, nightmare1: nightmare2, nightmare2: nightmare3, userPuzzle0: userPuzzle1, userPuzzle1: userPuzzle2};
 
    // Displaying the puzzle, adding event listeners to empty spaces.
    (function () {
       var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle, deleteUserInputs, deleteUserErrors, removeFinishedInputs, currentPuzzle;
+=======
+   // Displaying the puzzle, adding event listeners to empty spaces.
+   (function () {
+      var sudokuValues, addEventListeners, updateValues, validateAsYouGo, validateAlways, userInput, checkForGrayButtons, removeSelected, wrongCells, displayPuzzle, deleteUserInputs, deleteUserErrors, removeFinishedInputs, currentPuzzle, removeShow;
+>>>>>>> michaelEdit
 
       // Default the selectedNum to be placed in the cells next to one.
       selectedNum = 1;
@@ -253,19 +315,28 @@ document.addEventListener('DOMContentLoaded', function () {
       validateAsYouGo = false;
 
       // Add an event listener to every difficulty button
+<<<<<<< HEAD
       Array.prototype.forEach.call(document.getElementsByClassName('dropdown'), function (buttonElement) {
+=======
+      Array.prototype.forEach.call(document.querySelectorAll('.dropdown'), function (buttonElement) {
+>>>>>>> michaelEdit
 
          // When the button is clicked, show the buttons underneath it
          buttonElement.addEventListener('click', function () {
             buttonElement.querySelector('#my-dropdown').classList.toggle('show');
-
             // Add event listener to the drop-down buttons
+<<<<<<< HEAD
             Array.prototype.forEach.call(buttonElement.getElementsByClassName('puzzle-select'), function (puzzleElement, whichPuzzle) {
                // TOOK EVENT OUT OF THE PARENTHESIS TO APPEASE JSLINT
                puzzleElement.onclick = function () {
                   // Call displayPuzzle
                   currentPuzzle = [puzzleElement, whichPuzzle];
 
+=======
+            Array.prototype.forEach.call(buttonElement.querySelectorAll('.puzzle-select'), function (puzzleElement, whichPuzzle) {
+               puzzleElement.onclick = function () {
+                  currentPuzzle = [puzzleElement, whichPuzzle];
+>>>>>>> michaelEdit
                   displayPuzzle(puzzleElement, whichPuzzle);
                };
             });
@@ -281,13 +352,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
          display = puzzleElement.parentNode.parentNode.id.toString() + ' ' + (whichPuzzle + 1);
 
+<<<<<<< HEAD
          document.getElementById('which-puzzle').textContent = display;
+=======
+         document.querySelector('#which-puzzle').textContent = display;
+>>>>>>> michaelEdit
 
          // The array is stored as a property of puzzles
          array = puzzles[name];
 
          // Get the current puzzle element.
+<<<<<<< HEAD
          puzzlePlace = document.getElementById('currentPuzzle');
+=======
+         puzzlePlace = document.querySelector('#currentPuzzle');
+>>>>>>> michaelEdit
 
          // If anything exists here, delete it.
          while (puzzlePlace.hasChildNodes()) {
@@ -422,9 +501,150 @@ document.addEventListener('DOMContentLoaded', function () {
                   errorFound = true;
 
                   if (userInput[i]) {
+<<<<<<< HEAD
+                     wrongCells.push(document.getElementById(i));
+=======
+                     //FIX TO QUERYSELECTOR
                      wrongCells.push(document.getElementById(i));
                   }
 
+                  if (validateAsYouGo) {
+                     if (emptyCellElement.classList.contains('user-input')) {
+                        emptyCellElement.classList.remove('user-input');
+
+                        emptyCellElement.classList.add('user-error');
+                     }
+                  }
+               }
+            }
+         }
+
+         // Checking the rest of the column
+         for (i = column; i < 81; i += 9) {
+            if (index !== i) {
+               if (selectedNum === sudokuValues[i]) {
+
+                  errorFound = true;
+
+                  if (validateAsYouGo) {
+                     if (emptyCellElement.classList.contains('user-input')) {
+                        emptyCellElement.classList.remove('user-input');
+
+                        emptyCellElement.classList.add('user-error');
+                     }
+                  }
+               }
+            }
+         }
+
+         if (column < 3) {
+            lowerI = 0;
+
+            upperI = 3;
+
+         } else if (column >= 3 && column < 6) {
+            lowerI = 3;
+
+            upperI = 6;
+
+         } else {
+            lowerI = 6;
+
+            upperI = 9;
+         }
+
+         if (row < 3) {
+            lowerJ = 0;
+
+            upperJ = 3;
+
+         } else if (row >= 3 && row < 6) {
+            lowerJ = 3;
+
+            upperJ = 6;
+
+         } else {
+            lowerJ = 6;
+
+            upperJ = 9;
+         }
+
+         // Checking the 3x3
+         for (i = lowerI; i < upperI; i += 1) {
+            for (j = lowerJ; j < upperJ; j += 1) {
+               k = j * 9 + i;
+
+               if (index !== k) {
+                  if (selectedNum === sudokuValues[k]) {
+                     errorFound = true;
+
+                     if (validateAsYouGo) {
+                        if (emptyCellElement.classList.contains('user-input')) {
+                           emptyCellElement.classList.remove('user-input');
+
+                           emptyCellElement.classList.add('user-error');
+                        }
+                     }
+                  }
+               }
+            }
+         }
+
+         if (errorFound && !validateAsYouGo) {
+            wrongCells.push(emptyCellElement);
+         }
+
+         if (!errorFound && emptyCellElement.classList.contains('user-error')) {
+            emptyCellElement.classList.remove('user-error');
+
+            emptyCellElement.classList.add('user-input');
+
+            for (i = 0; i < wrongCells.length; i += 1) {
+               if (emptyCellElement.isEqualNode(wrongCells[i])) {
+                  wrongCells.splice(i, 1);
+               }
+            }
+         }
+      };
+
+      checkForGrayButtons = function () {
+         var numCount;
+
+         numCount = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+         sudokuValues.forEach(function (sudokuElement) {
+            if (sudokuElement > 0) {
+               numCount[sudokuElement - 1] += 1;
+            }
+         });
+         //FIX THIS
+         Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement) {
+            var i, tmp;
+
+            for (i = 0; i < 9; i += 1) {
+               if (numCount[i] >= 9) {
+                  tmp = i + 1;
+
+                  if (selectorElement.id === tmp + 'b') {
+                     if (selectorElement.classList.contains('input')) {
+                        selectorElement.classList.remove('input');
+                     }
+
+                     selectorElement.classList.add('finished-input');
+>>>>>>> michaelEdit
+                  }
+               }
+            }
+         }, false);
+         //FIX THIS
+         Array.prototype.forEach.call(document.getElementsByClassName('selected'), function (selectorElement) {
+            var i, tmp;
+
+            for (i = 0; i < 9; i += 1) {
+               if (numCount[i] >= 9) {
+                  tmp = i + 1;
+
+<<<<<<< HEAD
                   if (validateAsYouGo) {
                      if (emptyCellElement.classList.contains('user-input')) {
                         emptyCellElement.classList.remove('user-input');
@@ -849,15 +1069,302 @@ document.addEventListener('DOMContentLoaded', function () {
             });
          });
 
+=======
+                  if (selectorElement.id === tmp + 'b') {
+                     if (selectorElement.classList.contains('selected')) {
+                        selectorElement.classList.remove('selected');
+                     }
+
+                     selectorElement.classList.add('finished-input');
+                  }
+               }
+            }
+         }, false);
+
+         Array.prototype.forEach.call(document.getElementsByClassName('selected'), function (selectorElement) {
+            var i, tmp;
+
+            for (i = 0; i < 9; i += 1) {
+               if (numCount[i] < 9) {
+                  tmp = i + 1;
+
+                  if (selectorElement.id === tmp + 'b') {
+                     if (selectorElement.classList.contains('finished-input')) {
+                        selectorElement.classList.remove('finished-input');
+                     }
+
+                     selectorElement.classList.add('input');
+                  }
+               }
+            }
+         });
+      };
+
+      document.querySelector('#clear').addEventListener('click', function () {
+         var userInputs, userErrors, oneButton, finishedInputs;
+
+         displayPuzzle(currentPuzzle[0], currentPuzzle[1]);
+
+         userInputs = Array.from(document.getElementsByClassName('user-input'));
+
+         while (userInputs.length > 0) {
+            deleteUserInputs();
+
+            userInputs = Array.from(document.getElementsByClassName('user-input'));
+         }
+
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+
+            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+         }
+
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+
+            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+         }
+
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+
+            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+         }
+
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+
+            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+         }
+
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+
+            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+         }
+
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+
+            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+         }
+
+         userErrors = Array.from(document.getElementsByClassName('user-error'));
+
+         while (userErrors.length > 0) {
+            deleteUserErrors();
+
+            userErrors = Array.from(document.getElementsByClassName('user-errorr'));
+         }
+
+         removeSelected();
+
+         finishedInputs = Array.from(document.getElementsByClassName('finished-input'));
+
+         while (finishedInputs.length > 0) {
+            removeFinishedInputs();
+
+            finishedInputs = Array.from(document.getElementsByClassName('finished-input'));
+         }
+
+         selectedNum = 1;
+
+         oneButton = document.getElementsByClassName('input')[0];
+
+         oneButton.classList.remove('input');
+
+         oneButton.classList.add('selected');
+
+         checkForGrayButtons();
+
+         removeFinishedInputs();
+
+         clearTimeout(t);
+
+         h2.textContent = '00:00:00';
+
+         seconds = 0;
+
+         minutes = 0;
+
+         hours = 0;
+
+         t = timer();
+      });
+
+      removeFinishedInputs = function () {
+         Array.prototype.forEach.call(document.getElementsByClassName('finished-input'), function (element) {
+            if (element.classList.contains('finished-input')) {
+               element.classList.remove('finished-input');
+
+               element.classList.add('input');
+            }
+         });
+      };
+
+      deleteUserInputs = function () {
+         Array.prototype.forEach.call(document.getElementsByClassName('user-input'), function (element) {
+            element.classList.remove('user-input');
+
+            element.classList.add('empty-space');
+
+            element.innerHTML = '&nbsp;';
+         });
+      };
+
+      deleteUserErrors = function () {
+         Array.prototype.forEach.call(document.getElementsByClassName('user-error'), function (element) {
+            element.classList.remove('user-error');
+
+            element.classList.add('empty-space');
+
+            element.innerHTML = '&nbsp';
+         });
+      };
+
+      document.querySelector('#validate-always').addEventListener('click', function () {
+         var element;
+         element = document.getElementById('validate-always');
+         if (validateAsYouGo === false) {
+            element.classList.remove('utility');
+            element.classList.add('utility-toggle');
+            validateAsYouGo = true;
+            wrongCells.forEach(function (element) {
+               if (element.classList.contains('user-input')) {
+                  element.classList.remove('user-input');
+                  element.classList.add('user-error');
+               }
+            });
+         } else {
+            element.classList.remove('utility-toggle');
+            element.classList.add('utility');
+            validateAsYouGo = false;
+            resetUserError();
+         }
+      });
+
+      resetUserError = function () {
+         document.querySelectorAll('.user-error').forEach(function (element) {
+            element.classList.remove('user-error');
+
+            element.classList.add('user-input');
+         });
+      };
+
+      document.querySelector('#validate-once').addEventListener('click', function () {
+         wrongCells.forEach(function (element) {
+            if (element.classList.contains('user-input')) {
+               element.classList.remove('user-input');
+
+               element.classList.add('user-error');
+            }
+         });
+      });
+
+      Array.prototype.forEach.call(document.getElementsByClassName('input'), function (selectorElement, whichButton) {
+         selectorElement.addEventListener('click', function () {
+            removeSelected();
+
+            selectedNum = whichButton + 1;
+
+            if (selectorElement.classList.contains('input')) {
+               selectorElement.classList.remove('input');
+
+               selectorElement.classList.add('selected');
+            }
+         }, false);
+      });
+
+      (function () {
+         var oneButton;
+         //alert('selected')
+         selectedNum = 1;
+
+         oneButton = document.getElementsByClassName('input')[0];
+
+         oneButton.classList.remove('input');
+
+         oneButton.classList.add('selected');
+      }());
+
+      removeSelected = function () {
+         Array.prototype.forEach.call(document.getElementsByClassName('selected'), function (selectorElem) {
+            selectorElem.classList.remove('selected');
+
+            selectorElem.classList.add('input');
+         });
+      };
+   }());
+
+   (function () {
+      document.querySelector('#solve').addEventListener('click', function () {
+         var kids, parents, solverValues, rows, i, solveSudoku, checkRow, checkCol, check3x3, findEmptySpace, isCellSafe, displaySolution, testing, totalKids, rose;
+
+         solverValues = [];
+
+         rows = [];
+
+         i = 0;
+
+         testing = 0;
+
+         totalKids = 0;
+
+         parents = document.querySelectorAll('div.happy');
+
+         parents.forEach(function (parentNode) {
+            kids = parentNode.children;
+
+            kids = Array.from(kids);
+
+            totalKids += kids.length;
+
+            kids.forEach(function (childNode) {
+               if (childNode.textContent === '1' || childNode.textContent === '2' || childNode.textContent === '3' || childNode.textContent === '4' || childNode.textContent === '5' || childNode.textContent === '6' || childNode.textContent === '7' || childNode.textContent === '8' || childNode.textContent === '9') {
+                  rows.push(childNode.textContent);
+
+                  i += 1;
+
+                  testing += 1;
+
+               } else {
+                  rows.push('0');
+
+                  i += 1;
+
+                  testing += 1;
+               }
+            });
+         });
+
+>>>>>>> michaelEdit
          for (i = 0; i < 9; i += 1) {
             rose = rows.slice(i * 9, (i + 1) * 9);
 
             solverValues.push(rose);
          }
       });
+<<<<<<< HEAD
 
       window.onclick = function (event) {
          Array.prototype.forEach.call(document.getElementsByClassName("dropdown-content"), function (dropdownElement) {
+=======
+      // https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Event_handlers
+      window.onclick = function (event) {
+         Array.prototype.forEach.call(document.querySelectorAll('.dropdown-content'), function (dropdownElement) {
+>>>>>>> michaelEdit
             if (dropdownElement.parentNode.id !== event.target.parentNode.id) {
                if (dropdownElement.classList.contains('show')) {
                   dropdownElement.classList.remove('show');
