@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
       seconds = 0;
       minutes = 0;
       hours = 0;
-      // make a timer function that sets t to calls add every 1000 milliseconds
+      // make a timer function that sets t to calls add every 1000 milliseconds 
       // and return t
       timer = function () {
          t = setTimeout(add, 1000);
@@ -280,9 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
          // The name is the parent's parent's id, converted to a string with the number of whichPuzzle
          name = puzzleElement.parentNode.parentNode.id.toString() + whichPuzzle;
 
-         // We have the puzzleElement, but we want to know which category it is a part of.
-         // We look two parents up to find the difficulty of the puzzle (i.e. 'easy'), and
-         // use the whichPuzzle index to complete it's name.
+         // MCCARVER COMMENT THIS LINE
          display = puzzleElement.parentNode.parentNode.id.toString() + ' ' + (whichPuzzle + 1);
          // the text content of the whichpuzzle span is the display.
          document.querySelector('#which-puzzle').textContent = display;
@@ -629,7 +627,7 @@ document.addEventListener('DOMContentLoaded', function () {
             element.classList.add('input');
          });
       };
-
+      
       removeFinishedInputs = function () {
          // for every finished input button, remove that and put input
          Array.prototype.forEach.call(document.querySelectorAll('.finished-input'), function (element) {
@@ -676,7 +674,7 @@ document.addEventListener('DOMContentLoaded', function () {
          });
       };
 
-      // when validate once is clicked,
+      // when validate once is clicked, 
       document.querySelector('#validate-once').addEventListener('click', function () {
          // for all the wrong cells, if they contained user input, change to user error
          wrongCells.forEach(function (element) {
