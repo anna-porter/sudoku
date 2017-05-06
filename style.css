@@ -294,12 +294,13 @@ tr:nth-child(3n) {
 }
 .utility-toggle {
    white-space: normal;
+   width: 15%;
    height: 39px;
    margin: 0.5%;
    color: white;
    background-color: #00A86B;
    text-decoration: none;
-   width: 115px;
+   width: 150px;
 }
 .user-input {
    color: #4e749a;
