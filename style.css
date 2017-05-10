@@ -8,6 +8,9 @@ YOUR NAME: Anna Porter and Michael McCarver
 html {
    box-sizing: border-box;
 }
+/*
+   Default background image (http://orig05.deviantart.net/7249/f/2007/185/5/7/wood_wallpaper_by_stenosis.jpg), center text, width of body is full width of page Top and botoom margin are 0, sides are auto assigned
+*/
 body {
    background-image: url(wood.jpg);
    margin: 0 auto;
@@ -15,13 +18,20 @@ body {
    text-align: center;
    padding-top: 1em;
 }
+
+/*Margins for divs match body*/
 div {
    margin: 0 auto;
 }
+
+/*Padding to seperate title from board/buttons*/
 .ghetto-padding {
    height: 40px;
 }
 
+/*
+   Div that is wrapped around board and buttons. Width is full page width, set minimum height to look nicer, center children.
+*/
 .neat {
    width: 100%;
    min-height: 450px;
@@ -30,32 +40,47 @@ div {
    justify-content: center;
 }
 
+/*
+   Div that contains the buttons. Do not allow buttons to wrap, display children above and below each other, keep the margin on the left side at 5% -- so the buttons won't be too close to the board, content is justified with space around so that the two sets of buttons will be seperated, set min-height to same as parent div.
+*/
 .sidebar {
    display: flex;
    flex-wrap: nowrap;
    flex-direction: column;
-   float: right;
+   /*float: right;*/
    margin-left: 5%;
    justify-content: space-around;
    min-height: 450px;
 }
 
+/*
+   Div that surrounds the board -- without this div, the background image of the board would load before the board loaded. Keep the board to the right of the div to make the distance between board and buttons look nice.
+*/
 .maybe {
    margin-right: 0%;
 }
 
+/*
+   Div that contains top row of action buttons. Do not allow buttons to wrap, and they should have a row layout.
+*/
 .top {
    display: flex;
    flex-wrap: nowrap;
    flex-direction: row;
 }
 
+/*
+   Div that contains the bottom row of buttons -- same as .top
+*/
 .bottom {
    display: flex;
    flex-wrap: nowrap;
    flex-direction: row;
 }
 
+/*
+   Div containing current puzzle being played on. Some things here may be redundant, but I am nervous about removing them. Center the children, width should be 30% of parent, make the min-width the same as parent's min-height -- try to force a square, the direct descendant children should be layed out in columns, set the background of the board.
+*/
 #currentPuzzle {
    /*position: relative;*/
    display: flex;
@@ -63,7 +88,7 @@ div {
    justify-content: center;
    width: 30%;
    /*height: 600px;*/
-   float: left;
+   /*float: left;*/
    /*margin-left: 25%;*/
    min-width: 450px;
    /*padding-bottom: 5%;*/
@@ -73,17 +98,23 @@ div {
    background-image: url(paper.png);
 }
 
+/*
+   Div class for every row of squares. Margin set to 0 so that squares completely fill row, squares direction set to row, center the squares, make the font (numbers) large, flex used to set flex-grow, flex-shrink, and flex-basis - flex-grow was needed at one time for squares to fill row completely, I didn't want to remove. flex: found at https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+*/
 .happy {
-   padding: 0px;
+   /*padding: 0px;*/
    margin: 0px;
    display: flex;
-   flex-wrap: wrap;
+   /*flex-wrap: wrap;*/
    flex-direction: row;
    justify-content: center;
    font-size: 250%;
    flex: 1 1 auto;
 }
 
+/*
+   Div children of happy (numbered squares). Padding and margin set to make the squares fill the whole space allowed. Setting width to 10% helps the squares line up nicely. flex-grow used to make squares fill whole space (I used flex with the default values of flex-shrink and flex-basis), height should be full hight of parent div.
+*/
 .happy div {
 /*   width: 43px;
    height: 43px;*/
@@ -94,25 +125,42 @@ div {
    height: 100%;
 }
 
+/*
+   More settings for div's of happy (could have probably put in above rule, but two people where working on the file at this point). Set the black border that surrounds each square.
+*/
 .happy div {
    border: 1px solid;
 }
 
+/*
+   Set a wider border for certain squares -- to separate the 9 mini boards.
+*/
 .happy:nth-child(9), .happy:nth-child(3), .happy:nth-child(6) {
    border-bottom: 3px solid;
 }
 
+/*
+   Should have put this with above section. Also sets border for mini board separation.
+*/
 .happy div:nth-child(9), .happy div:nth-child(3), .happy div:nth-child(6) {
    border-right: 3px solid;
 }
+
+/*
+   Set the left border for first div children of Happy class - for main board border.
+*/
 .happy div:first-child {
    border-left: 3px solid;
 }
+
+/*
+   Set the top border of the first happy row.
+*/
 .happy:first-child {
    border-top: 3px solid;
 }
 
-/* Normally the * selector is smart to avoid, but for this purpose it's fine. */
+/* Normally the * selector is smart to avoid, but for this purpose it's fine.
 *, *:before, *:after {
    box-sizing: inherit;
 }
@@ -122,12 +170,20 @@ h1 {
 /*table {
    margin: 1em auto;
 }*/
+
+
+
+/* Not sure these tr sections do anything*/
+/*
+   Set height/width/text-alignment for interface buttons.
+*/
 td {
    height: 50px;
    width: 50px;
-   /*border: 1px solid;*/
+
    text-align: center;
 }
+/* Set solid borders for first and last td's, and first and last tr's*/
 td:first-child {
    border-left: solid;
 }
@@ -140,6 +196,12 @@ tr:first-child {
 tr:nth-child(3n) {
    border-bottom:solid;
 }
+
+/*
+   Class for dropdown buttons at top of page. Black background with white text, pad to keep buttons from being comically small, nice font size, make cursor a hand when hovering over buttons (https://developer.mozilla.org/en-US/docs/Web/CSS/cursor?v=control), make buttons nice looking and rounded, hardcode width.
+
+   Help for dropdown buttons: https://www.w3schools.com/css/css_dropdowns.asp
+*/
 .dropbtn {
    background-color: black;
    color: white;
@@ -150,36 +212,51 @@ tr:nth-child(3n) {
    border-radius: 10px 10px 10px 10px;
    width: 150px;
 }
+
+/*
+   When hovering over button, change color to gray.
+*/
 .dropbtn:hover, .dropbtn:focus {
    background-color: gray;
    border-radius: 10px 10px 10px 10px;
 }
+
+/*
+   Div containing a dropdown button. Inline-block displays these divs side-by-side. Hardcode width and make borders look nice.
+*/
 .dropdown {
-   position: relative;
+   /*position: relative;*/
    display: inline-block;
    border-radius: 10px 10px 10px 10px;
    width: 150px;
 }
+
+/*
+   Class for div that contains the puzzle links. Default to not show them, position absolute make them stay still when the display changes, add faint shadow around links, hardcode width just in case.
+*/
 .dropdown-content {
    display: none;
    position: absolute;
-   background-image: url(wood.jpg);
+   /*background-image: url(wood.jpg);*/
 /*   background-color: #f9f9f9;*/
 /*   background-color: #3CAF50;*/
 /*   min-width: 100px;*/
    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-   z-index: 1;
    width: 150px;
 }
 
-/* Links inside the dropdown */
+/*
+   Buttons for puzzle links. Pad them to make the a good size, hardcode width.
+*/
 .dropdown-content button {
-    color: black;
+    /*color: black;*/
     padding: 12px 16px;
-    text-decoration: none;
-    display: block;
+    /*text-decoration: none;*/
+    /*display: block;*/
     width: 150px;
 }
+
+/* Cool color scheme Anna came up with for puzzle link buttons*/
 #nightmare {
    background-color: #012345;
 }
@@ -262,11 +339,17 @@ tr:nth-child(3n) {
    background-color: #688db3;
    color: white;
 }
-#userinput-1 {
+
+/*#userinput-1 {
    background-color: #4e749a;
    color: white;
-   /*width: 150px;*/
-}
+   width: 150px;
+}*/
+
+
+/*
+   Buttons with user interface numbers. Set background, text is white, set good font size, hardcode width and height, make nice rounded borders.
+*/
 .input {
    background-color: #5781aa;
    color: white;
@@ -276,38 +359,60 @@ tr:nth-child(3n) {
    border-radius: 8px 8px 8px 8px;
    /*justify-content: center;*/
 }
+
+/*
+   Id of table holding buttons. Auto-assigned side margins helps buttons sit nicely on screen.
+*/
 #input-buttons {
    /*float: center;*/
    /*justify-content: center;*/
    /*position: relative;*/
    margin: 0 auto;
 }
+
+/*
+   Action buttons above numbered interface buttons. Set width, height, and margin. Color of text is white, nice looking background color.
+*/
 .utility {
-   white-space: normal;
-   width: 15%;
+   /*width: 15%;*/
    height: 40px;
    margin: 0.5%;
    color: white;
    background-color: #293e7a;
-   text-decoration: none;
+   /*text-decoration: none;*/
    width: 150px;
 }
+
+/*
+   This toggle is used to change the color of the 'Validate as You Go' button when pressed. Make height slightly smaller, keep same width and margin. Change color to same as when interface button is selected.
+*/
 .utility-toggle {
-   white-space: normal;
-   width: 15%;
+   /*width: 15%;*/
    height: 39px;
    margin: 0.5%;
    color: white;
    background-color: #00A86B;
-   text-decoration: none;
+   /*text-decoration: none;*/
    width: 150px;
 }
+
+/*
+   The empty squares become this class when they are filled with a number. This sets the font color
+*/
 .user-input {
    color: #4e749a;
 }
+
+/*
+   The squares with user-input become this color if it is validated that they are incorrect.
+*/
 .user-error {
    color: red;
 }
+
+/*
+   Change the color of an interface button when it is pressed. Everything stays the same except for color.
+*/
 .selected {
    background-color: #00A86B;
    color: white;
@@ -316,6 +421,10 @@ tr:nth-child(3n) {
    height: 60px;
    border-radius: 8px 8px 8px 8px;
 }
+
+/*
+   This class is used to change the button color to gray when it has been used too many times.
+*/
 .finished-input {
    background-color: #A9A9A9;
    color: white;
@@ -324,19 +433,26 @@ tr:nth-child(3n) {
    height: 60px;
    border-radius: 8px 8px 8px 8px;
 }
+
+/*
+   If a button hasn't been selected yet, change its color on hover
+*/
 .input:hover {
    background-color: #688db3;
 }
+
+/*
+   Make sure the border of the tr's is clear.
+*/
 tr .noborder {
    border: none;
    /*background-image: url(paper.png);*/
 
 }
 
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #f1f1f1}
-
+/*
+   When something needs to be shown, show
+*/
 .show {
    display: block;
 }
